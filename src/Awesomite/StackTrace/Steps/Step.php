@@ -38,7 +38,11 @@ class Step implements StepInterface
             throw new LogicException('There is no source code for this step!');
         }
 
-        return new PlaceInCode($this->stepArray['file'], $this->stepArray['line']);
+        return new PlaceInCode(
+            $this->stepArray['file'],
+            $this->stepArray['line'],
+            isset($this->stepArray['__awesomite_file_contents']) ? $this->stepArray['__awesomite_file_contents'] : null
+        );
     }
 
     public function hasPlaceInCode()

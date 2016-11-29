@@ -16,13 +16,22 @@ class PlaceInCode implements PlaceInCodeInterface
 
     private $lineNo;
 
-    public function __construct($fileName, $lineNo)
+    private $contents;
+
+    /**
+     * PlaceInCode constructor.
+     * @param string $fileName
+     * @param int $lineNo
+     * @param string|null $contents
+     */
+    public function __construct($fileName, $lineNo, $contents = null)
     {
         if (!$lineNo) {
             throw new InvalidArgumentException('Line number must be equal at least 1!');
         }
         $this->fileName = $fileName;
         $this->lineNo = $lineNo;
+        $this->contents = $contents;
     }
 
     public function getFileName()
@@ -41,7 +50,7 @@ class PlaceInCode implements PlaceInCodeInterface
             throw new LogicException("File {$this->fileName} does not exist!");
         }
 
-        $strings = explode("\n", file_get_contents($this->fileName));
+        $strings = explode("\n", $this->getContents());
         $count = count($strings);
 
         if ($this->lineNo > $count) {
@@ -65,6 +74,15 @@ class PlaceInCode implements PlaceInCodeInterface
         }
 
         return new Lines($result);
+    }
+
+    private function getContents()
+    {
+        if (is_null($this->contents)) {
+            $this->contents = file_get_contents($this->fileName);
+        }
+
+        return $this->contents;
     }
 
     private function moveIfNeed(&$firstLine, &$lastLine, $count)

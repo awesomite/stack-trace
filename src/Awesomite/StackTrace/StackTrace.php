@@ -136,6 +136,10 @@ class StackTrace implements StackTraceInterface
             $result['__awesomite_args_converted'] = true;
         }
 
+        if (!empty($result['file']) && !isset($result['__awesomite_file_contents'])) {
+            $result['__awesomite_file_contents'] = file_get_contents($result['file']);
+        }
+
         if (isset($result['object'])) {
             unset($result['object']);
         }
