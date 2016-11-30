@@ -15,7 +15,7 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.1.1';
+    const VERSION = '0.1.2';
     const CONSTRAINTS_VERSION = '^0.1.0';
 
     private $arrayStackTrace;
@@ -136,7 +136,7 @@ class StackTrace implements StackTraceInterface
             $result['__awesomite_args_converted'] = true;
         }
 
-        if (!empty($result['file']) && !isset($result['__awesomite_file_contents'])) {
+        if (!empty($result['file']) && is_file($result['file']) && !isset($result['__awesomite_file_contents'])) {
             $result['__awesomite_file_contents'] = file_get_contents($result['file']);
         }
 

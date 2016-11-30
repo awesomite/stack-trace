@@ -47,7 +47,8 @@ class Step implements StepInterface
 
     public function hasPlaceInCode()
     {
-        return isset($this->stepArray['file']) && !empty($this->stepArray['line']);
+        return isset($this->stepArray['__awesomite_file_contents']) ||
+            (isset($this->stepArray['file']) && is_file($this->stepArray['file']) && !empty($this->stepArray['line']));
     }
 
     public function hasCalledFunction()
