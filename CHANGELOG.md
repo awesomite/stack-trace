@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+* Added support for objects in `LightVarDumper`
+
 ## 0.1.1
 
 * Store in serialized variable also contents of files

@@ -23,7 +23,7 @@ class LightVarDumperTest extends \PHPUnit_Framework_TestCase
     {
         $array = range(1, 21);
         $array[0] = range(1, 5);
-        $arrayDump = <<<ARRAY
+        $arrayDump = <<<'ARRAY'
 array(21) {
   [0] => 
   array(5) {
@@ -81,12 +81,33 @@ array(21) {
 
 ARRAY;
 
+        $object = new TestObject();
+        $object->setPrivate('private variable');
+        $object->setProtected('protected variable');
+        $object->public = 'public variable';
+        $object->dynamicPublic = 'another public variable';
+
+        $objectDump = <<<'OBJECT'
+object(Awesomite\StackTrace\VarDumpers\TestObject) (4) {
+  public $public => 
+  string(15) "public variable"
+  protected $protected => 
+  string(18) "protected variable"
+  public $dynamicPublic => 
+  string(23) "another public variable"
+  private $private @Awesomite\StackTrace\VarDumpers\TestParent => 
+  string(16) "private variable"
+}
+
+OBJECT;
+
         return array(
             array(false, "bool(false)\n"),
             array(150, "int(150)\n"),
-            array(new \stdClass(), "object(stdClass) {}\n"),
+            array(new \stdClass(), "object(stdClass) (0) {\n}\n"),
             array($array, $arrayDump),
             array(null, "NULL\n"),
+            array($object, $objectDump),
         );
     }
 }
