@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+* `LightVarDumper` can handle all types of variables
+* `LightVarDumper` became default dumper
+
 ## 0.2.0
 
 * Added support for objects in `LightVarDumper`

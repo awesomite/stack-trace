@@ -6,7 +6,7 @@ use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
 use Awesomite\StackTrace\Steps\Step;
 use Awesomite\StackTrace\Steps\StepInterface;
-use Awesomite\StackTrace\VarDumpers\InternalVarDumper;
+use Awesomite\StackTrace\VarDumpers\LightVarDumper;
 use Awesomite\StackTrace\VarDumpers\VarDumperInterface;
 use Composer\Semver\Semver;
 
@@ -15,10 +15,12 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.2.0';
-    const CONSTRAINTS_VERSION = '^0.1.0|^0.2.0';
+    const VERSION = '0.3.0';
+    const CONSTRAINTS_VERSION = '^0.1.0|^0.2.0|^0.3.0';
 
     private $arrayStackTrace;
+
+    private $withoutArgs = false;
 
     /**
      * @var VarDumperInterface
@@ -74,6 +76,7 @@ class StackTrace implements StackTraceInterface
     {
         $result = array();
         $stepNumber = 0;
+        $this->withoutArgs = true;
         foreach ($this as $step) {
             /** @var StepInterface $step */
             $line = '#' . $stepNumber;
@@ -88,6 +91,7 @@ class StackTrace implements StackTraceInterface
             $result[] = $line;
             $stepNumber++;
         }
+        $this->withoutArgs = false;
 
         return implode("\n", $result);
     }
@@ -95,6 +99,7 @@ class StackTrace implements StackTraceInterface
     public function getId()
     {
         $lines = array();
+        $this->withoutArgs = true;
         foreach ($this as $key => $step) {
             /** @var StepInterface $step */
             $line = $key . '#';
@@ -110,6 +115,7 @@ class StackTrace implements StackTraceInterface
 
             $lines[] = $line;
         }
+        $this->withoutArgs = false;
 
         return md5(implode('__', $lines));
     }
@@ -121,7 +127,7 @@ class StackTrace implements StackTraceInterface
 
     private function getVarDumper()
     {
-        return $this->varDumper ?: new InternalVarDumper();
+        return $this->varDumper ?: new LightVarDumper();
     }
 
     private function convertStep(array $step)
@@ -131,7 +137,10 @@ class StackTrace implements StackTraceInterface
             $result[$key] = $value;
         }
 
-        if (empty($result['__awesomite_args_converted']) && isset($result['args'])) {
+        if ($this->withoutArgs) {
+            $result['args'] = array();
+        }
+        else if (empty($result['__awesomite_args_converted']) && isset($result['args'])) {
             $result['args'] = $this->convertArgs($result['args']);
             $result['__awesomite_args_converted'] = true;
         }
@@ -165,7 +174,7 @@ class StackTrace implements StackTraceInterface
     private function convertArg($value)
     {
         if (is_scalar($value)) {
-            return new Value($value);
+            return new Value($value, $this->getVarDumper());
         }
 
         return new DeserializedValue($this->getVarDumper()->getDump($value));

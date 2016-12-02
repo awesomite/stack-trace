@@ -9,15 +9,33 @@ class LightVarDumper extends InternalVarDumper
 {
     private $limit = 20;
 
+    private $maxStringLength = 200;
+
+    private $objects = array();
+
     public function dump($var)
     {
-        if (is_scalar($var) || is_resource($var)) {
-            parent::dump($var);
+        if (is_string($var)) {
+            $this->dumpString($var);
+            return;
+        }
+
+        if (is_null($var)) {
+            echo "NULL\n";
+            return;
+        }
+
+        if (is_scalar($var)) {
+            $this->dumpScalar($var);
             return;
         }
 
         if (is_object($var)) {
+            $isFirst = empty($this->objects);
             $this->dumpObj($var);
+            if ($isFirst) {
+                $this->objects = array();
+            }
             return;
         }
 
@@ -26,7 +44,48 @@ class LightVarDumper extends InternalVarDumper
             return;
         }
 
+        if (is_resource($var)) {
+            $this->dumpResource($var);
+            return;
+        }
+
+        // @codeCoverageIgnoreStart
+        // Theoretically the following line is unnecessary
         parent::dump($var);
+        // @codeCoverageIgnoreStop
+    }
+
+    private function dumpResource($resource)
+    {
+        echo 'resource of type ', get_resource_type($resource), "\n";
+    }
+
+    private function dumpScalar($scalar)
+    {
+        $mapping = array(
+            'boolean' => 'bool',
+            'integer' => 'int',
+        );
+        $type = gettype($scalar);
+        if (isset($mapping[$type])) {
+            $type = $mapping[$type];
+        }
+
+        echo $type . '(' . var_export($scalar, true) . ")\n";
+    }
+
+    private function dumpString($string)
+    {
+        $len = strlen($string);
+        $suffix = '';
+        if ($len > $this->maxStringLength) {
+            $string = substr($string, 0, $this->maxStringLength);
+            $suffix = '...';
+        }
+
+        echo "string({$len}) ";
+        var_export($string);
+        echo $suffix . "\n";
     }
 
     private function dumpArray($array)
@@ -49,6 +108,12 @@ class LightVarDumper extends InternalVarDumper
 
     private function dumpObj($object)
     {
+        if (in_array($object, $this->objects, true)) {
+            echo 'RECURSIVE object(' . get_class($object) . ")\n";
+            return;
+        }
+        $this->objects[] = $object;
+
         $limit = $this->limit;
         $propertiesIterator = new Properties($object);
         /** @var PropertyInterface[] $properties */

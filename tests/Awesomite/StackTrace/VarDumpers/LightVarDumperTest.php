@@ -90,13 +90,13 @@ ARRAY;
         $objectDump = <<<'OBJECT'
 object(Awesomite\StackTrace\VarDumpers\TestObject) (4) {
   public $public => 
-  string(15) "public variable"
+  string(15) 'public variable'
   protected $protected => 
-  string(18) "protected variable"
+  string(18) 'protected variable'
   public $dynamicPublic => 
-  string(23) "another public variable"
+  string(23) 'another public variable'
   private $private @Awesomite\StackTrace\VarDumpers\TestParent => 
-  string(16) "private variable"
+  string(16) 'private variable'
 }
 
 OBJECT;
@@ -108,6 +108,7 @@ OBJECT;
             array($array, $arrayDump),
             array(null, "NULL\n"),
             array($object, $objectDump),
+            array(tmpfile(), "resource of type stream\n"),
         );
     }
 }
