@@ -11,7 +11,7 @@ class LightVarDumper extends InternalVarDumper
 
     private $maxStringLength = 200;
 
-    private $objects = array();
+    private $references = array();
 
     public function dump($var)
     {
@@ -31,11 +31,7 @@ class LightVarDumper extends InternalVarDumper
         }
 
         if (is_object($var)) {
-            $isFirst = empty($this->objects);
             $this->dumpObj($var);
-            if ($isFirst) {
-                $this->objects = array();
-            }
             return;
         }
 
@@ -90,6 +86,12 @@ class LightVarDumper extends InternalVarDumper
 
     private function dumpArray($array)
     {
+        if (in_array($array, $this->references, true)) {
+            echo 'RECURSIVE array(' . count($array) . ")\n";
+            return;
+        }
+        $this->references[] = &$array;
+
         $limit = $this->limit;
         echo 'array(' . count($array) . ') {' . "\n";
         foreach ($array as $key => $value) {
@@ -104,15 +106,17 @@ class LightVarDumper extends InternalVarDumper
             }
         }
         echo '}' . "\n";
+
+        array_pop($this->references);
     }
 
     private function dumpObj($object)
     {
-        if (in_array($object, $this->objects, true)) {
+        if (in_array($object, $this->references, true)) {
             echo 'RECURSIVE object(' . get_class($object) . ")\n";
             return;
         }
-        $this->objects[] = $object;
+        $this->references[] = $object;
 
         $limit = $this->limit;
         $propertiesIterator = new Properties($object);
@@ -136,6 +140,8 @@ class LightVarDumper extends InternalVarDumper
             }
         }
         echo '}' . "\n";
+
+        array_pop($this->references);
     }
 
     private function getTextTypePrefix(PropertyInterface $property)
