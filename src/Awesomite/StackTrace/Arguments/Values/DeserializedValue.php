@@ -9,6 +9,10 @@ class DeserializedValue implements ValueInterface
 {
     private $dumpedVariable;
 
+    /**
+     * DeserializedValue constructor.
+     * @param string $dump
+     */
     public function __construct($dump)
     {
         $this->dumpedVariable = $dump;
