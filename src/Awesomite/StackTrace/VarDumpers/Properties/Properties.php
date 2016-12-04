@@ -27,7 +27,7 @@ class Properties implements PropertiesInterface
     {
         $object = $this->object;
         $result = array_map(function ($property) use ($object) {
-            return new ReflectionProperty($property, $object);
+            return new Property($property, $object);
         }, $this->getDeclaredProperties());
 
         return array_values($result);

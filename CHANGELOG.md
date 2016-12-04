@@ -8,6 +8,7 @@
   * `LightVarDumper::setMaxDepth()`
   * `LightVarDumper::setMaxStringLength()`
   * `LightVarDumper::setMaxChildren()`
+* Refactored namespace `Awesomite\StackTrace\VarDumpers\Properties`
 
 ## 0.2.0
 

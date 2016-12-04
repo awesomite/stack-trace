@@ -172,13 +172,15 @@ class LightVarDumper extends InternalVarDumper
         $class = get_class($object);
         echo 'object(' . $class . ') (' . count($properties) . ') {' . "\n";
         foreach ($properties as $property) {
+            $reflection = $property->getReflection();
             $valDump = str_replace("\n", "\n  ", $this->getDump($property->getValue()));
             $valDump = substr($valDump, 0, -2);
             $declaringClass = '';
-            if ($property->getDeclaringClass() !== $class) {
-                $declaringClass = " @{$property->getDeclaringClass()}";
+            if ($reflection->getDeclaringClass()->getName() !== $class) {
+                $declaringClass = " @{$reflection->getDeclaringClass()->getName()}";
             }
-            echo "  {$this->getTextTypePrefix($property)}\${$property->getName()}{$declaringClass} => \n  {$valDump}";
+            $name = $reflection->getName();
+            echo "  {$this->getTextTypePrefix($reflection)}\${$name}{$declaringClass} => \n  {$valDump}";
             if (!--$limit) {
                 if (count($properties) > $this->maxChildren) {
                     echo "  (...)\n";
@@ -192,7 +194,7 @@ class LightVarDumper extends InternalVarDumper
         $this->depth--;
     }
 
-    private function getTextTypePrefix(PropertyInterface $property)
+    private function getTextTypePrefix(\ReflectionProperty $property)
     {
         $prefix = $property->isStatic() ? 'static ' : '';
 
