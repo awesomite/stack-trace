@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+* Corrected value of `StackTrace::VERSION`
+
 ## 0.3.1
 
 * Fixed "Nesting level too deep - recursive dependency?" in old versions of PHP
