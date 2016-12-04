@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+* Fixed "Nesting level too deep - recursive dependency?" in old versions of PHP
+
 ## 0.3.0
 
 * `LightVarDumper` can handle all types of variables
