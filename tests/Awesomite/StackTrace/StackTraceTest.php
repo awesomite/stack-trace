@@ -8,7 +8,7 @@ use Awesomite\StackTrace\VarDumpers\LightVarDumper;
 /**
  * @internal
  */
-class StackTraceTest extends \PHPUnit_Framework_TestCase
+class StackTraceTest extends BaseTestCase
 {
     public function testAll()
     {

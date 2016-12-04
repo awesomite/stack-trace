@@ -3,6 +3,7 @@
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Values\Value;
+use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Functions\AFunction;
 use Awesomite\StackTrace\Functions\FunctionInterface;
 use Awesomite\StackTrace\Tmp\TestPhp53;
@@ -11,7 +12,7 @@ use Awesomite\StackTrace\Tmp\TestPhp56;
 /**
  * @internal
  */
-class ArgumentsTest extends \PHPUnit_Framework_TestCase
+class ArgumentsTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

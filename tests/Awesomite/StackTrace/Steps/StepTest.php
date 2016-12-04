@@ -3,13 +3,14 @@
 namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\ArgumentsInterface;
+use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Exceptions\LogicException;
 use Awesomite\StackTrace\SourceCode\PlaceInCodeInterface;
 
 /**
  * @internal
  */
-class StepTest extends \PHPUnit_Framework_TestCase
+class StepTest extends BaseTestCase
 {
     /**
      * @dataProvider providerGetArguments

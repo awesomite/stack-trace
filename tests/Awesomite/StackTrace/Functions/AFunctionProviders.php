@@ -2,7 +2,9 @@
 
 namespace Awesomite\StackTrace\Functions;
 
-class AFunctionProviders extends \PHPUnit_Framework_TestCase
+use Awesomite\StackTrace\BaseTestCase;
+
+class AFunctionProviders extends BaseTestCase
 {
     public function providerGetName()
     {

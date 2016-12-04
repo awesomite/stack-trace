@@ -2,10 +2,12 @@
 
 namespace Awesomite\StackTrace\Arguments\Values;
 
+use Awesomite\StackTrace\BaseTestCase;
+
 /**
  * @internal
  */
-class ValueTest extends \PHPUnit_Framework_TestCase
+class ValueTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

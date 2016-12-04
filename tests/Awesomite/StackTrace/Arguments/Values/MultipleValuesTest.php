@@ -2,7 +2,9 @@
 
 namespace Awesomite\StackTrace\Arguments\Values;
 
-class MultipleValuesTest extends \PHPUnit_Framework_TestCase
+use Awesomite\StackTrace\BaseTestCase;
+
+class MultipleValuesTest extends BaseTestCase
 {
     /**
      * @dataProvider providerObject

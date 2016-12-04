@@ -2,7 +2,9 @@
 
 namespace Awesomite\StackTrace\VarDumpers\Properties;
 
-class ReflectionPropertyTest extends \PHPUnit_Framework_TestCase
+use Awesomite\StackTrace\BaseTestCase;
+
+class ReflectionPropertyTest extends BaseTestCase
 {
     public static $static;
 

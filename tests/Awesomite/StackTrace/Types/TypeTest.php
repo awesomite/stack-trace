@@ -1,13 +1,13 @@
 <?php
 
-namespace Awesomite\Types;
+namespace Awesomite\StackTrace\Types;
 
-use Awesomite\StackTrace\Types\Type;
+use Awesomite\StackTrace\BaseTestCase;
 
 /**
  * @internal
  */
-class TypeTest extends \PHPUnit_Framework_TestCase
+class TypeTest extends BaseTestCase
 {
     /**
      * @dataProvider providerToString

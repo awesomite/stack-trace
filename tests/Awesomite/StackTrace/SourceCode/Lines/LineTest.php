@@ -2,10 +2,12 @@
 
 namespace Awesomite\StackTrace\SourceCode\Lines;
 
+use Awesomite\StackTrace\BaseTestCase;
+
 /**
  * @internal
  */
-class LineTest extends \PHPUnit_Framework_TestCase
+class LineTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

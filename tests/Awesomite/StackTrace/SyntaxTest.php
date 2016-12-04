@@ -5,7 +5,7 @@ namespace Awesomite\StackTrace;
 /**
  * @internal
  */
-class SyntaxTest extends \PHPUnit_Framework_TestCase
+class SyntaxTest extends BaseTestCase
 {
     public function testSyntax()
     {

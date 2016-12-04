@@ -2,7 +2,9 @@
 
 namespace Awesomite\StackTrace\Arguments\Values;
 
-class DeserializedValueTest extends \PHPUnit_Framework_TestCase
+use Awesomite\StackTrace\BaseTestCase;
+
+class DeserializedValueTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

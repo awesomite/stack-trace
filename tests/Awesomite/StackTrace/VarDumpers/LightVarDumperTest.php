@@ -2,10 +2,12 @@
 
 namespace Awesomite\StackTrace\VarDumpers;
 
+use Awesomite\StackTrace\BaseTestCase;
+
 /**
  * @internal
  */
-class LightVarDumperTest extends \PHPUnit_Framework_TestCase
+class LightVarDumperTest extends BaseTestCase
 {
     /**
      * @dataProvider providerDump

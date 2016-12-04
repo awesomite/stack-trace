@@ -9,7 +9,7 @@ use Awesomite\StackTrace\Steps\StepInterface;
 /**
  * @internal
  */
-class StackTraceFactoryTest extends \PHPUnit_Framework_TestCase
+class StackTraceFactoryTest extends BaseTestCase
 {
     /**
      * @dataProvider providerCreate

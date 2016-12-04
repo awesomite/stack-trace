@@ -2,12 +2,13 @@
 
 namespace Awesomite\StackTrace\Arguments\Declarations;
 
+use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Tmp\TestPhp53;
 use Awesomite\StackTrace\Tmp\TestPhp54;
 use Awesomite\StackTrace\Tmp\TestPhp56;
 use Awesomite\StackTrace\Tmp\TestPhp71;
 
-class DeclarationProviders extends \PHPUnit_Framework_TestCase
+class DeclarationProviders extends BaseTestCase
 {
     public function providerGetName()
     {

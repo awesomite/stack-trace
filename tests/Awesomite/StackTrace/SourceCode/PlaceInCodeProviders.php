@@ -2,9 +2,10 @@
 
 namespace Awesomite\StackTrace\SourceCode;
 
+use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\StackTraceFactory;
 
-class PlaceInCodeProviders extends \PHPUnit_Framework_TestCase
+class PlaceInCodeProviders extends BaseTestCase
 {
     public function providerGetFile()
     {

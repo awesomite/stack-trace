@@ -6,12 +6,13 @@ use Awesomite\StackTrace\Arguments\Declarations\Declaration;
 use Awesomite\StackTrace\Arguments\Declarations\DeclarationInterface;
 use Awesomite\StackTrace\Arguments\Values\Value;
 use Awesomite\StackTrace\Arguments\Values\ValueInterface;
+use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Exceptions\LogicException;
 
 /**
  * @internal
  */
-class ArgumentTest extends \PHPUnit_Framework_TestCase
+class ArgumentTest extends BaseTestCase
 {
     /**
      * @dataProvider providerDeclaration

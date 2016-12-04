@@ -2,7 +2,9 @@
 
 namespace Awesomite\StackTrace\VarDumpers\Properties;
 
-class PropertiesTest extends \PHPUnit_Framework_TestCase
+use Awesomite\StackTrace\BaseTestCase;
+
+class PropertiesTest extends BaseTestCase
 {
     /**
      * @dataProvider providerGetProperties
