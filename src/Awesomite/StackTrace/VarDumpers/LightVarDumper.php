@@ -222,7 +222,7 @@ class LightVarDumper extends InternalVarDumper
      * $a = array();
      * $b = &$a;
      * $a[] = $b;
-     * var_dump(in_array($a, array($a), true));
+     * var_dump(in_array($b, array($a), true));
      *
      * throws fatal error "Nesting level too deep - recursive dependency?"
      * in PHP <= 5.3.14 || (PHP >= 5.4 && PHP <= 5.4.4)
