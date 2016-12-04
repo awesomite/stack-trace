@@ -259,9 +259,13 @@ array(1) {
 
 DUMP;
 
-        return array(
+        $result = array(
             array($recursiveObj, $objectDump),
-            array($recursiveArr, $arrayDump),
         );
+        if (version_compare(PHP_VERSION, '5.4.5' >= 0)) {
+            $result[] = array($recursiveArr, $arrayDump);
+        }
+
+        return $result;
     }
 }
