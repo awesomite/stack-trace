@@ -7,14 +7,23 @@ use Awesomite\StackTrace\VarDumpers\Properties\PropertyInterface;
 
 class LightVarDumper extends InternalVarDumper
 {
-    private $limit = 20;
+    private $maxChildren = 20;
 
     private $maxStringLength = 200;
+
+    private $depth = 0;
+
+    private $maxDepth = 5;
 
     private $references = array();
 
     public function dump($var)
     {
+        if ($this->depth > $this->maxDepth) {
+            echo "Too deep location\n";
+            return;
+        }
+
         if (is_string($var)) {
             $this->dumpString($var);
             return;
@@ -48,7 +57,40 @@ class LightVarDumper extends InternalVarDumper
         // @codeCoverageIgnoreStart
         // Theoretically the following line is unnecessary
         parent::dump($var);
-        // @codeCoverageIgnoreStop
+    }
+        // @codeCoverageIgnoreEnd
+
+    /**
+     * @param int $limit
+     * @return $this
+     */
+    public function setMaxDepth($limit)
+    {
+        $this->maxDepth = $limit;
+
+        return $this;
+    }
+
+    /**
+     * @param int $limit
+     * @return $this
+     */
+    public function setMaxStringLength($limit)
+    {
+        $this->maxStringLength = $limit;
+
+        return $this;
+    }
+
+    /**
+     * @param int $limit
+     * @return $this
+     */
+    public function setMaxChildren($limit)
+    {
+        $this->maxChildren = $limit;
+
+        return $this;
     }
 
     private function dumpResource($resource)
@@ -84,22 +126,24 @@ class LightVarDumper extends InternalVarDumper
         echo $suffix . "\n";
     }
 
-    private function dumpArray($array)
+    private function dumpArray(&$array)
     {
         if (in_array($array, $this->references, true)) {
             echo 'RECURSIVE array(' . count($array) . ")\n";
             return;
         }
+
+        $this->depth++;
         $this->references[] = &$array;
 
-        $limit = $this->limit;
+        $limit = $this->maxChildren;
         echo 'array(' . count($array) . ') {' . "\n";
         foreach ($array as $key => $value) {
             $valDump = str_replace("\n", "\n  ", $this->getDump($value));
             $valDump = substr($valDump, 0, -2);
             echo "  [{$key}] => \n  {$valDump}";
             if (!--$limit) {
-                if (count($array) > $this->limit) {
+                if (count($array) > $this->maxChildren) {
                     echo "  (...)\n";
                 }
                 break;
@@ -108,6 +152,7 @@ class LightVarDumper extends InternalVarDumper
         echo '}' . "\n";
 
         array_pop($this->references);
+        $this->depth--;
     }
 
     private function dumpObj($object)
@@ -116,9 +161,11 @@ class LightVarDumper extends InternalVarDumper
             echo 'RECURSIVE object(' . get_class($object) . ")\n";
             return;
         }
+
+        $this->depth++;
         $this->references[] = $object;
 
-        $limit = $this->limit;
+        $limit = $this->maxChildren;
         $propertiesIterator = new Properties($object);
         /** @var PropertyInterface[] $properties */
         $properties = $propertiesIterator->getProperties();
@@ -133,7 +180,7 @@ class LightVarDumper extends InternalVarDumper
             }
             echo "  {$this->getTextTypePrefix($property)}\${$property->getName()}{$declaringClass} => \n  {$valDump}";
             if (!--$limit) {
-                if (count($properties) > $this->limit) {
+                if (count($properties) > $this->maxChildren) {
                     echo "  (...)\n";
                 }
                 break;
@@ -142,6 +189,7 @@ class LightVarDumper extends InternalVarDumper
         echo '}' . "\n";
 
         array_pop($this->references);
+        $this->depth--;
     }
 
     private function getTextTypePrefix(PropertyInterface $property)

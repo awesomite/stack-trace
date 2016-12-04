@@ -4,6 +4,10 @@
 
 * `LightVarDumper` can handle all types of variables
 * `LightVarDumper` became default dumper
+* Added methods:
+  * `LightVarDumper::setMaxDepth()`
+  * `LightVarDumper::setMaxStringLength()`
+  * `LightVarDumper::setMaxChildren()`
 
 ## 0.2.0
 
