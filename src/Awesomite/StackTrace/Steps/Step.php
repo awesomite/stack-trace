@@ -3,6 +3,7 @@
 namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\Arguments;
+use Awesomite\StackTrace\Constants;
 use Awesomite\StackTrace\Functions\AFunction;
 use Awesomite\StackTrace\SourceCode\PlaceInCode;
 use Awesomite\StackTrace\Exceptions\LogicException;
@@ -41,13 +42,15 @@ class Step implements StepInterface
         return new PlaceInCode(
             $this->stepArray['file'],
             $this->stepArray['line'],
-            isset($this->stepArray['__awesomite_file_contents']) ? $this->stepArray['__awesomite_file_contents'] : null
+            isset($this->stepArray[Constants::KEY_FILE_CONTENTS])
+                ? $this->stepArray[Constants::KEY_FILE_CONTENTS]
+                : null
         );
     }
 
     public function hasPlaceInCode()
     {
-        return isset($this->stepArray['__awesomite_file_contents']) ||
+        return isset($this->stepArray[Constants::KEY_FILE_CONTENTS]) ||
             (isset($this->stepArray['file']) && is_file($this->stepArray['file']) && !empty($this->stepArray['line']));
     }
 

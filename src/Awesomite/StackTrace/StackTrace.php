@@ -140,13 +140,13 @@ class StackTrace implements StackTraceInterface
         if ($this->withoutArgs) {
             $result['args'] = array();
         }
-        else if (empty($result['__awesomite_args_converted']) && isset($result['args'])) {
+        else if (empty($result[Constants::KEY_ARGS_CONVERTED]) && isset($result['args'])) {
             $result['args'] = $this->convertArgs($result['args']);
-            $result['__awesomite_args_converted'] = true;
+            $result[Constants::KEY_ARGS_CONVERTED] = true;
         }
 
-        if (!empty($result['file']) && is_file($result['file']) && !isset($result['__awesomite_file_contents'])) {
-            $result['__awesomite_file_contents'] = file_get_contents($result['file']);
+        if (!empty($result['file']) && is_file($result['file']) && !isset($result[Constants::KEY_FILE_CONTENTS])) {
+            $result[Constants::KEY_FILE_CONTENTS] = file_get_contents($result['file']);
         }
 
         if (isset($result['object'])) {
