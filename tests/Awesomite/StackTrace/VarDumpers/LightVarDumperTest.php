@@ -43,6 +43,41 @@ object(Awesomite\StackTrace\VarDumpers\TestObject) (4) {
 
 OBJECT;
 
+        $arrayObject = new \ArrayObject();
+        $arrayObject['awesomite.stackTrace'] = true;
+        $arrayObjectDump = <<<'DUMP'
+object(ArrayObject) (1) {
+  $awesomite.stackTrace => 
+  bool(true)
+}
+
+DUMP;
+
+        $testArrayObject = new TestArrayObject();
+        $testArrayObject['awesomite.stackTrace'] = true;
+        $testArrayObjectDump = <<<'DUMP'
+object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (2) {
+  private $privateProperty => 
+  string(13) 'private value'
+  $awesomite.stackTrace => 
+  bool(true)
+}
+
+DUMP;
+
+        $testArrayObject2 = new TestArrayObject();
+        $testArrayObject2['privateProperty'] = 'public value';
+        $testArrayObject2['secondProperty'] = 'second value';
+        $testArrayObjectDump2 = <<<'DUMP'
+object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (2) {
+  private $privateProperty => 
+  string(13) 'private value'
+  $secondProperty => 
+  string(12) 'second value'
+}
+
+DUMP;
+
         return array(
             array(false, "bool(false)\n"),
             array(150, "int(150)\n"),
@@ -50,6 +85,9 @@ OBJECT;
             array(null, "NULL\n"),
             array($object, $objectDump),
             array(tmpfile(), "resource of type stream\n"),
+            array($arrayObject, $arrayObjectDump),
+            array($testArrayObject, $testArrayObjectDump),
+            array($testArrayObject2, $testArrayObjectDump2),
         );
     }
 

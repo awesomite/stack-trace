@@ -7,7 +7,7 @@ use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 /**
  * @internal
  */
-class Property implements PropertyInterface
+class ReflectionProperty implements PropertyInterface
 {
     private $reflection;
 
@@ -33,5 +33,15 @@ class Property implements PropertyInterface
     public function getReflection()
     {
         return $this->reflection;
+    }
+
+    public function hasReflection()
+    {
+        return true;
+    }
+
+    public function getName()
+    {
+        return $this->getReflection()->getName();
     }
 }

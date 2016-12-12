@@ -3,6 +3,7 @@
 namespace Awesomite\StackTrace\VarDumpers\Properties;
 
 use Awesomite\StackTrace\BaseTestCase;
+use Awesomite\StackTrace\Exceptions\LogicException;
 
 class PropertyTest extends BaseTestCase
 {
@@ -15,12 +16,22 @@ class PropertyTest extends BaseTestCase
     /**
      * @dataProvider providerGetValue
      *
-     * @param Property $property
-     * @param $expectedValue
+     * @param PropertyInterface $property
+     * @param string $name
+     * @param $value
+     * @param bool $hasReflection
      */
-    public function testGetValue(Property $property, $expectedValue)
+    public function testGetValue(PropertyInterface $property, $name, $value, $hasReflection = true)
     {
-        $this->assertSame($expectedValue, $property->getValue());
+        $this->assertSame($name, $property->getName());
+        $this->assertSame($value, $property->getValue());
+        $this->assertSame($hasReflection, $property->hasReflection());
+
+        if (!$hasReflection) {
+            $exception = new LogicException();
+            $this->setExpectedException(get_class($exception));
+        }
+        $this->assertInstanceOf('ReflectionProperty', $property->getReflection());
     }
 
     public function providerGetValue()
@@ -29,12 +40,18 @@ class PropertyTest extends BaseTestCase
         $this->testVariable = 'test value';
         $this->private = mt_rand(1, 1000);
         $this->protected = mt_rand(1, 1000);
+        $randValue = mt_rand(1, 1000);
 
         return array(
-            array(new Property($object->getProperty('public'), $this), null),
-            array(new Property($object->getProperty('testVariable'), $this), $this->testVariable),
-            array(new Property($object->getProperty('private'), $this), $this->private),
-            array(new Property($object->getProperty('protected'), $this), $this->protected),
+            array(new ReflectionProperty($object->getProperty('public'), $this), 'public', null),
+            array(
+                new ReflectionProperty($object->getProperty('testVariable'), $this),
+                'testVariable',
+                $this->testVariable,
+            ),
+            array(new ReflectionProperty($object->getProperty('private'), $this), 'private', $this->private),
+            array(new ReflectionProperty($object->getProperty('protected'), $this), 'protected', $this->protected),
+            array(new VarProperty('varProperty', $randValue), 'varProperty', $randValue, false),
         );
     }
 
@@ -45,7 +62,7 @@ class PropertyTest extends BaseTestCase
     {
         $object = new \ReflectionObject($this);
 
-        new Property(
+        new ReflectionProperty(
             $object->getProperty('public'),
             false
         );

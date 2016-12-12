@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+* Fixed bug: `Undefined property: ArrayObject::$propertyName`
+
 ## 0.3.2
 
 * Corrected value of `StackTrace::VERSION`

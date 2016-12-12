@@ -13,4 +13,14 @@ interface PropertyInterface
      * @return \ReflectionProperty
      */
     public function getReflection();
+
+    /**
+     * @return bool
+     */
+    public function hasReflection();
+
+    /**
+     * @return string
+     */
+    public function getName();
 }

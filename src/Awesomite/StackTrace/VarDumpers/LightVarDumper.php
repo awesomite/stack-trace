@@ -179,15 +179,15 @@ class LightVarDumper extends InternalVarDumper
         $class = get_class($object);
         echo 'object(' . $class . ') (' . count($properties) . ') {' . "\n";
         foreach ($properties as $property) {
-            $reflection = $property->getReflection();
             $valDump = str_replace("\n", "\n  ", $this->getDump($property->getValue()));
             $valDump = substr($valDump, 0, -2);
             $declaringClass = '';
-            if ($reflection->getDeclaringClass()->getName() !== $class) {
+            if ($property->hasReflection() && $property->getReflection()->getDeclaringClass()->getName() !== $class) {
+                $reflection = $property->getReflection();
                 $declaringClass = " @{$reflection->getDeclaringClass()->getName()}";
             }
-            $name = $reflection->getName();
-            echo "  {$this->getTextTypePrefix($reflection)}\${$name}{$declaringClass} => \n  {$valDump}";
+            $name = $property->getName();
+            echo "  {$this->getTextTypePrefix($property)}\${$name}{$declaringClass} => \n  {$valDump}";
             if (!--$limit) {
                 if (count($properties) > $this->maxChildren) {
                     echo "  (...)\n";
@@ -201,15 +201,20 @@ class LightVarDumper extends InternalVarDumper
         $this->depth--;
     }
 
-    private function getTextTypePrefix(\ReflectionProperty $property)
+    private function getTextTypePrefix(PropertyInterface $property)
     {
-        $prefix = $property->isStatic() ? 'static ' : '';
+        if (!$property->hasReflection()) {
+            return '';
+        }
 
-        if ($property->isPublic()) {
+        $reflection = $property->getReflection();
+        $prefix = $reflection->isStatic() ? 'static ' : '';
+
+        if ($reflection->isPublic()) {
             return $prefix . 'public ';
         }
 
-        if ($property->isProtected()) {
+        if ($reflection->isProtected()) {
             return $prefix . 'protected ';
         }
 

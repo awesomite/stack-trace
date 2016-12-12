@@ -27,8 +27,26 @@ class Properties implements PropertiesInterface
     {
         $object = $this->object;
         $result = array_map(function ($property) use ($object) {
-            return new Property($property, $object);
+            return new ReflectionProperty($property, $object);
         }, $this->getDeclaredProperties());
+
+        $object = $this->object;
+        if ($object instanceof \ArrayObject) {
+            $result = array_filter($result, function (PropertyInterface $property) use ($object) {
+                return property_exists($object, $property->getName());
+            });
+            $names = array_map(function (PropertyInterface $property) {
+                return $property->getName();
+            }, $result);
+            foreach (get_object_vars($object) as $key => $value) {
+                if (in_array($key, $names)) {
+                    // @codeCoverageIgnoreStart
+                    continue;
+                    // @codeCoverageIgnoreEnd
+                }
+                $result[] = new VarProperty($key, $value);
+            }
+        }
 
         return array_values($result);
     }
