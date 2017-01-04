@@ -15,12 +15,16 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.4.1';
-    const CONSTRAINTS_VERSION = '^0.1.0|^0.2.0|^0.3.0|^0.4.0';
+    const VERSION = '0.5.0';
+    const CONSTRAINTS_VERSION = '>=0.1.0 <0.5.0 || ^0.5.0';
 
     private $arrayStackTrace;
 
     private $withoutArgs = false;
+
+    private $filesContents = array();
+
+    private $unserialized = false;
 
     /**
      * @var VarDumperInterface
@@ -49,13 +53,22 @@ class StackTrace implements StackTraceInterface
 
     public function serialize()
     {
-        $steps = array();
-        foreach ($this->arrayStackTrace as $step) {
-            $steps[] = $this->convertStep($step);
+        if ($this->unserialized) {
+            $steps = $this->arrayStackTrace;
+        } else {
+            $steps = array();
+            foreach ($this->arrayStackTrace as $step) {
+                $steps[] = $this->convertStep($step, true);
+                $fileName = isset($step['file']) ? $step['file'] : false;
+                if ($fileName && !isset($this->filesContents[$fileName]) && is_file($fileName)) {
+                    $this->filesContents[$fileName] = file_get_contents($fileName);
+                }
+            }
         }
 
         return serialize(array(
             'steps' => $steps,
+            'filesContents' => $this->filesContents,
             '__version' => static::VERSION,
         ));
     }
@@ -70,6 +83,8 @@ class StackTrace implements StackTraceInterface
             // @codeCoverageIgnoreEnd
         }
         $this->arrayStackTrace = $data['steps'];
+        $this->unserialized = true;
+        $this->filesContents = isset($data['filesContents']) ? $data['filesContents'] : array();
     }
 
     public function __toString()
@@ -130,7 +145,7 @@ class StackTrace implements StackTraceInterface
         return $this->varDumper ?: new LightVarDumper();
     }
 
-    private function convertStep(array $step)
+    private function convertStep(array $step, $toSerialize = false)
     {
         $result = array();
         foreach ($step as $key => $value) {
@@ -145,8 +160,13 @@ class StackTrace implements StackTraceInterface
             $result[Constants::KEY_ARGS_CONVERTED] = true;
         }
 
-        if (!empty($result['file']) && is_file($result['file']) && !isset($result[Constants::KEY_FILE_CONTENTS])) {
-            $result[Constants::KEY_FILE_CONTENTS] = file_get_contents($result['file']);
+        if (
+            !$toSerialize
+            && !isset($result[Constants::KEY_FILE_CONTENTS])
+            && isset($result['file'])
+            && isset($this->filesContents[$result['file']])
+        ) {
+            $result[Constants::KEY_FILE_CONTENTS] = $this->filesContents[$result['file']];
         }
 
         if (isset($result['object'])) {

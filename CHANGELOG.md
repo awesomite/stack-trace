@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+* Decreased size of serialized stack trace - contents of file should be shared between steps of stack trace
+
 ## 0.4.1
 
 * Fixed bug: `Call to a member function getDump() on null`
