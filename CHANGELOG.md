@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+* Fixed bug: `Call to a member function getDump() on null`
+
 ## 0.4.0
 
 * Fixed bug: `Undefined property: ArrayObject::$propertyName`

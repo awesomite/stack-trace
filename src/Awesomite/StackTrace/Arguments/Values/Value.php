@@ -70,7 +70,7 @@ class Value implements ValueInterface, \Serializable
     {
         return serialize(array(
             'value' => $this->value,
-            'dumpedVar' => $this->varDumper->getDump($this->value)
+            'dumpedVar' => !is_null($this->dumpedVar) ? $this->dumpedVar : $this->varDumper->getDump($this->value),
         ));
     }
 

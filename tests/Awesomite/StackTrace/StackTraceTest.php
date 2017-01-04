@@ -68,7 +68,8 @@ class StackTraceTest extends BaseTestCase
 
         return array(
             array(new StackTrace($backTrace)),
-            array($factory->create())
+            array($factory->create()),
+            array(unserialize(serialize($factory->create()))),
         );
     }
 
