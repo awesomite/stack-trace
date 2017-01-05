@@ -3,6 +3,7 @@
 ## 0.5.0
 
 * Decreased size of serialized stack trace - contents of file should be shared between steps of stack trace
+* Improved handling of `\ArrayObject` in `\Awesomite\StackTrace\VarDumpers\LightVarDumper`
 
 ## 0.4.1
 

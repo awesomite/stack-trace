@@ -50,4 +50,32 @@ class PropertiesTest extends BaseTestCase
             array(null),
         );
     }
+
+    /**
+     * @dataProvider providerArrayObject
+     *
+     * @param \ArrayObject $array
+     * @param array $expectedNames
+     */
+    public function testArrayObject(\ArrayObject $array, array $expectedNames)
+    {
+        $properties = new Properties($array);
+        $names = array();
+        foreach ($properties->getProperties() as $property) {
+            /** @var PropertyInterface $property */
+            $names[] = $property->getName();
+        }
+        $diff = array_diff($names, $expectedNames);
+        $this->assertSame(0, count($diff), 'Diff: "' . implode('", "', $diff) . '".');
+    }
+
+    public function providerArrayObject()
+    {
+        $object = new ArrayObject();
+        $object['test'] = 'hello';
+        $object->property = 'value';
+        return array(
+            array($object, array('privateProperty', 'property', 'storage', 'flags', 'iteratorClass')),
+        );
+    }
 }

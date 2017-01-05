@@ -7,20 +7,40 @@ namespace Awesomite\StackTrace\VarDumpers\Properties;
  */
 interface PropertyInterface
 {
-    public function getValue();
-
     /**
-     * @return \ReflectionProperty
+     * @return bool
      */
-    public function getReflection();
+    public function isStatic();
 
     /**
      * @return bool
      */
-    public function hasReflection();
+    public function isDynamic();
+
+    /**
+     * @return bool
+     */
+    public function isPublic();
+
+    /**
+     * @return bool
+     */
+    public function isProtected();
+
+    /**
+     * @return bool
+     */
+    public function isPrivate();
+
+    public function getValue();
 
     /**
      * @return string
      */
     public function getName();
+
+    /**
+     * @return string
+     */
+    public function getDeclaringClass();
 }

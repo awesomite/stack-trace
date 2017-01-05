@@ -30,18 +30,46 @@ class ReflectionProperty implements PropertyInterface
         return $result;
     }
 
-    public function getReflection()
+    public function getName()
     {
-        return $this->reflection;
+        return $this->reflection->getName();
     }
 
-    public function hasReflection()
+    public function isStatic()
     {
+        return $this->reflection->isStatic();
+    }
+
+    public function isDynamic()
+    {
+        $class = new \ReflectionClass($this->object);
+
+        do {
+            if ($class->hasProperty($this->getName())) {
+                return false;
+            }
+        } while ($class = $class->getParentClass());
+
         return true;
     }
 
-    public function getName()
+    public function isPublic()
     {
-        return $this->getReflection()->getName();
+        return $this->reflection->isPublic();
+    }
+
+    public function isProtected()
+    {
+        return $this->reflection->isProtected();
+    }
+
+    public function isPrivate()
+    {
+        return $this->reflection->isPrivate();
+    }
+
+    public function getDeclaringClass()
+    {
+        return $this->reflection->getDeclaringClass()->getName();
     }
 }

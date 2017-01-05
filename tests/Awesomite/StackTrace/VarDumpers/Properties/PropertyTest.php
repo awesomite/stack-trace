@@ -19,19 +19,11 @@ class PropertyTest extends BaseTestCase
      * @param PropertyInterface $property
      * @param string $name
      * @param $value
-     * @param bool $hasReflection
      */
-    public function testGetValue(PropertyInterface $property, $name, $value, $hasReflection = true)
+    public function testGetValue(PropertyInterface $property, $name, $value)
     {
         $this->assertSame($name, $property->getName());
         $this->assertSame($value, $property->getValue());
-        $this->assertSame($hasReflection, $property->hasReflection());
-
-        if (!$hasReflection) {
-            $exception = new LogicException();
-            $this->setExpectedException(get_class($exception));
-        }
-        $this->assertInstanceOf('ReflectionProperty', $property->getReflection());
     }
 
     public function providerGetValue()
@@ -51,7 +43,12 @@ class PropertyTest extends BaseTestCase
             ),
             array(new ReflectionProperty($object->getProperty('private'), $this), 'private', $this->private),
             array(new ReflectionProperty($object->getProperty('protected'), $this), 'protected', $this->protected),
-            array(new VarProperty('varProperty', $randValue), 'varProperty', $randValue, false),
+            array(
+                new VarProperty('varProperty', $randValue, VarProperty::VISIBILITY_PRIVATE, __CLASS__),
+                'varProperty',
+                $randValue,
+                false
+            ),
         );
     }
 

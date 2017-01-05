@@ -182,9 +182,8 @@ class LightVarDumper extends InternalVarDumper
             $valDump = str_replace("\n", "\n  ", $this->getDump($property->getValue()));
             $valDump = substr($valDump, 0, -2);
             $declaringClass = '';
-            if ($property->hasReflection() && $property->getReflection()->getDeclaringClass()->getName() !== $class) {
-                $reflection = $property->getReflection();
-                $declaringClass = " @{$reflection->getDeclaringClass()->getName()}";
+            if ($property->getDeclaringClass() !== $class) {
+                $declaringClass = " @{$property->getDeclaringClass()}";
             }
             $name = $property->getName();
             echo "  {$this->getTextTypePrefix($property)}\${$name}{$declaringClass} => \n  {$valDump}";
@@ -203,18 +202,17 @@ class LightVarDumper extends InternalVarDumper
 
     private function getTextTypePrefix(PropertyInterface $property)
     {
-        if (!$property->hasReflection()) {
+        if ($property->isDynamic()) {
             return '';
         }
 
-        $reflection = $property->getReflection();
-        $prefix = $reflection->isStatic() ? 'static ' : '';
+        $prefix = $property->isStatic() ? 'static ' : '';
 
-        if ($reflection->isPublic()) {
+        if ($property->isPublic()) {
             return $prefix . 'public ';
         }
 
-        if ($reflection->isProtected()) {
+        if ($property->isProtected()) {
             return $prefix . 'protected ';
         }
 

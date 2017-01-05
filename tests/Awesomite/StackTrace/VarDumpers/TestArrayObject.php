@@ -8,4 +8,9 @@ namespace Awesomite\StackTrace\VarDumpers;
 class TestArrayObject extends \ArrayObject
 {
     private $privateProperty = 'private value';
+
+    public function getArrayCopy()
+    {
+        throw new \Exception();
+    }
 }

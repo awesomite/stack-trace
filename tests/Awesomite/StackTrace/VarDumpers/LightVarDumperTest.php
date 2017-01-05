@@ -35,7 +35,7 @@ object(Awesomite\StackTrace\VarDumpers\TestObject) (4) {
   string(15) 'public variable'
   protected $protected => 
   string(18) 'protected variable'
-  public $dynamicPublic => 
+  $dynamicPublic => 
   string(23) 'another public variable'
   private $private @Awesomite\StackTrace\VarDumpers\TestParent => 
   string(16) 'private variable'
@@ -46,9 +46,16 @@ OBJECT;
         $arrayObject = new \ArrayObject();
         $arrayObject['awesomite.stackTrace'] = true;
         $arrayObjectDump = <<<'DUMP'
-object(ArrayObject) (1) {
-  $awesomite.stackTrace => 
-  bool(true)
+object(ArrayObject) (3) {
+  private $storage => 
+  array(1) {
+    [awesomite.stackTrace] => 
+    bool(true)
+  }
+  private $flags => 
+  int(0)
+  private $iteratorClass => 
+  string(13) 'ArrayIterator'
 }
 
 DUMP;
@@ -56,11 +63,18 @@ DUMP;
         $testArrayObject = new TestArrayObject();
         $testArrayObject['awesomite.stackTrace'] = true;
         $testArrayObjectDump = <<<'DUMP'
-object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (2) {
+object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (4) {
   private $privateProperty => 
   string(13) 'private value'
-  $awesomite.stackTrace => 
-  bool(true)
+  private $storage @ArrayObject => 
+  array(1) {
+    [awesomite.stackTrace] => 
+    bool(true)
+  }
+  private $flags @ArrayObject => 
+  int(0)
+  private $iteratorClass @ArrayObject => 
+  string(13) 'ArrayIterator'
 }
 
 DUMP;
@@ -69,11 +83,20 @@ DUMP;
         $testArrayObject2['privateProperty'] = 'public value';
         $testArrayObject2['secondProperty'] = 'second value';
         $testArrayObjectDump2 = <<<'DUMP'
-object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (2) {
+object(Awesomite\StackTrace\VarDumpers\TestArrayObject) (4) {
   private $privateProperty => 
   string(13) 'private value'
-  $secondProperty => 
-  string(12) 'second value'
+  private $storage @ArrayObject => 
+  array(2) {
+    [privateProperty] => 
+    string(12) 'public value'
+    [secondProperty] => 
+    string(12) 'second value'
+  }
+  private $flags @ArrayObject => 
+  int(0)
+  private $iteratorClass @ArrayObject => 
+  string(13) 'ArrayIterator'
 }
 
 DUMP;
@@ -122,11 +145,11 @@ DUMP;
 
         $dump1 = <<<'DUMP'
 object(stdClass) (2) {
-  public $testInt => 
+  $testInt => 
   int(5)
-  public $foo => 
+  $foo => 
   object(stdClass) (1) {
-    public $bar => 
+    $bar => 
     Too deep location
   }
 }
@@ -135,11 +158,11 @@ DUMP;
 
         $dump2 = <<<'DUMP'
 object(stdClass) (2) {
-  public $testInt => 
+  $testInt => 
   int(5)
-  public $foo => 
+  $foo => 
   object(stdClass) (1) {
-    public $bar => 
+    $bar => 
     object(stdClass) (0) {
     }
   }
@@ -243,7 +266,7 @@ DUMP;
 
         $objectDump1 = <<<'DUMP'
 object(stdClass) (3) {
-  public $foo => 
+  $foo => 
   string(3) 'foo'
   (...)
 }
@@ -252,11 +275,11 @@ DUMP;
 
         $objectDump2 = <<<'DUMP'
 object(stdClass) (3) {
-  public $foo => 
+  $foo => 
   string(3) 'foo'
-  public $bar => 
+  $bar => 
   string(3) 'bar'
-  public $foobar => 
+  $foobar => 
   string(6) 'foobar'
 }
 
@@ -288,7 +311,7 @@ DUMP;
         $recursiveObj->self = $recursiveObj;
         $objectDump = <<<'DUMP'
 object(stdClass) (1) {
-  public $self => 
+  $self => 
   RECURSIVE object(stdClass)
 }
 
