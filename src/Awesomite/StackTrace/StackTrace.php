@@ -142,7 +142,11 @@ class StackTrace implements StackTraceInterface
 
     private function getVarDumper()
     {
-        return $this->varDumper ?: new LightVarDumper();
+        if (is_null($this->varDumper)) {
+            $this->varDumper = new LightVarDumper();
+        }
+
+        return $this->varDumper;
     }
 
     private function convertStep(array $step, $toSerialize = false)
