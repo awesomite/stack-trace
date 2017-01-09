@@ -8,6 +8,7 @@ This guide describes how to execute tests.
 1. [Production environment](#production-environment)
 2. [Local environment](#local-environment)
 3. [Local environment with docker](#local-environment-with-docker)
+4. [HHVM](#hhvm)
 
 ## Production environment
 
@@ -90,6 +91,15 @@ Argument `VERSION` can be equal to one of below values:
 * `5.6`
 * `7.0`
 * `7.1`
+
+### Requirements
+
+* [docker](https://www.docker.com/)
+
+## HHVM
+
+* Tests - `bin/hhvm-tests.sh`
+* Interpreter - `bin/hhvm.sh`
 
 ### Requirements
 
