@@ -65,6 +65,7 @@ class PropertiesTest extends BaseTestCase
             /** @var PropertyInterface $property */
             $names[] = $property->getName();
         }
+        $this->assertSame(count($expectedNames), count($names));
         $diff = array_diff($names, $expectedNames);
         $this->assertSame(0, count($diff), 'Diff: "' . implode('", "', $diff) . '".');
     }

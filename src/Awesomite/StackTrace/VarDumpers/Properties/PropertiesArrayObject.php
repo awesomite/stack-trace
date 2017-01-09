@@ -26,19 +26,26 @@ class PropertiesArrayObject extends AbstractProperties
             return new ReflectionProperty($property, $object);
         }, $this->getDeclaredProperties());
 
-        $properties[] = new VarProperty(
-            'storage',
-            $reflectionClass->getMethod('getArrayCopy')->invoke($object),
-            VarProperty::VISIBILITY_PRIVATE,
-            static::DESIRED_CLASS_NAME
-        );
-        $properties[] = new VarProperty('flags', $flags, VarProperty::VISIBILITY_PRIVATE, static::DESIRED_CLASS_NAME);
-        $properties[] = new VarProperty(
-            'iteratorClass',
-            $reflectionClass->getMethod('getIteratorClass')->invoke($object),
-            VarProperty::VISIBILITY_PRIVATE,
-            static::DESIRED_CLASS_NAME
-        );
+        if (!defined('HHVM_VERSION')) {
+            $properties[] = new VarProperty(
+                'storage',
+                $reflectionClass->getMethod('getArrayCopy')->invoke($object),
+                VarProperty::VISIBILITY_PRIVATE,
+                static::DESIRED_CLASS_NAME
+            );
+            $properties[] = new VarProperty(
+                'flags',
+                $flags,
+                VarProperty::VISIBILITY_PRIVATE,
+                static::DESIRED_CLASS_NAME
+            );
+            $properties[] = new VarProperty(
+                'iteratorClass',
+                $reflectionClass->getMethod('getIteratorClass')->invoke($object),
+                VarProperty::VISIBILITY_PRIVATE,
+                static::DESIRED_CLASS_NAME
+            );
+        }
 
         $reflectionClass->getMethod('setFlags')->invoke($object, $flags);
 

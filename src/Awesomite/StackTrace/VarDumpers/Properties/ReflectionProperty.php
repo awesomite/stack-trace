@@ -42,7 +42,7 @@ class ReflectionProperty implements PropertyInterface
 
     public function isDynamic()
     {
-        $class = new \ReflectionClass($this->object);
+        $class = new \ReflectionClass(get_class($this->object));
 
         do {
             if ($class->hasProperty($this->getName())) {
