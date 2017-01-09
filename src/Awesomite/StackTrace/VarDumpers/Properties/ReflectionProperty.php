@@ -40,7 +40,7 @@ class ReflectionProperty implements PropertyInterface
         return $this->reflection->isStatic();
     }
 
-    public function isDynamic()
+    public function isVirtual()
     {
         $class = new \ReflectionClass(get_class($this->object));
 

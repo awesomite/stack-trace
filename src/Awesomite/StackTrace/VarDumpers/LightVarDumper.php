@@ -202,7 +202,7 @@ class LightVarDumper extends InternalVarDumper
 
     private function getTextTypePrefix(PropertyInterface $property)
     {
-        if ($property->isDynamic()) {
+        if ($property->isVirtual()) {
             return '';
         }
 

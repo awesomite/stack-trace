@@ -15,7 +15,7 @@ interface PropertyInterface
     /**
      * @return bool
      */
-    public function isDynamic();
+    public function isVirtual();
 
     /**
      * @return bool

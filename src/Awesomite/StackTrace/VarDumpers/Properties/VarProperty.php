@@ -9,7 +9,6 @@ use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
  */
 class VarProperty implements PropertyInterface
 {
-    const VISIBILITY_DYNAMIC = 'dynamic';
     const VISIBILITY_PUBLIC = 'public';
     const VISIBILITY_PROTECTED = 'protected';
     const VISIBILITY_PRIVATE = 'private';
@@ -19,6 +18,8 @@ class VarProperty implements PropertyInterface
     private $value;
 
     private $static;
+
+    private $virtual;
 
     private $visibility;
 
@@ -31,11 +32,11 @@ class VarProperty implements PropertyInterface
      * @param string $visibility
      * @param string $declaringClass
      * @param bool $static
+     * @param bool $virtual
      */
-    public function __construct($name, $value, $visibility, $declaringClass, $static = false)
+    public function __construct($name, $value, $visibility, $declaringClass, $static = false, $virtual = false)
     {
         $visibilityOptions = array(
-            static::VISIBILITY_DYNAMIC,
             static::VISIBILITY_PUBLIC,
             static::VISIBILITY_PROTECTED,
             static::VISIBILITY_PRIVATE,
@@ -49,6 +50,7 @@ class VarProperty implements PropertyInterface
         $this->visibility = $visibility;
         $this->declaringClass = $declaringClass;
         $this->static = $static;
+        $this->virtual = $virtual;
     }
 
     public function getName()
@@ -66,9 +68,9 @@ class VarProperty implements PropertyInterface
         return $this->static;
     }
 
-    public function isDynamic()
+    public function isVirtual()
     {
-        return $this->visibility === static::VISIBILITY_DYNAMIC;
+        return $this->virtual;
     }
 
     public function isPublic()

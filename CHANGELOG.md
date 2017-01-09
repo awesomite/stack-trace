@@ -7,7 +7,7 @@
 * Fixed issue related to HHVM and `\ArrayObject` in `\Awesomite\StackTrace\VarDumpers\LightVarDumper` -
 HHVM can see properties `storage`, `flags` and `iteratorClass` of `\ArrayObject`,
 fix in class `\Awesomite\StackTrace\VarDumpers\Properties\PropertiesArrayObject`
-* Fixed checking if property is dynamic in HHVM - `\Awesomite\StackTrace\VarDumpers\Properties\ReflectionProperty::isDynamic`
+* Fixed checking if property is virtual in HHVM - `\Awesomite\StackTrace\VarDumpers\Properties\ReflectionProperty::isVirtual`
 
 ## 0.4.1
 
