@@ -27,7 +27,7 @@ class StackTrace implements StackTraceInterface
     private $unserialized = false;
 
     /**
-     * @var VarDumperInterface
+     * @var VarDumperInterface|null
      */
     private $varDumper;
 
