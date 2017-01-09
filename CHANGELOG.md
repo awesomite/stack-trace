@@ -4,6 +4,10 @@
 
 * Decreased size of serialized stack trace - contents of file should be shared between steps of stack trace
 * Improved handling of `\ArrayObject` in `\Awesomite\StackTrace\VarDumpers\LightVarDumper`
+* Fixed issue related to HHVM and `\ArrayObject` in `\Awesomite\StackTrace\VarDumpers\LightVarDumper` -
+HHVM can see properties `storage`, `flags` and `iteratorClass` of `\ArrayObject`,
+fix in class `\Awesomite\StackTrace\VarDumpers\Properties\PropertiesArrayObject`
+* Fixed checking if property is dynamic in HHVM - `\Awesomite\StackTrace\VarDumpers\Properties\ReflectionProperty::isDynamic`
 
 ## 0.4.1
 
