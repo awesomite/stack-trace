@@ -77,10 +77,8 @@ class StackTrace implements StackTraceInterface
     {
         $data = unserialize($serialized);
         if (!Semver::satisfies($data['__version'], static::CONSTRAINTS_VERSION)) {
-            // @codeCoverageIgnoreStart
             $message = 'Cannot use incompatible version to unserialize stack trace (serialized by: %s, current: %s).';
             throw new \LogicException(sprintf($message, $data['__version'], static::VERSION));
-            // @codeCoverageIgnoreEnd
         }
         $this->arrayStackTrace = $data['steps'];
         $this->unserialized = true;

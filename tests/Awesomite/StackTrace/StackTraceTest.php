@@ -97,4 +97,14 @@ class StackTraceTest extends BaseTestCase
             $this->assertContains($expectedPart, $string);
         }
     }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessageRegExp #^Cannot use incompatible version to unserialize stack trace \(serialized by\: 999\.0\.0, current\: .*\)\.$#
+     */
+    public function testCannotUnserialize()
+    {
+        $string = 'C:31:"Awesomite\StackTrace\StackTrace":81:{a:3:{s:5:"steps";a:0:{}s:13:"filesContents";a:0:{}s:9:"__version";s:7:"999.0.0";}}';
+        unserialize($string);
+    }
 }
