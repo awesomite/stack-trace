@@ -46,7 +46,7 @@ class PlaceInCode implements PlaceInCodeInterface
 
     public function getAdjacentCode($linesLimit)
     {
-        if (!is_file($this->fileName)) {
+        if (is_null($this->contents) && !is_file($this->fileName)) {
             throw new LogicException("File {$this->fileName} does not exist!");
         }
 

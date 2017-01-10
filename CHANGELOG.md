@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+* Check if file exists when contents is not initialized yet - `\Awesomite\StackTrace\SourceCode\PlaceInCode`
+
 ## 0.5.0
 
 * Decreased size of serialized stack trace - contents of file should be shared between steps of stack trace
