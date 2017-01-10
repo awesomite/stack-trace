@@ -42,7 +42,7 @@ class VarProperty implements PropertyInterface
             static::VISIBILITY_PRIVATE,
         );
         if (!in_array($visibility, $visibilityOptions, true)) {
-            throw new InvalidArgumentException('Invalid value for $visibility!');
+            throw new InvalidArgumentException('Invalid value of $visibility!');
         }
 
         $this->name = $name;
