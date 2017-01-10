@@ -156,8 +156,7 @@ class StackTrace implements StackTraceInterface
 
         if ($this->withoutArgs) {
             $result['args'] = array();
-        }
-        else if (empty($result[Constants::KEY_ARGS_CONVERTED]) && isset($result['args'])) {
+        } else if (empty($result[Constants::KEY_ARGS_CONVERTED]) && isset($result['args'])) {
             $result['args'] = $this->convertArgs($result['args']);
             $result[Constants::KEY_ARGS_CONVERTED] = true;
         }
