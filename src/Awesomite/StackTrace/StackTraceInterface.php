@@ -3,7 +3,7 @@
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Steps\StepInterface;
-use Awesomite\StackTrace\VarDumpers\VarDumperInterface;
+use Awesomite\VarDumper\VarDumperInterface;
 
 interface StackTraceInterface extends \IteratorAggregate, \Countable, \Serializable
 {

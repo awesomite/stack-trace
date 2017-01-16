@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+
+* Moved `LightVarDumper` to separate repository (`awesomite/var-dumper`)
+
 ## 0.5.1
 
 * Check if file exists when contents is not initialized yet - `\Awesomite\StackTrace\SourceCode\PlaceInCode`

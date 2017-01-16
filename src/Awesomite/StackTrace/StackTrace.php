@@ -6,8 +6,8 @@ use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
 use Awesomite\StackTrace\Steps\Step;
 use Awesomite\StackTrace\Steps\StepInterface;
-use Awesomite\StackTrace\VarDumpers\LightVarDumper;
-use Awesomite\StackTrace\VarDumpers\VarDumperInterface;
+use Awesomite\VarDumper\LightVarDumper;
+use Awesomite\VarDumper\VarDumperInterface;
 use Composer\Semver\Semver;
 
 /**
@@ -15,8 +15,8 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.5.2';
-    const CONSTRAINTS_VERSION = '>=0.1.0 <0.5.0 || ^0.5.0';
+    const VERSION = '0.6.0';
+    const CONSTRAINTS_VERSION = '>=0.1.0 <0.7.0';
 
     private $arrayStackTrace;
 

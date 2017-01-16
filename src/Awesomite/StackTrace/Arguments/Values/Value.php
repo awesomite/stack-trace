@@ -2,8 +2,8 @@
 
 namespace Awesomite\StackTrace\Arguments\Values;
 
-use Awesomite\StackTrace\VarDumpers\InternalVarDumper;
-use Awesomite\StackTrace\VarDumpers\VarDumperInterface;
+use Awesomite\VarDumper\InternalVarDumper;
+use Awesomite\VarDumper\VarDumperInterface;
 
 /**
  * @internal
