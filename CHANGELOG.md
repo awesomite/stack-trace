@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+* Updated `awesomite/var-dumper` to version `^0.2.0`
+
 ## 0.6.0
 
 * Moved `LightVarDumper` to separate repository (`awesomite/var-dumper`)
