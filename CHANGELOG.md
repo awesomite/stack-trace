@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+* Decreased size of serialized stack traced;
+* `Awesomite\StackTrace\StackTrace::getIterator` returns `Awesomite\Iterators\CallbackIterator`
+
 ## 0.6.1
 
 * Updated `awesomite/var-dumper` to version `^0.2.0`

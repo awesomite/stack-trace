@@ -8,7 +8,7 @@ use Awesomite\StackTrace\SourceCode\Lines\LinesInterface;
 interface PlaceInCodeInterface
 {
     /**
-     * @param int $linesLimit
+     * @param int $linesLimit Max value = \Awesomite\StackTrace\Constants::MAX_LINE_THRESHOLD * 2
      * @return LineInterface[]|LinesInterface
      */
     public function getAdjacentCode($linesLimit);

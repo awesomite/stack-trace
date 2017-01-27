@@ -2,6 +2,7 @@
 
 namespace Awesomite\StackTrace\SourceCode;
 
+use Awesomite\StackTrace\Constants;
 use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 use Awesomite\StackTrace\Exceptions\LogicException;
 use Awesomite\StackTrace\SourceCode\Lines\Line;
@@ -16,22 +17,22 @@ class PlaceInCode implements PlaceInCodeInterface
 
     private $lineNo;
 
-    private $contents;
+    private $file;
 
     /**
      * PlaceInCode constructor.
      * @param string $fileName
      * @param int $lineNo
-     * @param string|null $contents
+     * @param FileInterface|null $file
      */
-    public function __construct($fileName, $lineNo, $contents = null)
+    public function __construct($fileName, $lineNo, FileInterface $file = null)
     {
         if (!$lineNo) {
             throw new InvalidArgumentException('Line number must be equal at least 1!');
         }
         $this->fileName = $fileName;
         $this->lineNo = $lineNo;
-        $this->contents = $contents;
+        $this->file = $file;
     }
 
     public function getFileName()
@@ -46,12 +47,17 @@ class PlaceInCode implements PlaceInCodeInterface
 
     public function getAdjacentCode($linesLimit)
     {
-        if (is_null($this->contents) && !is_file($this->fileName)) {
+        $maxValue = Constants::MAX_LINE_THRESHOLD * 2;
+        if ($linesLimit > $maxValue) {
+            throw new InvalidArgumentException("Too big number, cannot be bigger than {$maxValue}!");
+        }
+        
+        if (is_null($this->file) && !is_file($this->fileName)) {
             throw new LogicException("File {$this->fileName} does not exist!");
         }
 
-        $strings = explode("\n", $this->getContents());
-        $count = count($strings);
+        $file = $this->getFile();
+        $count = $file->countLines();
 
         if ($this->lineNo > $count) {
             throw new LogicException("Line {$this->lineNo} does not exist in file {$this->fileName}!");
@@ -65,24 +71,22 @@ class PlaceInCode implements PlaceInCodeInterface
         $lastLine += $firstMoved;
         $this->moveIfNeed($firstLine, $lastLine, $count);
 
-        array_unshift($strings, '');
-        $strings = array_slice($strings, $firstLine, $lastLine - $firstLine + 1, true);
-        $result = array();
-
-        foreach ($strings as $lineNo => $lineVal) {
-            $result[$lineNo] = new Line($lineVal, $this->fileName, $lineNo);
+        $rawLines = $file->getLines($firstLine, $lastLine);
+        $lines = array();
+        foreach ($rawLines as $key => $value) {
+            $lines[$key] = new Line($value, $file->getFileName(), $key);
         }
 
-        return new Lines($result);
+        return new Lines($lines);
     }
 
-    private function getContents()
+    private function getFile()
     {
-        if (is_null($this->contents)) {
-            $this->contents = file_get_contents($this->fileName);
+        if (is_null($this->file)) {
+            $this->file = new File($this->fileName);
         }
 
-        return $this->contents;
+        return $this->file;
     }
 
     private function moveIfNeed(&$firstLine, &$lastLine, $count)

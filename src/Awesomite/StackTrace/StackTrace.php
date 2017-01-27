@@ -6,6 +6,7 @@ use Awesomite\Iterators\CallbackIterator;
 use Awesomite\Iterators\StopIterateException;
 use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
+use Awesomite\StackTrace\SourceCode\File;
 use Awesomite\StackTrace\Steps\Step;
 use Awesomite\StackTrace\Steps\StepInterface;
 use Awesomite\VarDumper\LightVarDumper;
@@ -24,7 +25,7 @@ class StackTrace implements StackTraceInterface
 
     private $withoutArgs = false;
 
-    private $filesContents = array();
+    private $files = array();
 
     private $unserialized = false;
 
@@ -64,18 +65,25 @@ class StackTrace implements StackTraceInterface
             $steps = $this->arrayStackTrace;
         } else {
             $steps = array();
+            $maxThreshold = Constants::MAX_LINE_THRESHOLD;
             foreach ($this->arrayStackTrace as $step) {
                 $steps[] = $this->convertStep($step, true);
                 $fileName = isset($step['file']) ? $step['file'] : false;
-                if ($fileName && !isset($this->filesContents[$fileName]) && is_file($fileName)) {
-                    $this->filesContents[$fileName] = file_get_contents($fileName);
+                if ($fileName && is_file($fileName)) {
+                    $file = isset($this->files[$fileName])
+                        ? $this->files[$fileName]
+                        : new File($fileName);
+                    if (isset($step['line'])) {
+                        $file->addThresholds($step['line'] - $maxThreshold, $step['line'] + $maxThreshold);
+                    }
+                    $this->files[$fileName] = $file;
                 }
             }
         }
 
         return serialize(array(
             'steps' => $steps,
-            'filesContents' => $this->filesContents,
+            'files' => $this->files,
             '__version' => static::VERSION,
         ));
     }
@@ -89,7 +97,7 @@ class StackTrace implements StackTraceInterface
         }
         $this->arrayStackTrace = $data['steps'];
         $this->unserialized = true;
-        $this->filesContents = isset($data['filesContents']) ? $data['filesContents'] : array();
+        $this->files = isset($data['files']) ? $data['files'] : array();
     }
 
     public function __toString()
@@ -167,11 +175,11 @@ class StackTrace implements StackTraceInterface
 
         if (
             !$toSerialize
-            && !isset($result[Constants::KEY_FILE_CONTENTS])
+            && !isset($result[Constants::KEY_FILE_OBJECT])
             && isset($result['file'])
-            && isset($this->filesContents[$result['file']])
+            && isset($this->files[$result['file']])
         ) {
-            $result[Constants::KEY_FILE_CONTENTS] = $this->filesContents[$result['file']];
+            $result[Constants::KEY_FILE_OBJECT] = $this->files[$result['file']];
         }
 
         if (isset($result['object'])) {

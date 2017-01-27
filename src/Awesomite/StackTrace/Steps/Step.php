@@ -42,15 +42,15 @@ class Step implements StepInterface
         return new PlaceInCode(
             $this->stepArray['file'],
             $this->stepArray['line'],
-            isset($this->stepArray[Constants::KEY_FILE_CONTENTS])
-                ? $this->stepArray[Constants::KEY_FILE_CONTENTS]
+            isset($this->stepArray[Constants::KEY_FILE_OBJECT])
+                ? $this->stepArray[Constants::KEY_FILE_OBJECT]
                 : null
         );
     }
 
     public function hasPlaceInCode()
     {
-        return isset($this->stepArray[Constants::KEY_FILE_CONTENTS]) ||
+        return isset($this->stepArray[Constants::KEY_FILE_OBJECT]) ||
             (isset($this->stepArray['file']) && is_file($this->stepArray['file']) && !empty($this->stepArray['line']));
     }
 

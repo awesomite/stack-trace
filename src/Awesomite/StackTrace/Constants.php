@@ -7,6 +7,7 @@ namespace Awesomite\StackTrace;
  */
 class Constants
 {
-    const KEY_FILE_CONTENTS = '__awesomite_file_contents';
+    const KEY_FILE_OBJECT = '__awesomite_file_object';
     const KEY_ARGS_CONVERTED = '__awesomite_args_converted';
+    const MAX_LINE_THRESHOLD = 20;
 }
