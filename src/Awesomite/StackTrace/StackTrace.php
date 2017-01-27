@@ -40,11 +40,6 @@ class StackTrace implements StackTraceInterface
 
     public function getIterator()
     {
-        $result = array();
-        foreach ($this->arrayStackTrace as $arrayStep) {
-            $result[] = new Step($this->convertStep($arrayStep));
-        }
-
         $stackTrace = $this->arrayStackTrace;
         $self = $this;
         $i = -1;
