@@ -2,6 +2,8 @@
 
 namespace Awesomite\StackTrace;
 
+use Awesomite\Iterators\CallbackIterator;
+use Awesomite\Iterators\StopIterateException;
 use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
 use Awesomite\StackTrace\Steps\Step;
@@ -15,8 +17,8 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.6.1';
-    const CONSTRAINTS_VERSION = '>=0.1.0 <0.7.0';
+    const VERSION = '0.7.0';
+    const CONSTRAINTS_VERSION = '>=0.1.0 <0.8.0';
 
     private $arrayStackTrace;
 
@@ -33,7 +35,7 @@ class StackTrace implements StackTraceInterface
 
     public function __construct(array $arrayStackTrace)
     {
-        $this->arrayStackTrace = $arrayStackTrace;
+        $this->arrayStackTrace = new \ArrayObject($arrayStackTrace);
     }
 
     public function getIterator()
@@ -43,7 +45,17 @@ class StackTrace implements StackTraceInterface
             $result[] = new Step($this->convertStep($arrayStep));
         }
 
-        return new \ArrayIterator($result);
+        $stackTrace = $this->arrayStackTrace;
+        $self = $this;
+        $i = -1;
+
+        return new CallbackIterator(function () use ($stackTrace, $self, &$i) {
+            if (++$i < $self->count()) {
+                return new Step($self->convertStep($stackTrace[$i]));
+            }
+
+            throw new StopIterateException();
+        });
     }
 
     public function count()
@@ -138,16 +150,13 @@ class StackTrace implements StackTraceInterface
         $this->varDumper = $varDumper;
     }
 
-    private function getVarDumper()
-    {
-        if (is_null($this->varDumper)) {
-            $this->varDumper = new LightVarDumper();
-        }
-
-        return $this->varDumper;
-    }
-
-    private function convertStep(array $step, $toSerialize = false)
+    /**
+     * @internal
+     * @param array $step
+     * @param bool $toSerialize
+     * @return array
+     */
+    public function convertStep(array $step, $toSerialize = false)
     {
         $result = array();
         foreach ($step as $key => $value) {
@@ -175,6 +184,15 @@ class StackTrace implements StackTraceInterface
         }
 
         return $result;
+    }
+
+    private function getVarDumper()
+    {
+        if (is_null($this->varDumper)) {
+            $this->varDumper = new LightVarDumper();
+        }
+
+        return $this->varDumper;
     }
 
     private function convertArgs(array $args)
