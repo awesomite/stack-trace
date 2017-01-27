@@ -52,12 +52,12 @@ class StackTraceTest extends BaseTestCase
     public function testSerializeSize(StackTrace $stackTrace)
     {
         $this->expectOutputString(null);
-        $this->expectOutputRegex('#^Serialized stack trace size:#');
         $serialized = serialize($stackTrace);
         $size = mb_strlen($serialized) / 1024;
         $sizeCompressed = mb_strlen(gzencode($serialized)) / 1024;
         $ratio = $sizeCompressed / $size;
         echo sprintf("Serialized stack trace size: %0.2fkB / %0.2fkB, ratio: %0.2f\n", $sizeCompressed, $size, $ratio);
+        $this->assertTrue(true);
     }
 
     private function getFirstDump(StackTrace $stackTrace)
