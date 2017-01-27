@@ -3,7 +3,6 @@
 namespace Awesomite\StackTrace;
 
 use Awesomite\Iterators\CallbackIterator;
-use Awesomite\Iterators\StopIterateException;
 use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
 use Awesomite\StackTrace\SourceCode\File;
@@ -50,7 +49,7 @@ class StackTrace implements StackTraceInterface
                 return new Step($self->convertStep($stackTrace[$i]));
             }
 
-            throw new StopIterateException();
+            CallbackIterator::stopIterate();
         });
     }
 
