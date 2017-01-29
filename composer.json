@@ -9,12 +9,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "Awesomite\\StackTrace\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "": "tests/"
+            "Awesomite\\StackTrace\\": "tests/"
         }
     },
     "require": {
