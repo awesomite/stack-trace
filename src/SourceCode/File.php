@@ -35,7 +35,7 @@ class File implements FileInterface
      * @param int $to
      * @return $this
      */
-    public function addThresholds($from, $to)
+    public function addThreshold($from, $to)
     {
         $this->thresholds[] = array($from, $to);
         
@@ -81,7 +81,7 @@ class File implements FileInterface
             $result = array();
             for ($i = max(1, $from); $i <= $max; $i++) {
                 $file->seek($i-1);
-                $result[$i] = $file->current();
+                $result[$i] = substr($file->current(), 0, -1);
             }
 
             return $result;
@@ -106,7 +106,7 @@ class File implements FileInterface
         $result = array();
         foreach ($this->thresholds as $data) {
             list($from, $to) = $data;
-            $result = array_merge($result, $this->getLines($from, $to));
+            $result += $this->getLines($from, $to);
         }
 
         return $result;

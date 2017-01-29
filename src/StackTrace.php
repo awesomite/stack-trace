@@ -73,7 +73,7 @@ class StackTrace implements StackTraceInterface
                         ? $this->files[$fileName]
                         : new File($fileName);
                     if (isset($step['line'])) {
-                        $file->addThresholds($step['line'] - $maxThreshold, $step['line'] + $maxThreshold);
+                        $file->addThreshold($step['line'] - $maxThreshold, $step['line'] + $maxThreshold);
                     }
                     $this->files[$fileName] = $file;
                 }
