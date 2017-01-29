@@ -10,6 +10,19 @@ use Awesomite\StackTrace\SourceCode\Lines\LinesInterface;
 class PlaceInCodeTest extends PlaceInCodeProviders
 {
     /**
+     * @dataProvider providerInvalidLineLimit
+     * @expectedException \Awesomite\StackTrace\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessageRegExp /^Too big number, cannot be bigger than \d+!$/
+     *
+     * @param int $limit
+     */
+    public function testInvalidLineLimit($limit)
+    {
+        $placeInCode = new PlaceInCode(__FILE__, __LINE__);
+        $placeInCode->getAdjacentCode($limit);
+    }
+
+    /**
      * @dataProvider providerGetFile
      *
      * @param PlaceInCode $placeInCode
@@ -35,7 +48,7 @@ class PlaceInCodeTest extends PlaceInCodeProviders
     /**
      * @dataProvider providerInvalidFile
      * @expectedException \Awesomite\StackTrace\Exceptions\LogicException
-     * @expectedExceptionMessageRegExp /File .* does not exist!/
+     * @expectedExceptionMessageRegExp /^File .* does not exist!$/
      *
      * @param PlaceInCode $placeInCode
      */

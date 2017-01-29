@@ -3,10 +3,19 @@
 namespace Awesomite\StackTrace\SourceCode;
 
 use Awesomite\StackTrace\BaseTestCase;
+use Awesomite\StackTrace\Constants;
 use Awesomite\StackTrace\StackTraceFactory;
 
 class PlaceInCodeProviders extends BaseTestCase
 {
+    public function providerInvalidLineLimit()
+    {
+        return array(
+            array(PHP_INT_MAX),
+            array(Constants::MAX_LINE_THRESHOLD * 2 + 1),
+        );
+    }
+    
     public function providerGetFile()
     {
         return array(
