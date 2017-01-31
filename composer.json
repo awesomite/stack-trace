@@ -26,5 +26,10 @@
     "require-dev": {
         "phpunit/phpunit": "^4.8.23",
         "satooshi/php-coveralls": "^1.0.1"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.7-dev"
+        }
     }
 }
