@@ -10,6 +10,14 @@ use Awesomite\StackTrace\BaseTestCase;
 class LineTest extends BaseTestCase
 {
     /**
+     * @expectedException \Awesomite\StackTrace\Exceptions\InvalidArgumentException
+     */
+    public function testInvalidConstructor()
+    {
+        new Line(false, __FILE__, __LINE__);
+    }
+
+    /**
      * @dataProvider providerAll
      *
      * @param Line $line

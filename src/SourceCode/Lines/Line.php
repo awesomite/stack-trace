@@ -2,6 +2,8 @@
 
 namespace Awesomite\StackTrace\SourceCode\Lines;
 
+use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
+
 /**
  * @internal
  */
@@ -18,6 +20,9 @@ class Line implements LineInterface
 
     public function __construct($lineValue, $fileName, $lineNo)
     {
+        if (!is_string($lineValue)) {
+            throw new InvalidArgumentException('Value must be a string!');
+        }
         $this->lineValue = $lineValue;
         $this->file = $fileName;
         $this->lineNo = $lineNo;
