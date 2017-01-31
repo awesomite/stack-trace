@@ -28,4 +28,12 @@ class FileTest extends BaseTestCase
         $this->assertNotContains("\n", $text);
         $this->assertContains("__LINE__", $text);
     }
+
+    public function testOnlyStrings()
+    {
+        $file = new File(__FILE__);
+        foreach ($file->getLines(1, $file->countLines()) as $line) {
+            $this->assertInternalType('string', $line);
+        }
+    }
 }
