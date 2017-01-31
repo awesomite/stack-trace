@@ -18,4 +18,14 @@ class FileTest extends BaseTestCase
         $this->assertSame($file->countLines(), $deserialized->countLines());
         $this->assertSame($file->getFileName(), $deserialized->getFileName());
     }
+
+    public function testValidLine()
+    {
+        $file = new File(__FILE__);
+        $line = __LINE__;
+        $lines = $file->getLines($line, $line);
+        $text = implode("\n", $lines);
+        $this->assertNotContains("\n", $text);
+        $this->assertContains("__LINE__", $text);
+    }
 }
