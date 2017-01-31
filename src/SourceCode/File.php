@@ -81,7 +81,8 @@ class File implements FileInterface
             $result = array();
             for ($i = max(1, $from); $i <= $max; $i++) {
                 $file->seek($i-1);
-                $result[$i] = substr($file->current(), 0, -1);
+                // substr($file->current(), 0, -1) can return false
+                $result[$i] = substr_replace($file->current(), '', -1);
             }
 
             return $result;
