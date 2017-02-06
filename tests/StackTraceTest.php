@@ -3,7 +3,7 @@
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Steps\StepInterface;
-use Awesomite\StackTrace\VarDumpers\LightVarDumper;
+use Awesomite\VarDumper\LightVarDumper;
 
 /**
  * @internal
