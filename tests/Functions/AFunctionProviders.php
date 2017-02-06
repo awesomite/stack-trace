@@ -53,19 +53,22 @@ class AFunctionProviders extends BaseTestCase
             'sayHello' => array('class' => $testClassName, 'function' => 'sayHello'),
             'sayGoodbye' => array('class' => $testClassName, 'function' => 'sayGoodbye'),
         );
-        $atLeast70 = version_compare(PHP_VERSION, '7.0') >= 0;
-        if (!$atLeast70 && !defined('HHVM_VERSION')) {
-            $deprecatedFunctions['call_user_method'] = array('function' => 'call_user_method');
-        }
-        if ($atLeast70 && in_array('ldap', get_loaded_extensions())) {
-            $deprecatedFunctions['ldap_sort'] = array('function' => 'ldap_sort');
-        }
 
         $functions = array(
             'welcome' => array('class' => $testClassName, 'function' => 'welcome'),
-            'strpos' => array('function' => 'strpos'),
             '{closure}' => array('function' => '{closure}'),
         );
+
+        foreach (array('call_user_method', 'ldap_sort', 'strpos') as $functionName) {
+            if (function_exists($functionName)) {
+                $reflectionFunction = new \ReflectionFunction($functionName);
+                if ($reflectionFunction->isDeprecated()) {
+                    $deprecatedFunctions[$functionName] = array('function' => $functionName);
+                } else {
+                    $functions[$functionName] = array('function' => $functionName);
+                }
+            }
+        }
 
         $result = array();
 
