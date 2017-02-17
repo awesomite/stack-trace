@@ -19,6 +19,8 @@ class UnsafeFunctionsTest extends BaseTestCase
         'rename_function',
         'var_dump',
         'print_r',
+        'mb_ereg_replace', // /e
+        'mb_eregi_replace', // /e
     );
 
     /**
