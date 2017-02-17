@@ -59,7 +59,7 @@ class AFunctionProviders extends BaseTestCase
             '{closure}' => array('function' => '{closure}'),
         );
 
-        foreach (array('call_user_method', 'ldap_sort', 'strpos') as $functionName) {
+        foreach (array('call_user_method', 'ldap_sort', 'strpos', 'mb_ereg_replace') as $functionName) {
             if (function_exists($functionName)) {
                 $reflectionFunction = new \ReflectionFunction($functionName);
                 if ($reflectionFunction->isDeprecated()) {
