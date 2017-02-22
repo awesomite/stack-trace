@@ -1,6 +1,7 @@
 {
     "name": "awesomite/stack-trace",
     "license": "MIT",
+    "description": "The wrapper for debug_backtrace() function",
     "authors": [
         {
             "name": "Bartłomiej Krukowski",
