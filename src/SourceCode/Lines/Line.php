@@ -2,8 +2,6 @@
 
 namespace Awesomite\StackTrace\SourceCode\Lines;
 
-use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
-
 /**
  * @internal
  */
