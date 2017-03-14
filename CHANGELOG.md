@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.2
+
+Value of StackTrace::VERSION has been corrected
+
+## 0.7.1
+
+Version of awesomite/var-dumper has been updated to ^0.3.0
+
 ## 0.7.0
 
 * Decreased size of serialized stack traced;
