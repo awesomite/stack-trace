@@ -4,6 +4,10 @@
 
 * Deprecated classes `Awesomite\StackTrace\VarDumpers\*` have been removed
 
+## 0.7.3
+
+* Links in documentation have been fixed
+
 ## 0.7.2
 
 * Value of `StackTrace::VERSION` has been corrected
