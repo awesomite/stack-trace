@@ -14,7 +14,7 @@
 
 ## 0.7.1
 
-* Version of `awesomite/var-dumper` ha been updated to `^0.3.0`
+* Version of `awesomite/var-dumper` has been updated to `^0.3.0`
 
 ## 0.7.0
 
