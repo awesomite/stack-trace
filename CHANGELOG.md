@@ -1,12 +1,16 @@
 # Changelog
 
+## 0.7.3
+
+* Links in documentation have been fixed
+
 ## 0.7.2
 
-Value of StackTrace::VERSION has been corrected
+* Value of StackTrace::VERSION has been corrected
 
 ## 0.7.1
 
-Version of awesomite/var-dumper has been updated to ^0.3.0
+* Version of awesomite/var-dumper has been updated to ^0.3.0
 
 ## 0.7.0
 
