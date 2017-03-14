@@ -36,7 +36,7 @@ Factory gives you object which implements proper interface, so you always have e
 
 ## Iterate on stack trace
 
-[`StackTraceInterface`](src/Awesomite/StackTrace/StackTraceInterface.php) implements [`Traversable`](http://php.net/manual/en/class.traversable.php) interface, it means `$stackTrace` is iterable. 
+[`StackTraceInterface`](src/StackTraceInterface.php) implements [`Traversable`](http://php.net/manual/en/class.traversable.php) interface, it means `$stackTrace` is iterable. 
 
 ```php
 foreach ($stackTrace as $step) {
@@ -52,14 +52,14 @@ This principle is applied in almost all cases, except cases when returned value 
 
 ## List of interfaces
 
-* `$stackTrace = $factory->create();` [Awesomite\StackTrace\StackTraceInterface](src/Awesomite/StackTrace/StackTraceInterface.php)
-* `foreach ($stackTrace as $step) {}` [Awesomite\StackTrace\Steps\StepInterface](src/Awesomite/StackTrace/Steps/StepInterface.php)
-* `$placeInCode = $step->getPlaceInCode();` [Awesomite\StackTrace\SourceCode\PlaceInCodeInterface](src/Awesomite/StackTrace/SourceCode/PlaceInCodeInterface.php)
-* `$lines = $placeInCode->getAdjacentCode();` [Awesomite\StackTrace\SourceCode\Lines\LinesInterface](src/Awesomite/StackTrace/SourceCode/Lines/LinesInterface.php)
-* `foreach ($lines as $line) {}` [Awesomite\StackTrace\SourceCode\Lines\LineInterface](src/Awesomite/StackTrace/SourceCode/Lines/LineInterface.php)
-* `$function = $step->getCalledFunction();` [Awesomite\StackTrace\Functions\FunctionInterface](src/Awesomite/StackTrace/Functions/FunctionInterface.php)
-* `$arguments = $step->getArguments();` [Awesomite\StackTrace\Arguments\ArgumentsInterface](src/Awesomite/StackTrace/Arguments/ArgumentsInterface.php)
-* `foreach ($arguments as $argument) {}` [Awesomite\StackTrace\Arguments\ArgumentInterface](src/Awesomite/StackTrace/Arguments/ArgumentInterface.php)
-* `$declaration = $argument->getDeclaration();` [Awesomite\StackTrace\Arguments\Declarations\DeclarationInterface](src/Awesomite/StackTrace/Arguments/Declarations/DeclarationInterface.php)
-* `$type = $declaration->getType();` [Awesomite\StackTrace\Types\TypeInterface](src/Awesomite/StackTrace/Types/TypeInterface.php)
-* `$value = $argument->getValue();` [Awesomite\StackTrace\Arguments\Values\ValueInterface](src/Awesomite/StackTrace/Arguments/Values/ValueInterface.php)
+* `$stackTrace = $factory->create();` [Awesomite\StackTrace\StackTraceInterface](src/StackTraceInterface.php)
+* `foreach ($stackTrace as $step) {}` [Awesomite\StackTrace\Steps\StepInterface](src/Steps/StepInterface.php)
+* `$placeInCode = $step->getPlaceInCode();` [Awesomite\StackTrace\SourceCode\PlaceInCodeInterface](src/SourceCode/PlaceInCodeInterface.php)
+* `$lines = $placeInCode->getAdjacentCode();` [Awesomite\StackTrace\SourceCode\Lines\LinesInterface](src/SourceCode/Lines/LinesInterface.php)
+* `foreach ($lines as $line) {}` [Awesomite\StackTrace\SourceCode\Lines\LineInterface](src/SourceCode/Lines/LineInterface.php)
+* `$function = $step->getCalledFunction();` [Awesomite\StackTrace\Functions\FunctionInterface](src/Functions/FunctionInterface.php)
+* `$arguments = $step->getArguments();` [Awesomite\StackTrace\Arguments\ArgumentsInterface](src/Arguments/ArgumentsInterface.php)
+* `foreach ($arguments as $argument) {}` [Awesomite\StackTrace\Arguments\ArgumentInterface](src/Arguments/ArgumentInterface.php)
+* `$declaration = $argument->getDeclaration();` [Awesomite\StackTrace\Arguments\Declarations\DeclarationInterface](src/Arguments/Declarations/DeclarationInterface.php)
+* `$type = $declaration->getType();` [Awesomite\StackTrace\Types\TypeInterface](src/Types/TypeInterface.php)
+* `$value = $argument->getValue();` [Awesomite\StackTrace\Arguments\Values\ValueInterface](src/Arguments/Values/ValueInterface.php)
