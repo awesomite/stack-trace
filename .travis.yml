@@ -2,6 +2,7 @@ language: php
 
 install:
   - mkdir -p build/logs
+  - rm -rf .git
 
 php:
   - 5.3
@@ -14,8 +15,8 @@ php:
   - nightly
 
 script:
-  - travis_wait composer update --prefer-lowest --no-interaction && rm -rf .git && vendor/bin/phpunit
-  - travis_wait composer update --no-interaction && rm -rf .git && vendor/bin/phpunit
+  - travis_wait composer update --prefer-lowest --no-interaction && vendor/bin/phpunit
+  - travis_wait composer update --no-interaction && vendor/bin/phpunit
 
 after_script:
   - travis_retry bin/coveralls.sh
