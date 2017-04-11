@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1
+
+* Fixed bug - last character of last line fetched by `Awesomite\StackTrace\SourceCode\File` was not displayed when file was not ended by empty line
+
 ## 0.8.0
 
 * Deprecated classes `Awesomite\StackTrace\VarDumpers\*` have been removed
