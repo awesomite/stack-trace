@@ -16,7 +16,7 @@ execute the following commands on root directory of this project:
 
 ```bash
 composer update --dev
-vendor/bin/phpunit
+bin/phpunit.sh
 ```
 
 ### Requirements
