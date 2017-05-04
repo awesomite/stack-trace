@@ -13,12 +13,17 @@ class TestListener extends BridgeTestListener
 {
     private $offset = .05;
 
-    private $messages = array();
+    private static $messages = array();
+
+    public static function logMessage($message)
+    {
+        self::$messages[] = $message;
+    }
 
     public function __destruct()
     {
         $output = $this->getConsoleOutput();
-        foreach ($this->messages as $message) {
+        foreach (self::$messages as $message) {
             $output->writeln($message);
         }
     }
@@ -35,7 +40,7 @@ class TestListener extends BridgeTestListener
             ? get_class($test) . '::' . $test->getName()
             : get_class($test);
 
-        $this->messages[] = sprintf("<warning>Test '%s' took %0.2f seconds.</warning>",
+        self::$messages[] = sprintf("<warning>Test '%s' took %0.2f seconds.</warning>",
             $name,
             $time
         );
