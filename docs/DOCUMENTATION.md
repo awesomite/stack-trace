@@ -13,7 +13,7 @@ $factory = new StackTraceFactory();
 // creates stack trace for current position
 $currentStackTrace = $factory->create();
 
-set_exception_handler(function ($exception) {
+set_exception_handler(function ($exception) use ($factory) {
     /** @var \Exception|\Throwable $exception */
     // creates stack trace for \Exception or \Throwable
     $exceptionStackTrace = $factory->createByThrowable($exception);
