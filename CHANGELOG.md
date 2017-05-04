@@ -5,6 +5,7 @@
 * Documentation has been moved to docs directory
 * Removed file `bin/local-tests.sh` - tests can be executed in docker, it is easier way
 * Changed coding style to PSR-2
+* Support for PHPUnit ^5.7 and ^6.1
 
 ## 0.8.1
 
