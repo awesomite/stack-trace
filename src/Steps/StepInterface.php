@@ -4,9 +4,9 @@ namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\ArgumentInterface;
 use Awesomite\StackTrace\Arguments\ArgumentsInterface;
+use Awesomite\StackTrace\Exceptions\LogicException;
 use Awesomite\StackTrace\Functions\FunctionInterface;
 use Awesomite\StackTrace\SourceCode\PlaceInCodeInterface;
-use Awesomite\StackTrace\Exceptions\LogicException;
 
 interface StepInterface
 {

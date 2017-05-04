@@ -3,8 +3,8 @@
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Declarations\Declaration;
-use Awesomite\StackTrace\Arguments\Values\ValueInterface;
 use Awesomite\StackTrace\Arguments\Values\MultipleValues;
+use Awesomite\StackTrace\Arguments\Values\ValueInterface;
 use Awesomite\StackTrace\Functions\FunctionInterface;
 
 /**

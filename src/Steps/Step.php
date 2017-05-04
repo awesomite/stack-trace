@@ -4,9 +4,9 @@ namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\Arguments;
 use Awesomite\StackTrace\Constants;
+use Awesomite\StackTrace\Exceptions\LogicException;
 use Awesomite\StackTrace\Functions\AFunction;
 use Awesomite\StackTrace\SourceCode\PlaceInCode;
-use Awesomite\StackTrace\Exceptions\LogicException;
 
 /**
  * @internal
