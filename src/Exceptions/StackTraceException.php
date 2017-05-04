@@ -5,4 +5,6 @@ namespace Awesomite\StackTrace\Exceptions;
 /**
  * @internal
  */
-interface StackTraceException {}
+interface StackTraceException
+{
+}

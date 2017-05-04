@@ -1,6 +1,7 @@
 <?php
 
 namespace Awesomite\StackTrace\Functions;
+
 use Awesomite\StackTrace\Exceptions\LogicException;
 
 /**

@@ -2,4 +2,6 @@
 
 namespace Awesomite\StackTrace\Exceptions;
 
-class InvalidArgumentException extends \InvalidArgumentException implements StackTraceException  {}
+class InvalidArgumentException extends \InvalidArgumentException implements StackTraceException
+{
+}
