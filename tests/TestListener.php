@@ -2,6 +2,7 @@
 
 namespace Awesomite\StackTrace;
 
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
@@ -11,11 +12,14 @@ class TestListener implements \PHPUnit_Framework_TestListener
 {
     private $offset = .05;
 
-    private $output;
+    private $messages = array();
 
-    public function __construct()
+    public function __destruct()
     {
-        $this->output = new ConsoleOutput();
+        $output = $this->getConsoleOutput();
+        foreach ($this->messages as $message) {
+            $output->writeln($message);
+        }
     }
 
     public function startTest(\PHPUnit_Framework_Test $test)
@@ -32,12 +36,10 @@ class TestListener implements \PHPUnit_Framework_TestListener
             ? get_class($test) . '::' . $test->getName()
             : get_class($test);
 
-        $output = new ConsoleOutput();
-        $message = sprintf("\n<error>Test '%s' ended and took %0.2f seconds.</error>",
+        $this->messages[] = sprintf("<warning>Test '%s' took %0.2f seconds.</warning>",
             $name,
             $time
         );
-        $output->writeln($message);
     }
 
     public function addError(\PHPUnit_Framework_Test $test, \Exception $e, $time)
@@ -66,5 +68,16 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
+    }
+    private function getConsoleOutput()
+    {
+        $style = new OutputFormatterStyle();
+        $style->setBackground('yellow');
+        $style->setForeground('black');
+
+        $output = new ConsoleOutput();
+        $output->getFormatter()->setStyle('warning', $style);
+
+        return $output;
     }
 }
