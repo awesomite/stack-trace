@@ -26,10 +26,9 @@ class StackTraceFactory
             return new StackTrace($arrayStackTrace);
         }
 
-        $options = $this->getOptionsForDebugBacktrace53();
-        $arrayStackTrace = debug_backtrace($options);
+        $arrayStackTrace = debug_backtrace($this->getOptionsForDebugBacktrace53());
         if ($stepLimit > 0) {
-            $arrayStackTrace = array_slice(debug_backtrace($options), 0, $stepLimit, true);
+            $arrayStackTrace = array_slice($arrayStackTrace, 0, $stepLimit, true);
         }
         if ($ignoreArgs) {
             $this->removeArgs($arrayStackTrace);
