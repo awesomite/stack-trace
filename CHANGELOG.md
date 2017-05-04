@@ -1,6 +1,6 @@
 # Changelog
 
-## ???
+## 0.9.0
 
 * Documentation has been moved to docs directory
 * Removed file `bin/local-tests.sh` - tests can be executed in docker, it is easier way
