@@ -3,6 +3,7 @@
 ## ???
 
 * Documentation has been moved to docs directory
+* Removed file `bin/local-tests.sh` - tests can be executed in docker, it is easier way
 
 ## 0.8.1
 

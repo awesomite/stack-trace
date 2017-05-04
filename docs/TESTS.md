@@ -6,9 +6,8 @@ This guide describes how to execute tests.
 ## Table of contents
 
 1. [Production environment](#production-environment)
-2. [Local environment](#local-environment)
-3. [Local environment with docker](#local-environment-with-docker)
-4. [HHVM](#hhvm)
+2. [Local environment with docker](#local-environment-with-docker)
+3. [HHVM](#hhvm)
 
 ## Production environment
 
@@ -23,45 +22,7 @@ vendor/bin/phpunit
 ### Requirements
 
 * [composer](https://getcomposer.org/)
-* `php`
-
-## Local environment
-
-The following command executes test on your local computer.
-Dependencies will be installed automatically in `build` directory.
-Tests will be executed on all available versions of PHP.
-
-```bash
-bin/local-tests.sh
-```
-
-If you want to execute test on specified version of PHP,
-add optional argument `VERSION`.
-
-```bash
-VERSION=70
-bin/local-tests.sh ${VERSION}
-```
-
-Argument `VERSION` can be equal to one of below values:
-
-* `default`
-* `53`
-* `54`
-* `55`
-* `56`
-* `70`
-* `71`
-
-### Requirements
-
-* `php`
-* `php53`
-* `php54`
-* `php55`
-* `php56`
-* `php70`
-* `php71`
+* `php ^5.3 || ^7.0`
 
 ## Local environment with docker
 
@@ -95,6 +56,7 @@ Argument `VERSION` can be equal to one of below values:
 ### Requirements
 
 * [docker](https://www.docker.com/)
+* `php ^5.3 || ^7.0`
 
 ## HHVM
 
