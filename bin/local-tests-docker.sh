@@ -76,15 +76,15 @@ function runTestsFor()
     local extensions="-d zend_extension=/phpfarm/inst/php-${version}/lib/xdebug.so"
     extensions=''
 
-    local extra_params=''
+    local ini_params=''
     if [ "$version" == "7.2" ]
     then
-        local error_reporting=$(${container} ${phpCommand} -r "var_export((E_ALL | E_STRICT) & ~E_DEPRECATED);");
-        extra_params="-d error_reporting=${error_reporting}"
+        local error_reporting=$(${container} ${phpCommand} -r "var_export(E_ALL & ~E_DEPRECATED);");
+        ini_params="-d error_reporting=${error_reporting}"
     fi
 
-    ${container} ${phpCommand} -n ${extensions} \
-        "build/php-versions/$escapedVersion/bin/phpunit" ${extra_params} \
+    ${container} ${phpCommand} -n ${extensions} ${ini_params} \
+        "build/php-versions/$escapedVersion/bin/phpunit" \
         --bootstrap "build/php-versions/$escapedVersion/autoload.php" \
         --coverage-html "build/logs/$escapedVersion"
     echo ""
