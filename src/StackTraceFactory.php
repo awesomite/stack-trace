@@ -18,7 +18,12 @@ class StackTraceFactory
             if ($ignoreArgs) {
                 $options |= DEBUG_BACKTRACE_IGNORE_ARGS;
             }
-            return new StackTrace(debug_backtrace($options, $stepLimit));
+            $arrayStackTrace = debug_backtrace($options, $stepLimit);
+            if ($ignoreArgs) {
+                $this->removeArgs($arrayStackTrace);
+            }
+
+            return new StackTrace($arrayStackTrace);
         }
 
         $options = $this->getOptionsForDebugBacktrace53();
@@ -27,11 +32,7 @@ class StackTraceFactory
             $arrayStackTrace = array_slice(debug_backtrace($options), 0, $stepLimit, true);
         }
         if ($ignoreArgs) {
-            foreach ($arrayStackTrace as &$step) {
-                if (isset($step['args'])) {
-                    unset($step['args']);
-                }
-            }
+            $this->removeArgs($arrayStackTrace);
         }
 
         return new StackTrace($arrayStackTrace);
@@ -73,14 +74,19 @@ class StackTraceFactory
         }
 
         if ($ignoreArgs) {
-            foreach ($trace as &$step) {
-                if (isset($step['args'])) {
-                    unset($step['args']);
-                }
-            }
+            $this->removeArgs($trace);
         }
 
         return new StackTrace($trace);
+    }
+
+    private function removeArgs(array &$trace)
+    {
+        foreach ($trace as &$step) {
+            if (isset($step['args'])) {
+                unset($step['args']);
+            }
+        }
     }
 
     private function getOptionsForDebugBacktrace53()
