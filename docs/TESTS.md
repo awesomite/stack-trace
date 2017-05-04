@@ -40,7 +40,7 @@ add optional argument `VERSION`.
 
 ```bash
 VERSION=70
-bin/local-tests.sh $VERSION
+bin/local-tests.sh ${VERSION}
 ```
 
 Argument `VERSION` can be equal to one of below values:
@@ -80,7 +80,7 @@ add optional argument `VERSION`.
 
 ```bash
 VERSION=7.0
-bin/local-tests-docker.sh $VERSION
+bin/local-tests-docker.sh ${VERSION}
 ```
 
 Argument `VERSION` can be equal to one of below values:

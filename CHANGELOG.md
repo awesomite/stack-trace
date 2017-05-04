@@ -1,5 +1,9 @@
 # Changelog
 
+## ???
+
+* Documentation has been moved to docs directory
+
 ## 0.8.1
 
 * Fixed bug - last character of last line fetched by `Awesomite\StackTrace\SourceCode\File` was not displayed when file was not ended by empty line
