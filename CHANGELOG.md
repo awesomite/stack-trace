@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.1
+
+* Removed bin/phpunit.sh, use vendor/bin/phpunit instead
+
 ## 0.9.0
 
 * Documentation has been moved to docs directory
