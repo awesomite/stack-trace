@@ -3,6 +3,7 @@
 ## 0.9.1
 
 * Removed bin/phpunit.sh, use vendor/bin/phpunit instead
+* Added `.gitattributes` file
 
 ## 0.9.0
 
