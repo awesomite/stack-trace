@@ -1,7 +1,21 @@
 <?php
 
+namespace Awesomite\StackTrace;
+
+use PHPUnit\Framework\TestCase;
+
 if (class_exists('PHPUnit_Framework_TestCase')) {
-    class_alias('PHPUnit_Framework_TestCase', 'Awesomite\StackTrace\BridgeTestCase');
-} else {
-    class_alias('PHPUnit\Framework\TestCase', 'Awesomite\StackTrace\BridgeTestCase');
+    /**
+     * @internal
+     */
+    abstract class BridgeTestCase extends \PHPUnit_Framework_TestCase
+    {
+    }
+} elseif (class_exists('PHPUnit\Framework\TestCase')) {
+    /**
+     * @internal
+     */
+    abstract class BridgeTestCase extends TestCase
+    {
+    }
 }
