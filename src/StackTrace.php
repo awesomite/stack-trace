@@ -17,8 +17,8 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION = '0.9.2';
-    const CONSTRAINTS_VERSION = '>=0.1.0 <0.10.0';
+    const VERSION = '0.10.0';
+    const CONSTRAINTS_VERSION = '>=0.1.0 <0.11.0';
 
     private $arrayStackTrace;
 
@@ -168,7 +168,18 @@ class StackTrace implements StackTraceInterface
         if ($this->withoutArgs) {
             $result['args'] = array();
         } else if (empty($result[Constants::KEY_ARGS_CONVERTED]) && isset($result['args'])) {
-            $result['args'] = $this->convertArgs($result['args']);
+            $maxArgs = null;
+            if (version_compare(PHP_VERSION, '5.6') >= 0) {
+                $fakeStep = new Step($result);
+                $reflectionFn = $fakeStep->hasCalledFunction() && $fakeStep->getCalledFunction()->hasReflection()
+                    ? $fakeStep->getCalledFunction()->getReflection()
+                    : null;
+                if (!is_null($reflectionFn) && $reflectionFn->isVariadic()) {
+                    $maxArgs = count($reflectionFn->getParameters());
+                }
+            }
+
+            $result['args'] = $this->convertArgs($result['args'], $maxArgs);
             $result[Constants::KEY_ARGS_CONVERTED] = true;
         }
 
@@ -197,16 +208,32 @@ class StackTrace implements StackTraceInterface
         return $this->varDumper;
     }
 
-    private function convertArgs(array $args)
+    /**
+     * @param array $args
+     * @param int|null $maxArgs
+     * @return array
+     */
+    private function convertArgs(array $args, $maxArgs)
     {
         /**
          * input has to be copied to different array,
          * because array $args returned by debug_backtrace function contains references from PHP 7.0
          */
-        $result = array();
+        $preparedArgs = array();
 
-        foreach ($args as $key => $value) {
-            $result[$key] = $this->convertArg($value);
+        foreach ($args as $value) {
+            $preparedArgs[] = $value;
+        }
+
+        if (!is_null($maxArgs) && $maxArgs <= count($preparedArgs)) {
+            $preparedCopy = $preparedArgs;
+            $preparedArgs = array_slice($preparedCopy, 0, $maxArgs - 1);
+            $preparedArgs[] = array_slice($preparedCopy, $maxArgs - 1);
+        }
+
+        $result = array();
+        foreach ($preparedArgs as $value) {
+            $result[] = $this->convertArg($value);
         }
 
         return $result;

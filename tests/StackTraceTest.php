@@ -107,4 +107,14 @@ class StackTraceTest extends BaseTestCase
         $string = 'C:31:"Awesomite\StackTrace\StackTrace":81:{a:3:{s:5:"steps";a:0:{}s:13:"filesContents";a:0:{}s:9:"__version";s:7:"999.0.0";}}';
         unserialize($string);
     }
+
+    public function testVariadic()
+    {
+        if (version_compare(PHP_VERSION, '5.6') >= 0) {
+            $stackTraceVariadic = new StackTraceVariadic($this);
+            $stackTraceVariadic->handleTest();
+        } else {
+            $this->assertTrue(true);
+        }
+    }
 }

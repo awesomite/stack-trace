@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0
+
+* Removed `Awesomite\StackTrace\Arguments\Values\MultipleValues`
+
 ## 0.9.2
 
 * Fixed phpdoc for `Awesomite\StackTrace\Arguments\ArgumentsInterface::getIterator`
