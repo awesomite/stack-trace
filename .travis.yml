@@ -4,8 +4,6 @@ install:
   - mkdir -p build/logs
   - mv .git ~.git
 
-dist: trusty
-
 php:
   - 5.3
   - 5.4
@@ -18,8 +16,8 @@ php:
 
 matrix:
   include:
-    - php: 5.3
-      dist: precise
+    - php: hhvm
+      dist: trusty
 
 script:
   - travis_wait composer update --prefer-lowest --no-interaction && php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
