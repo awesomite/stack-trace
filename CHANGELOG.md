@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.2
+
+* Fixed phpdoc for `Awesomite\StackTrace\Arguments\ArgumentsInterface::getIterator`
+
 ## 0.9.1
 
 * Removed bin/phpunit.sh, use vendor/bin/phpunit instead
