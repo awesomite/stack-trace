@@ -3,6 +3,7 @@
 ## 0.9.2
 
 * Fixed phpdoc for `Awesomite\StackTrace\Arguments\ArgumentsInterface::getIterator`
+* Fixed [bug](https://travis-ci.org/awesomite/stack-trace/jobs/239395658) in HHVM
 
 ## 0.9.1
 

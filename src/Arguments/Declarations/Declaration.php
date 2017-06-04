@@ -114,7 +114,7 @@ class Declaration implements DeclarationInterface
         if (defined('HHVM_VERSION')) {
             // @codeCoverageIgnoreStart
             if (method_exists($this->parameter, 'isDefaultValueConstant')) {
-                return $this->parameter->isDefaultValueConstant();
+                return (bool) $this->parameter->isDefaultValueConstant();
             }
 
             return false;
