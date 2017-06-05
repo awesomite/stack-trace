@@ -5,6 +5,7 @@ install:
   - mv .git ~.git
 
 dist: trusty
+sudo: false
 
 php:
   - hhvm
