@@ -7,9 +7,6 @@ namespace Awesomite\StackTrace;
  */
 class SyntaxTest extends BaseTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSyntax()
     {
         $delimiter = DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR;
