@@ -8,9 +8,9 @@ then
     echo 'hhvm.php7.all=1' >> /etc/hhvm/php.ini
     php -r "echo phpversion() . PHP_EOL;"
 
-    travis_wait composer update --prefer-lowest --no-interaction
+    composer update --prefer-lowest --no-interaction
     php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
 
-    travis_wait composer update --no-interaction
+    composer update --no-interaction
     vendor/bin/phpunit
 fi
