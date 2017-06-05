@@ -168,6 +168,14 @@ class StackTraceTest extends BaseTestCase
 
     public function testChangeReference()
     {
+        /**
+         * HHVM does not allow to change value of reference using debug_backtrace()
+         */
+        if (defined('HHVM_VERSION')) {
+            $this->assertTrue(true);
+            return;
+        }
+
         $original = 'original';
         $copy = $original;
         $this->changeReference($original);
