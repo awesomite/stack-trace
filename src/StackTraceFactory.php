@@ -46,8 +46,12 @@ class StackTraceFactory
     public function createByThrowable($exception, $stepLimit = 0, $ignoreArgs = false)
     {
         $exceptionClass = version_compare(PHP_VERSION, '7.0') >= 0 ? '\Throwable' : '\Exception';
-        if (!$exception instanceof $exceptionClass) {
-            throw new InvalidArgumentException("Argument should be an instance of {$exceptionClass}!");
+        if (!is_object($exception) || !$exception instanceof $exceptionClass) {
+            throw new InvalidArgumentException(sprintf(
+                "Expected argument of type %s, %s given",
+                $exceptionClass,
+                is_object($exception) ? get_class($exception) : gettype($exception)
+            ));
         }
 
         return $this->createBy($exception, $stepLimit, $ignoreArgs);
