@@ -7,43 +7,43 @@ install:
 dist: trusty
 sudo: false
 
-#php:
-#  - 5.4
-#  - 5.5
-#  - 5.6
-#  - 7.0
-#  - 7.1
-#  - nightly
-#  - hhvm
-#  - hhvm-3.3
-#  - hhvm-3.6
-#  - hhvm-3.9
-#  - hhvm-3.12
-#  - hhvm-3.15
-#  - hhvm-3.18
-#  - hhvm-nightly
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - nightly
+  - hhvm
+  - hhvm-3.3
+  - hhvm-3.6
+  - hhvm-3.9
+  - hhvm-3.12
+  - hhvm-3.15
+  - hhvm-3.18
+  - hhvm-nightly
 
 matrix:
   include:
-#    - php: 5.3
-#      dist: precise
+    - php: 5.3
+      dist: precise
 
-#    - php: hhvm
-#      env: HHVM_PHP7=1
+    - php: hhvm
+      env: HHVM_PHP7=1
 
     - php: hhvm-3.12
       env: HHVM_PHP7=1
 
     - php: hhvm-3.12
 
-#    - php: hhvm-3.15
-#      env: HHVM_PHP7=1
-#
-#    - php: hhvm-3.18
-#      env: HHVM_PHP7=1
-#
-#    - php: hhvm-nightly
-#      env: HHVM_PHP7=1
+    - php: hhvm-3.15
+      env: HHVM_PHP7=1
+
+    - php: hhvm-3.18
+      env: HHVM_PHP7=1
+
+    - php: hhvm-nightly
+      env: HHVM_PHP7=1
 
 before_script:
   - if [ ${HHVM_PHP7+x} ]; then bin/composer-set-config.php php 7.0; fi
@@ -52,7 +52,7 @@ before_script:
 script:
   - php ${EXTRA_CONFIG} -r "echo phpversion() . PHP_EOL;"
 
-  - travis_wait if [ ${HHVM_PHP7+x} ]; then echo "Do not test lowest dependencies on HHVM with PHP7 support"; else composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit; fi
+  - if [ ${HHVM_PHP7+x} ]; then echo "Do not test lowest dependencies on HHVM with PHP7 support"; else travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit; fi
   - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit
 
 after_script:
