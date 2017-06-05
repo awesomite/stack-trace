@@ -15,6 +15,11 @@ class TestListener extends BridgeTestListener
 
     private $messages = array();
 
+    public function __construct()
+    {
+        $this->getConsoleOutput()->writeln(sprintf('PHP %s', phpversion()));
+    }
+
     public function __destruct()
     {
         $output = $this->getConsoleOutput();
