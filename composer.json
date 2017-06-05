@@ -14,6 +14,7 @@
         }
     },
     "autoload-dev": {
+        "files": ["tests/hhvm-polyfill/exceptions.php.polyfill"],
         "psr-4": {
             "Awesomite\\StackTrace\\": "tests/"
         }
