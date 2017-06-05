@@ -29,9 +29,17 @@ matrix:
       dist: precise
     - php:
       - hhvm
+      env: HHVM_PHP7=1
+    - php:
       - hhvm-3.12
+      env: HHVM_PHP7=1
+    - php:
       - hhvm-3.15
+      env: HHVM_PHP7=1
+    - php:
       - hhvm-3.18
+      env: HHVM_PHP7=1
+    - php:
       - hhvm-nightly
       env: HHVM_PHP7=1
 
