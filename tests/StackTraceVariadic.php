@@ -42,6 +42,12 @@ class StackTraceVariadic
          */
         if (!defined('HHVM_VERSION') || version_compare(HHVM_VERSION, '3.9') >= 0) {
             $this->testCase->assertSame(empty($third), !$args[2]->hasValue());
+            $this->testCase->assertTrue($args[2]->hasDeclaration());
+        }
+
+        for ($i = 0; $i < 2; $i++) {
+            $this->testCase->assertTrue($args[$i]->hasValue());
+            $this->testCase->assertTrue($args[$i]->hasDeclaration());
         }
     }
 }

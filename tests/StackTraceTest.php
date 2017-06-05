@@ -2,6 +2,7 @@
 
 namespace Awesomite\StackTrace;
 
+use Awesomite\StackTrace\Arguments\ArgumentInterface;
 use Awesomite\StackTrace\Steps\StepInterface;
 use Awesomite\VarDumper\LightVarDumper;
 
@@ -116,5 +117,71 @@ class StackTraceTest extends BaseTestCase
         } else {
             $this->assertTrue(true);
         }
+    }
+
+    public function testSemiVariadic()
+    {
+        $this->handleSemiVariadic(1);
+        $this->handleSemiVariadic(1, 2);
+        $this->handleSemiVariadic(1, 2, 3);
+    }
+
+    private function handleSemiVariadic()
+    {
+        $factory = new StackTraceFactory();
+        $stackTrace = $factory->create(2);
+        /** @var StepInterface[] $steps */
+        $steps = iterator_to_array($stackTrace->getIterator());
+        $step = $steps[1];
+        /** @var ArgumentInterface[] $args */
+        $args = iterator_to_array($step->getArguments());
+        $this->assertSame(count(func_get_args()), count($args));
+        foreach ($args as $argument) {
+            $this->assertTrue($argument->hasValue());
+            $this->assertFalse($argument->hasDeclaration());
+        }
+    }
+
+    /**
+     * There is an option to change value of passed argument usign debug_backtrace() function.
+     * Class StackTrace should not change any value passed by reference.
+     *
+     * @see testChangeReference
+     */
+    public function testDoNotChangeReferences()
+    {
+        $original = 'original';
+        $copy = $original;
+        $this->doNotChangeReferences($original);
+        $this->assertSame($copy, $original);
+    }
+
+    private function doNotChangeReferences(&$reference)
+    {
+        /**
+         * debug_backtrace()[$x]['args'] can contain references
+         */
+        $factory = new StackTraceFactory();
+        $stackTrace = $factory->create(2);
+        foreach ($stackTrace as $step) {}
+    }
+
+    public function testChangeReference()
+    {
+        $original = 'original';
+        $copy = $original;
+        $this->changeReference($original);
+        $this->assertNotSame($copy, $original);
+    }
+
+    private function changeReference(&$reference)
+    {
+        $this->modifyArgsInStackTrace();
+    }
+
+    private function modifyArgsInStackTrace()
+    {
+        $stackTrace = debug_backtrace();
+        $stackTrace[1]['args'][0] = 'I\'m a hacker!';
     }
 }
