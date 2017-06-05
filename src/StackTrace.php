@@ -5,6 +5,7 @@ namespace Awesomite\StackTrace;
 use Awesomite\Iterators\CallbackIterator;
 use Awesomite\StackTrace\Arguments\Values\DeserializedValue;
 use Awesomite\StackTrace\Arguments\Values\Value;
+use Awesomite\StackTrace\Exceptions\LogicException;
 use Awesomite\StackTrace\SourceCode\File;
 use Awesomite\StackTrace\Steps\Step;
 use Awesomite\StackTrace\Steps\StepInterface;
@@ -92,7 +93,7 @@ class StackTrace implements StackTraceInterface
         $data = unserialize($serialized);
         if (!Semver::satisfies($data['__version'], static::CONSTRAINTS_VERSION)) {
             $message = 'Cannot use incompatible version to unserialize stack trace (serialized by: %s, current: %s).';
-            throw new \LogicException(sprintf($message, $data['__version'], static::VERSION));
+            throw new LogicException(sprintf($message, $data['__version'], static::VERSION));
         }
         $this->arrayStackTrace = $data['steps'];
         $this->unserialized = true;
