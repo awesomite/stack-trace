@@ -160,17 +160,12 @@ class StackTrace implements StackTraceInterface
      */
     public function convertStep(array $step, $toSerialize = false)
     {
-        $result = array();
-        foreach ($step as $key => $value) {
-            $result[$key] = $value;
-        }
-
         if ($this->withoutArgs) {
-            $result['args'] = array();
-        } else if (empty($result[Constants::KEY_ARGS_CONVERTED]) && isset($result['args'])) {
+            $step['args'] = array();
+        } else if (empty($step[Constants::KEY_ARGS_CONVERTED]) && isset($step['args'])) {
             $maxArgs = null;
             if (version_compare(PHP_VERSION, '5.6') >= 0) {
-                $fakeStep = new Step($result);
+                $fakeStep = new Step($step);
                 $reflectionFn = $fakeStep->hasCalledFunction() && $fakeStep->getCalledFunction()->hasReflection()
                     ? $fakeStep->getCalledFunction()->getReflection()
                     : null;
@@ -179,24 +174,24 @@ class StackTrace implements StackTraceInterface
                 }
             }
 
-            $result['args'] = $this->convertArgs($result['args'], $maxArgs);
-            $result[Constants::KEY_ARGS_CONVERTED] = true;
+            $step['args'] = $this->convertArgs($step['args'], $maxArgs);
+            $step[Constants::KEY_ARGS_CONVERTED] = true;
         }
 
         if (
             !$toSerialize
-            && !isset($result[Constants::KEY_FILE_OBJECT])
-            && isset($result['file'])
-            && isset($this->files[$result['file']])
+            && !isset($step[Constants::KEY_FILE_OBJECT])
+            && isset($step['file'])
+            && isset($this->files[$step['file']])
         ) {
-            $result[Constants::KEY_FILE_OBJECT] = $this->files[$result['file']];
+            $step[Constants::KEY_FILE_OBJECT] = $this->files[$step['file']];
         }
 
-        if (isset($result['object'])) {
-            unset($result['object']);
+        if (isset($step['object'])) {
+            unset($step['object']);
         }
 
-        return $result;
+        return $step;
     }
 
     private function getVarDumper()
@@ -209,34 +204,31 @@ class StackTrace implements StackTraceInterface
     }
 
     /**
-     * @param array $args
+     * @param array $inputArgs
      * @param int|null $maxArgs
      * @return array
      */
-    private function convertArgs(array $args, $maxArgs)
+    private function convertArgs(array $inputArgs, $maxArgs)
     {
         /**
-         * input has to be copied to different array,
-         * because array $args returned by debug_backtrace function contains references from PHP 7.0
+         * debug_backtrace()[$x]['args'] can contain references
          */
-        $preparedArgs = array();
-
-        foreach ($args as $value) {
-            $preparedArgs[] = $value;
+        $args = array();
+        foreach ($inputArgs as $key => $value) {
+            $args[$key] = $value;
         }
 
-        if (!is_null($maxArgs) && $maxArgs <= count($preparedArgs)) {
-            $preparedCopy = $preparedArgs;
-            $preparedArgs = array_slice($preparedCopy, 0, $maxArgs - 1);
-            $preparedArgs[] = array_slice($preparedCopy, $maxArgs - 1);
+        if (!is_null($maxArgs) && $maxArgs <= count($args)) {
+            $preparedCopy = $args;
+            $args = array_slice($preparedCopy, 0, $maxArgs - 1);
+            $args[] = array_slice($preparedCopy, $maxArgs - 1);
         }
 
-        $result = array();
-        foreach ($preparedArgs as $value) {
-            $result[] = $this->convertArg($value);
+        foreach ($args as $key => $value) {
+            $args[$key] = $this->convertArg($value);
         }
 
-        return $result;
+        return $args;
     }
 
     private function convertArg($value)
