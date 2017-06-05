@@ -11,10 +11,10 @@ then
     sed -i '' -e '$ d' /etc/hhvm/php.ini
     composer update --prefer-lowest --no-interaction
     echo 'hhvm.php7.all=1' >> /etc/hhvm/php.ini
-    php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
+    php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit --no-coverage
 
     sed -i '' -e '$ d' /etc/hhvm/php.ini
     composer update --no-interaction
     echo 'hhvm.php7.all=1' >> /etc/hhvm/php.ini
-    vendor/bin/phpunit
+    vendor/bin/phpunit --no-coverage
 fi
