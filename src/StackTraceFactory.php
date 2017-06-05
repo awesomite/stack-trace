@@ -6,6 +6,8 @@ use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 
 class StackTraceFactory
 {
+    private static $rootExceptionClass = null;
+
     /**
      * @param int $stepLimit
      * @param bool $ignoreArgs
@@ -45,7 +47,7 @@ class StackTraceFactory
      */
     public function createByThrowable($exception, $stepLimit = 0, $ignoreArgs = false)
     {
-        $exceptionClass = version_compare(PHP_VERSION, '7.0') >= 0 ? '\Throwable' : '\Exception';
+        $exceptionClass = $this->getRootExceptionClass();
         if (!is_object($exception) || !$exception instanceof $exceptionClass) {
             throw new InvalidArgumentException(sprintf(
                 "Expected argument of type %s, %s given",
@@ -55,6 +57,23 @@ class StackTraceFactory
         }
 
         return $this->createBy($exception, $stepLimit, $ignoreArgs);
+    }
+
+    /**
+     * HHVM still does not support \Throwable interface
+     *
+     * @return null|string
+     */
+    private function getRootExceptionClass()
+    {
+        if (is_null(self::$rootExceptionClass)) {
+            $reflection = new \ReflectionClass('\Exception');
+            self::$rootExceptionClass = $reflection->implementsInterface('\Throwable')
+                ? '\Throwable'
+                : '\Exception';
+        }
+
+        return self::$rootExceptionClass;
     }
 
     /**
