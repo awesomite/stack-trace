@@ -7,6 +7,7 @@ if [ ${IS_HHVM_PHP7} == "1" ]
 then
     echo 'hhvm.php7.all=1' >> /etc/hhvm/php.ini
     php -r "echo phpversion() . PHP_EOL;"
+    composer self-update
 
     composer update --prefer-lowest --no-interaction
     php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
