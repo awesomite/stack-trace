@@ -163,7 +163,8 @@ class StackTraceTest extends BaseTestCase
          */
         $factory = new StackTraceFactory();
         $stackTrace = $factory->create(2);
-        foreach ($stackTrace as $step) {}
+        foreach ($stackTrace as $step) {
+        }
     }
 
     public function testChangeReference()

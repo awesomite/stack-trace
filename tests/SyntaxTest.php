@@ -41,7 +41,7 @@ class SyntaxTest extends BaseTestCase
         $result = array();
 
         $subpath = implode(DIRECTORY_SEPARATOR, array('src', 'Exceptions', 'StackTraceException.php'));
-        $result[] = '#' . preg_quote($subpath,'#') . '#';
+        $result[] = '#' . preg_quote($subpath, '#') . '#';
 
         return $result;
     }
