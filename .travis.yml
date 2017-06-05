@@ -9,7 +9,7 @@ sudo: false
 
 php:
   - 5.4
-#  - 5.5
+  - 5.5
 #  - 5.6
 #  - 7.0
 #  - 7.1
@@ -28,11 +28,13 @@ matrix:
 #    - php: 5.3
 #      dist: precise
 
-    - php: hhvm
-      env: HHVM_PHP7=1
+#    - php: hhvm
+#      env: HHVM_PHP7=1
 
     - php: hhvm-3.12
       env: HHVM_PHP7=1
+
+    - php: hhvm-3.12
 
 #    - php: hhvm-3.15
 #      env: HHVM_PHP7=1
@@ -44,13 +46,14 @@ matrix:
 #      env: HHVM_PHP7=1
 
 before_script:
-  - if [ ${HHVM_PHP7+x} ]; then echo 'hhvm.php7.all=1' >> /etc/hhvm/php.ini; fi
+  - if [ ${HHVM_PHP7+x} ]; then composer-set-config.php php 7.0; fi
+  - if [ ${HHVM_PHP7+x} ]; then export EXTRA_CONFIG='-d hhvm.php7.all=1'; else export EXTRA_CONFIG=''; fi
 
 script:
-  - php -r "echo phpversion() . PHP_EOL;"
-  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
-  - if [ ${HHVM_PHP7+x} ]; then composer-set-config.php php 7.0; fi
-  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 vendor/bin/phpunit
+  - php ${EXTRA_CONFIG} -r "echo phpversion() . PHP_EOL;"
+
+  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") ${EXTRA_CONFIG} vendor/bin/phpunit
+  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit
 
 after_script:
   - mv ~.git .git
