@@ -35,6 +35,13 @@ class StackTraceVariadic
         /** @var ArgumentInterface[] $args */
         $args = iterator_to_array($step->getArguments());
         $this->testCase->assertSame(3, count($args));
-        $this->testCase->assertSame(empty($third), !$args[2]->hasValue());
+        /**
+         * @see https://travis-ci.org/awesomite/stack-trace/builds/239418547
+         * Bug in older HHVM versions:
+         * Variadic parameter is missing in debug_backtrace()[$x]['args']
+         */
+        if (!defined('HHVM_VERSION') || version_compare(HHVM_VERSION, '3.9') >= 0) {
+            $this->testCase->assertSame(empty($third), !$args[2]->hasValue());
+        }
     }
 }
