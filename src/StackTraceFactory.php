@@ -68,7 +68,8 @@ class StackTraceFactory
     {
         if (is_null(self::$rootExceptionClass)) {
             $reflection = new \ReflectionClass('\Exception');
-            self::$rootExceptionClass = $reflection->implementsInterface('\Throwable')
+            $throwableExists = interface_exists('\Throwable', false);
+            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('\Throwable')
                 ? '\Throwable'
                 : '\Exception';
         }
