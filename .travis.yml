@@ -30,8 +30,8 @@ matrix:
 
 script:
   - php -r "echo phpversion() . PHP_EOL;"
-  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit $(php -r "echo defined('HHVM_VERSION')?'--no-coverage':'';")
-  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 vendor/bin/phpunit $(php -r "echo defined('HHVM_VERSION')?'--no-coverage':'';")
+  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
+  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 vendor/bin/phpunit
   - travis_wait bin/hhvm-travis.sh
 
 after_script:

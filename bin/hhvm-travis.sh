@@ -8,8 +8,8 @@ then
     php -d hhvm.php7.all=1 -r "echo phpversion() . PHP_EOL;"
 
     composer update --prefer-lowest --no-interaction
-    php -d hhvm.php7.all=1 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") -d hhvm.jit=0 vendor/bin/phpunit --no-coverage
+    php -d hhvm.php7.all=1 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") -d hhvm.jit=0 vendor/bin/phpunit
 
     composer update --no-interaction
-    php -d hhvm.php7.all=1 -d hhvm.jit=0 vendor/bin/phpunit --no-coverage
+    php -d hhvm.php7.all=1 -d hhvm.jit=0 vendor/bin/phpunit
 fi
