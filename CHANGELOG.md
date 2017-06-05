@@ -3,6 +3,7 @@
 ## 0.10.0
 
 * Removed `Awesomite\StackTrace\Arguments\Values\MultipleValues`
+* Added tests for HHVM with flag `hhvm.php7.all=1`
 
 ## 0.9.2
 
