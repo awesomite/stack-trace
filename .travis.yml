@@ -52,8 +52,8 @@ before_script:
 script:
   - php ${EXTRA_CONFIG} -r "echo phpversion() . PHP_EOL;"
 
-  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") ${EXTRA_CONFIG} vendor/bin/phpunit --verbose
-  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit --verbose
+  - travis_wait if [ ${HHVM_PHP7+x} ]; then echo "Do not test lowest dependencies on HHVM with PHP7 support"; else composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit; fi
+  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit
 
 after_script:
   - mv ~.git .git
