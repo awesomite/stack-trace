@@ -52,7 +52,7 @@ before_script:
 script:
   - php ${EXTRA_CONFIG} -r "echo phpversion() . PHP_EOL;"
 
-  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") ${EXTRA_CONFIG} vendor/bin/phpunit
+  - travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") ${EXTRA_CONFIG} vendor/bin/phpunit --verbose
   - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit --verbose
 
 after_script:
