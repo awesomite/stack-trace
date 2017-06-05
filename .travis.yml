@@ -46,7 +46,7 @@ matrix:
 #      env: HHVM_PHP7=1
 
 before_script:
-  - if [ ${HHVM_PHP7+x} ]; then composer-set-config.php php 7.0; fi
+  - if [ ${HHVM_PHP7+x} ]; then bin/composer-set-config.php php 7.0; fi
   - if [ ${HHVM_PHP7+x} ]; then export EXTRA_CONFIG='-d hhvm.php7.all=1'; else export EXTRA_CONFIG=''; fi
 
 script:
