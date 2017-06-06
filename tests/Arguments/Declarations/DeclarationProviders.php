@@ -56,7 +56,7 @@ class DeclarationProviders extends BaseTestCase
         }
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
-        if (version_compare(PHP_VERSION, '7.1.0RC1') >= 0) {
+        if (version_compare(PHP_VERSION, '7.1.0RC1') >= 0 && !defined('HHVM_VERSION')) {
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameterIterable) = $class71->getMethod('argumentIterable')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'iterable');

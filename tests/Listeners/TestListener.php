@@ -2,14 +2,13 @@
 
 namespace Awesomite\StackTrace\Listeners;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * @internal
  */
-class TestListener extends BridgeTestListener
+class TestListener implements \PHPUnit_Framework_TestListener
 {
     private $offset = .05;
 
@@ -28,15 +27,45 @@ class TestListener extends BridgeTestListener
         }
     }
 
-    protected function _endTest($test, $time)
+    public function addError(\PHPUnit_Framework_Test $test, \Exception $e, $time)
     {
-        parent::_endTest($test, $time);
+    }
 
+    public function addFailure(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
+    }
+
+    public function addIncompleteTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
+    }
+
+    public function addRiskyTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
+    }
+
+    public function addSkippedTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
+    }
+
+    public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
+    {
+    }
+
+    public function endTestSuite(\PHPUnit_Framework_TestSuite $suite)
+    {
+    }
+
+    public function startTest(\PHPUnit_Framework_Test $test)
+    {
+    }
+
+    public function endTest(\PHPUnit_Framework_Test $test, $time)
+    {
         if ($time < $this->offset) {
             return;
         }
 
-        $name = ($test instanceof \PHPUnit_Framework_TestCase) || ($test instanceof TestCase)
+        $name = $test instanceof \PHPUnit_Framework_TestCase
             ? get_class($test) . '::' . $test->getName()
             : get_class($test);
 

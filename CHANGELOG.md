@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.1
+
+* Removed support for PHPUnit ^5.0 && ^6.0 - there are issue with HHVM and `Throwable`,
+in HHVM `Exception` does not implement `Throwable`
+
 ## 0.10.0
 
 * Removed `Awesomite\StackTrace\Arguments\Values\MultipleValues`

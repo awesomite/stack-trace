@@ -14,7 +14,6 @@
         }
     },
     "autoload-dev": {
-        "files": ["tests/hhvm-polyfill/exceptions.php.polyfill"],
         "psr-4": {
             "Awesomite\\StackTrace\\": "tests/"
         }
@@ -28,7 +27,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35 || ^5.7.19 || ^6.1.3",
+        "phpunit/phpunit": "^4.8.35",
         "satooshi/php-coveralls": "^1.0.1 || ^2.0.0",
         "sebastian/comparator": ">=1.2.3"
     },
