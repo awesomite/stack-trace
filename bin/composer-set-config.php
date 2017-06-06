@@ -10,7 +10,12 @@ $handle = function ($scriptName, $key, $value) {
         $json['config'] = array();
     }
     $json['config'][$key] = $value;
-    file_put_contents($jsonPath, json_encode($json));
+
+    $options = JSON_UNESCAPED_UNICODE;
+    if (defined('JSON_PRETTY_PRINT')) {
+        $options |= constant('JSON_PRETTY_PRINT');
+    }
+    file_put_contents($jsonPath, json_encode($json, $options));
 };
 
 call_user_func_array($handle, $argv);
