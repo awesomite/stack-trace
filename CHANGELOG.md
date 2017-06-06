@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0
+
+* Removed `Awesomite\StackTrace\Arguments\Values\MultipleValues`
+* Added tests for HHVM with flag `hhvm.php7.all=1`
+* `Awesomite\StackTrace\StackTrace::unserialize` throws `Awesomite\StackTrace\Exceptions\LogicException` instead of `LogicException`
+
 ## 0.9.2
 
 * Fixed phpdoc for `Awesomite\StackTrace\Arguments\ArgumentsInterface::getIterator`

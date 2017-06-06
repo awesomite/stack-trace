@@ -3,7 +3,6 @@
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Declarations\Declaration;
-use Awesomite\StackTrace\Arguments\Values\MultipleValues;
 use Awesomite\StackTrace\Arguments\Values\ValueInterface;
 use Awesomite\StackTrace\Functions\FunctionInterface;
 
@@ -41,12 +40,6 @@ class Arguments implements ArgumentsInterface
         if ($this->function && $this->function->hasReflection()) {
             foreach ($this->function->getReflection()->getParameters() as $parameter) {
                 $declaration = new Declaration($parameter);
-
-                if ($declaration->isVariadic()) {
-                    $result[] = new Argument($declaration, $arguments ? new MultipleValues($arguments) : null);
-                    $arguments = array();
-                    continue;
-                }
 
                 if ($arguments) {
                     $result[] = new Argument($declaration, array_shift($arguments));

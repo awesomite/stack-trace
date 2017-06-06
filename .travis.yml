@@ -5,6 +5,7 @@ install:
   - mv .git ~.git
 
 dist: trusty
+sudo: false
 
 php:
   - 5.4
@@ -27,10 +28,30 @@ matrix:
     - php: 5.3
       dist: precise
 
+    - php: hhvm
+      env: HHVM_PHP7=1
+
+    - php: hhvm-3.12
+      env: HHVM_PHP7=1
+
+    - php: hhvm-3.15
+      env: HHVM_PHP7=1
+
+    - php: hhvm-3.18
+      env: HHVM_PHP7=1
+
+    - php: hhvm-nightly
+      env: HHVM_PHP7=1
+
+before_script:
+  - if [ ${HHVM_PHP7+x} ]; then bin/composer-set-config.php php 7.0; fi
+  - if [ ${HHVM_PHP7+x} ]; then export EXTRA_CONFIG='-d hhvm.php7.all=1'; else export EXTRA_CONFIG=''; fi
+
 script:
-  - php -r "echo phpversion() . PHP_EOL;"
-  - travis_wait composer update --prefer-lowest --no-interaction && php -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit
-  - travis_wait composer update --no-interaction && vendor/bin/phpunit
+  - php ${EXTRA_CONFIG} -r "echo phpversion() . PHP_EOL;"
+
+  - if [ ${HHVM_PHP7+x} ]; then echo "Do not test the lowest dependencies on HHVM with PHP7 support"; else travis_wait composer update --prefer-lowest --no-interaction && php -d hhvm.jit=0 -d error_reporting=$(php -r "var_export(E_ALL & ~E_DEPRECATED);") vendor/bin/phpunit; fi
+  - travis_wait composer update --no-interaction && php -d hhvm.jit=0 ${EXTRA_CONFIG} vendor/bin/phpunit
 
 after_script:
   - mv ~.git .git

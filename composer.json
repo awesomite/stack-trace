@@ -14,6 +14,7 @@
         }
     },
     "autoload-dev": {
+        "files": ["tests/hhvm-polyfill/exceptions.php.polyfill"],
         "psr-4": {
             "Awesomite\\StackTrace\\": "tests/"
         }
@@ -21,7 +22,7 @@
     "require": {
         "php": "^5.3 || ^7.0",
         "composer/semver": "^1.4.2",
-        "awesomite/var-dumper": "^0.6.1",
+        "awesomite/var-dumper": "^0.6.1 || ^0.7.0",
         "awesomite/iterators": "^0.2.0"
     },
     "minimum-stability": "dev",
@@ -33,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.9-dev"
+            "dev-master": "0.10-dev"
         }
     }
 }

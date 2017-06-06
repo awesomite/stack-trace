@@ -6,6 +6,8 @@ use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 
 class StackTraceFactory
 {
+    private static $rootExceptionClass = null;
+
     /**
      * @param int $stepLimit
      * @param bool $ignoreArgs
@@ -45,12 +47,34 @@ class StackTraceFactory
      */
     public function createByThrowable($exception, $stepLimit = 0, $ignoreArgs = false)
     {
-        $exceptionClass = version_compare(PHP_VERSION, '7.0') >= 0 ? '\Throwable' : '\Exception';
-        if (!$exception instanceof $exceptionClass) {
-            throw new InvalidArgumentException("Argument should be an instance of {$exceptionClass}!");
+        $exceptionClass = $this->getRootExceptionClass();
+        if (!is_object($exception) || !$exception instanceof $exceptionClass) {
+            throw new InvalidArgumentException(sprintf(
+                "Expected argument of type %s, %s given",
+                $exceptionClass,
+                is_object($exception) ? get_class($exception) : gettype($exception)
+            ));
         }
 
         return $this->createBy($exception, $stepLimit, $ignoreArgs);
+    }
+
+    /**
+     * HHVM still does not support \Throwable interface
+     *
+     * @return null|string
+     */
+    private function getRootExceptionClass()
+    {
+        if (is_null(self::$rootExceptionClass)) {
+            $reflection = new \ReflectionClass('\Exception');
+            $throwableExists = interface_exists('\Throwable', false);
+            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('\Throwable')
+                ? '\Throwable'
+                : '\Exception';
+        }
+
+        return self::$rootExceptionClass;
     }
 
     /**

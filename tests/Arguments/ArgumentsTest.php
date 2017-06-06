@@ -23,6 +23,7 @@ class ArgumentsTest extends BaseTestCase
     public function testAll(Arguments $arguments, $count)
     {
         $this->assertSame($count, count($arguments));
+        $this->assertSame(count($arguments), count(iterator_to_array($arguments)));
         foreach ($arguments as $argument) {
             $this->assertTrue($argument instanceof ArgumentInterface);
         }
@@ -60,7 +61,7 @@ class ArgumentsTest extends BaseTestCase
         ));
 
         return array(
-            $this->createByRawValues(array('1', '2', '3'), $function),
+            $this->createByRawValues(array(array('1', '2', '3')), $function),
             1
         );
     }
