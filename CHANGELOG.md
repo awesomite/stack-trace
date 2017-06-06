@@ -2,7 +2,8 @@
 
 ## 0.10.1
 
-* Removed support for PHPUnit ^6.0 - PHPUnit ^6.0 does not support HHVM
+* Removed support for PHPUnit ^5.0 && ^6.0 - there are issue with HHVM and `Throwable`,
+in HHVM `Exception` does not implement `Throwable`
 
 ## 0.10.0
 
