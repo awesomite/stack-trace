@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.1
+
+* Removed support for PHPUnit ^6.0 - PHPUnit ^6.0 does not support HHVM
+
 ## 0.10.0
 
 * Removed `Awesomite\StackTrace\Arguments\Values\MultipleValues`
