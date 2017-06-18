@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.3
+
+* Fixed bug "Undefined property: ClassName::$propertyName" - property can be defined in code, but removed in runtime
+
+## 0.5.2
+
+* Updated `StackTrace::VERSION`
+
 ## 0.5.1
 
 * Check if file exists when contents is not initialized yet - `\Awesomite\StackTrace\SourceCode\PlaceInCode`
