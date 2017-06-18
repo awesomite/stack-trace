@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+* Corrected value `Awesomite\StackTrace\StackTrace::VERSION`
+
 ## 0.2.1
 
 * Fixed bug "Undefined property: ClassName::$propertyName" - property can be defined in code, but removed in runtime
