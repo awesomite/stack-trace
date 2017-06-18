@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+* Fixed bug "Undefined property: ClassName::$propertyName" - property can be defined in code, but removed in runtime
+
 ## 0.3.2
 
 * Corrected value of `StackTrace::VERSION`
