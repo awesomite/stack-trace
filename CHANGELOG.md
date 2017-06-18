@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+
+* Fixed bug "Undefined property: ClassName::$propertyName" - property can be defined in code, but removed in runtime
+
 ## 0.4.1
 
 * Fixed bug: `Call to a member function getDump() on null`
