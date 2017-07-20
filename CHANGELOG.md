@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4
+
+* `ReflectionProperty` calls `__get` method. Method `__get` can throw an exception. Added fix for this issue.
+
 ## 0.5.3
 
 * Fixed bug "Undefined property: ClassName::$propertyName" - property can be defined in code, but removed in runtime
