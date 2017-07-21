@@ -16,6 +16,14 @@ php:
   - hhvm
   - nightly
 
+dist: trusty
+sudo: false
+
+matrix:
+  include:
+    - php: 5.3
+      dist: precise
+
 matrix:
   allow_failures:
     - php: hhvm
