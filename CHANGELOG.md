@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+* Fixed bug - `ReflectionProperty::getValue` can throw an exception
+
 ## 0.2.2
 
 * Corrected value `Awesomite\StackTrace\StackTrace::VERSION`
