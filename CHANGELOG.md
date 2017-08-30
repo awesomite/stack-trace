@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.2 (2017-08-30)
+
+* Updated `awesomite/var-dumper` to version `^0.6.3 || ^0.7.2 || ^0.8.0`
+
 ## 0.10.1 (2017-06-06)
 
 * Removed support for PHPUnit ^5.0 and ^6.0 - there are issue with HHVM and `Throwable`,

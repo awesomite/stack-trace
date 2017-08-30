@@ -21,7 +21,7 @@
     "require": {
         "php": "^5.3 || ^7.0",
         "composer/semver": "^1.4.2",
-        "awesomite/var-dumper": "^0.6.1 || ^0.7.0",
+        "awesomite/var-dumper": "^0.6.3 || ^0.7.2 || ^0.8.0",
         "awesomite/iterators": "^0.2.0"
     },
     "minimum-stability": "dev",
