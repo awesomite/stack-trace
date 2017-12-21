@@ -14,6 +14,7 @@
         }
     },
     "autoload-dev": {
+        "files": ["tests/functions.php"],
         "psr-4": {
             "Awesomite\\StackTrace\\": "tests/"
         }
@@ -27,7 +28,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35",
+        "phpunit/phpunit": "^4.8.36",
         "sebastian/comparator": ">=1.2.3"
     },
     "extra": {
