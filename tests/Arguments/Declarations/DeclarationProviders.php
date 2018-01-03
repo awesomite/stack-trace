@@ -16,6 +16,7 @@ use Awesomite\StackTrace\Tmp\TestPhp53;
 use Awesomite\StackTrace\Tmp\TestPhp54;
 use Awesomite\StackTrace\Tmp\TestPhp56;
 use Awesomite\StackTrace\Tmp\TestPhp71;
+use Awesomite\StackTrace\Tmp\TestPhp72;
 
 class DeclarationProviders extends BaseTestCase
 {
@@ -69,6 +70,12 @@ class DeclarationProviders extends BaseTestCase
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameterIterable) = $class71->getMethod('argumentIterable')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'iterable');
+        }
+
+        if (\version_compare(PHP_VERSION, '7.2') >= 0) {
+            $class72 = new \ReflectionClass(new TestPhp72());
+            list($parameterIterable) = $class72->getMethod('argumentObject')->getParameters();
+            $result[] = array(new Declaration($parameterIterable), true, 'object');
         }
 
         return $result;
