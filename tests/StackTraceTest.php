@@ -88,7 +88,8 @@ class StackTraceTest extends BaseTestCase
     {
         $factory = new StackTraceFactory();
         $stackTraceA = $factory->create();
-        $stackTraceB = $factory->create(); $stackTraceC = $factory->create();
+        $stackTraceB = $factory->create();
+        $stackTraceC = $factory->create();
         $this->assertNotEquals($stackTraceA->getId(), $stackTraceB->getId());
         $this->assertSame($stackTraceB->getId(), $stackTraceC->getId());
         $this->assertInternalType('string', $stackTraceA->getId());
