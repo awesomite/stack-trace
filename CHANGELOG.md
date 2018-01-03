@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.10.4 (????-??-??)
+## 0.10.4 (2018-01-03)
 
 * Updated composer dependencies
 * Added `php-cs-fixer`
