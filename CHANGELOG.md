@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.4 (????-??-??)
+
+* Updated composer dependencies
+* Added `php-cs-fixer`
+* Added `awesomite/phpunit-4.8-fixer`
+
 ## 0.10.3 (2017-12-21)
 
 * Updated `awesomite/var-dumper` to version `^0.6.3 || ^0.7.2 || ^0.8.0 || ^0.9.0`

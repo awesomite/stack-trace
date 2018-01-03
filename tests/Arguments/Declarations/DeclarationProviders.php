@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments\Declarations;
 
 use Awesomite\StackTrace\BaseTestCase;
@@ -47,7 +56,7 @@ class DeclarationProviders extends BaseTestCase
         list($parameterWithoutName) = $methodWithoutType->getParameters();
         $result[] = array(new Declaration($parameterWithoutName), false);
 
-        if (version_compare(PHP_VERSION, '5.4') >= 0) {
+        if (\version_compare(PHP_VERSION, '5.4') >= 0) {
             $testPhp54 = new TestPhp54();
             $class54 = new \ReflectionClass($testPhp54);
             $methodCallable = $class54->getMethod('argumentCallable');
@@ -56,7 +65,7 @@ class DeclarationProviders extends BaseTestCase
         }
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
-        if (version_compare(PHP_VERSION, '7.1.0RC1') >= 0 && !defined('HHVM_VERSION')) {
+        if (\version_compare(PHP_VERSION, '7.1.0RC1') >= 0 && !\defined('HHVM_VERSION')) {
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameterIterable) = $class71->getMethod('argumentIterable')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'iterable');
@@ -85,7 +94,7 @@ class DeclarationProviders extends BaseTestCase
         list($normalParameter) = $class53->getMethod('argumentArray')->getParameters();
         $result[] = array(new Declaration($normalParameter), false);
 
-        if (version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
             $class56 = new \ReflectionClass(new TestPhp56());
             list($variadicParameter) = $class56->getMethod('argumentVariadic')->getParameters();
             $result[] = array(new Declaration($variadicParameter), true);
@@ -116,7 +125,7 @@ class DeclarationProviders extends BaseTestCase
         list($normalParameter) = $class53->getMethod('argumentArray')->getParameters();
         $result[] = array(new Declaration($normalParameter), false);
 
-        if (version_compare(PHP_VERSION, '5.4.6') >= 0 && !defined('HHVM_VERSION')) {
+        if (\version_compare(PHP_VERSION, '5.4.6') >= 0 && !\defined('HHVM_VERSION')) {
             $class54 = new \ReflectionClass(new TestPhp54());
             list($defaultConstant) = $class54->getMethod('argumentDefaultConstant')->getParameters();
             $result[] = array(new Declaration($defaultConstant), true, 'PHP_VERSION');

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Listeners;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -16,7 +25,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     public function __construct()
     {
-        $this->getConsoleOutput()->writeln(sprintf('PHP %s', phpversion()));
+        $this->getConsoleOutput()->writeln(\sprintf('PHP %s', \phpversion()));
     }
 
     public function __destruct()
@@ -66,10 +75,11 @@ class TestListener implements \PHPUnit_Framework_TestListener
         }
 
         $name = $test instanceof \PHPUnit_Framework_TestCase
-            ? get_class($test) . '::' . $test->getName()
-            : get_class($test);
+            ? \get_class($test) . '::' . $test->getName()
+            : \get_class($test);
 
-        $this->messages[] = sprintf("<warning>Test '%s' took %0.2f seconds.</warning>",
+        $this->messages[] = \sprintf(
+            "<warning>Test '%s' took %0.2f seconds.</warning>",
             $name,
             $time
         );

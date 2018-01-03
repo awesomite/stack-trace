@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\SourceCode\Lines;
 
 use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
@@ -15,7 +24,6 @@ class Lines implements LinesInterface
     private $lines;
 
     /**
-     * LineIterator constructor.
      * @param LineInterface[] $lines
      */
     public function __construct(array $lines)
@@ -28,12 +36,12 @@ class Lines implements LinesInterface
 
     public function getFirstLineIndex()
     {
-        return key(array_slice($this->lines, 0, 1, true));
+        return \key(\array_slice($this->lines, 0, 1, true));
     }
 
     public function getLastLineIndex()
     {
-        return key(array_slice($this->lines, -1, 1, true));
+        return \key(\array_slice($this->lines, -1, 1, true));
     }
 
     public function getIterator()
@@ -43,11 +51,11 @@ class Lines implements LinesInterface
 
     public function count()
     {
-        return count($this->lines);
+        return \count($this->lines);
     }
 
     public function __toString()
     {
-        return implode("\n", $this->lines);
+        return \implode("\n", $this->lines);
     }
 }

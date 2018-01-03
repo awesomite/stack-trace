@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Functions;
 
 use Awesomite\StackTrace\BaseTestCase;
@@ -11,11 +20,11 @@ class AFunctionProviders extends BaseTestCase
         return array(
             array(
                 new AFunction(array('class' => 'MyClass', 'type' => '::', 'function' => 'myFunction')),
-                'MyClass::myFunction'
+                'MyClass::myFunction',
             ),
             array(
                 new AFunction(array('class' => 'MyClass', 'type' => '->', 'function' => 'myFunction')),
-                'MyClass->myFunction'
+                'MyClass->myFunction',
             ),
             array(new AFunction(array('function' => 'strpos')), 'strpos'),
         );
@@ -47,20 +56,20 @@ class AFunctionProviders extends BaseTestCase
 
     public function providerIsDeprecated()
     {
-        $testClassName = get_class(new TestClass());
+        $testClassName = \get_class(new TestClass());
 
         $deprecatedFunctions = array(
-            'sayHello' => array('class' => $testClassName, 'function' => 'sayHello'),
+            'sayHello'   => array('class' => $testClassName, 'function' => 'sayHello'),
             'sayGoodbye' => array('class' => $testClassName, 'function' => 'sayGoodbye'),
         );
 
         $functions = array(
-            'welcome' => array('class' => $testClassName, 'function' => 'welcome'),
+            'welcome'   => array('class' => $testClassName, 'function' => 'welcome'),
             '{closure}' => array('function' => '{closure}'),
         );
 
         foreach (array('call_user_method', 'ldap_sort', 'strpos', 'mb_ereg_replace') as $functionName) {
-            if (function_exists($functionName)) {
+            if (\function_exists($functionName)) {
                 $reflectionFunction = new \ReflectionFunction($functionName);
                 if ($reflectionFunction->isDeprecated()) {
                     $deprecatedFunctions[$functionName] = array('function' => $functionName);
@@ -86,8 +95,8 @@ class AFunctionProviders extends BaseTestCase
     public function providerReflection()
     {
         return array(
-            'class' => array(new AFunction(array('class' => __CLASS__, 'function' => __FUNCTION__)), true),
-            'strpos' => array(new AFunction(array('function' => 'strpos')), true),
+            'class'     => array(new AFunction(array('class' => __CLASS__, 'function' => __FUNCTION__)), true),
+            'strpos'    => array(new AFunction(array('function' => 'strpos')), true),
             '{closure}' => array(new AFunction(array('function' => '{closure}')), false),
         );
     }

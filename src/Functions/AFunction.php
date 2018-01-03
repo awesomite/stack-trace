@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Functions;
 
 use Awesomite\StackTrace\Exceptions\LogicException;
@@ -39,7 +48,7 @@ class AFunction implements FunctionInterface
 
     public function isClosure()
     {
-        return strpos($this->arrayStep['function'], '{closure}') !== false;
+        return false !== \mb_strpos($this->arrayStep['function'], '{closure}');
     }
 
     public function isInClass()
@@ -49,7 +58,7 @@ class AFunction implements FunctionInterface
 
     public function isKeyword()
     {
-        return !$this->isClosure() && !$this->isInClass() && !function_exists($this->arrayStep['function']);
+        return !$this->isClosure() && !$this->isInClass() && !\function_exists($this->arrayStep['function']);
     }
 
     public function isDeprecated()
@@ -73,7 +82,8 @@ class AFunction implements FunctionInterface
                 if ($this->hasDeprecatedTag($reflection->getPrototype())) {
                     return true;
                 }
-            } catch (\ReflectionException $exception) {}
+            } catch (\ReflectionException $exception) {
+            }
         }
 
         return false;
@@ -81,7 +91,7 @@ class AFunction implements FunctionInterface
 
     public function getReflection()
     {
-        if (is_null($this->reflection)) {
+        if (\is_null($this->reflection)) {
             $this->reflection = $this->createReflection();
         }
 
@@ -91,14 +101,14 @@ class AFunction implements FunctionInterface
     public function hasReflection()
     {
         return !$this->isClosure() && !$this->isKeyword()
-            && (!$this->isInClass() || method_exists($this->arrayStep['class'], $this->arrayStep['function']));
+            && (!$this->isInClass() || \method_exists($this->arrayStep['class'], $this->arrayStep['function']));
     }
 
     private function hasDeprecatedTag(\ReflectionFunctionAbstract $function)
     {
         $comment = $function->getDocComment();
 
-        return $comment !== false && strpos($comment, '@deprecated') !== false;
+        return false !== $comment && false !== \mb_strpos($comment, '@deprecated');
     }
 
     private function createReflection()
@@ -109,6 +119,7 @@ class AFunction implements FunctionInterface
 
         if ($this->isInClass()) {
             $class = new \ReflectionClass($this->arrayStep['class']);
+
             return $class->getMethod($this->arrayStep['function']);
         }
 

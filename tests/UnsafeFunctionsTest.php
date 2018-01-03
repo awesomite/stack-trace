@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace;
 
 /**
@@ -7,40 +16,41 @@ namespace Awesomite\StackTrace;
  */
 class UnsafeFunctionsTest extends BaseTestCase
 {
-    private static $unsafeFunctions = array(
-        'system',
-        'exec',
-        'popen',
-        'pcntl_exec',
-        'eval',
-        'create_function',
-        'preg_replace', // /e
-        'override_function',
-        'rename_function',
-        'var_dump',
-        'print_r',
-        'mb_ereg_replace', // /e
-        'mb_eregi_replace', // /e
-    );
+    private static $unsafeFunctions
+        = array(
+            'system',
+            'exec',
+            'popen',
+            'pcntl_exec',
+            'eval',
+            'create_function',
+            'preg_replace', // /e
+            'override_function',
+            'rename_function',
+            'var_dump',
+            'print_r',
+            'mb_ereg_replace', // /e
+            'mb_eregi_replace', // /e
+        );
 
     /**
      * @dataProvider providerFiles
      */
     public function testPhp($filePath)
     {
-        foreach (token_get_all(file_get_contents($filePath)) as $tokenArr) {
-            if (!is_array($tokenArr)) {
-                if ($tokenArr === '`') {
+        foreach (\token_get_all(\file_get_contents($filePath)) as $tokenArr) {
+            if (!\is_array($tokenArr)) {
+                if ('`' === $tokenArr) {
                     $this->fail("Backtick operator is forbidden {$filePath}");
                 }
                 continue;
             }
             list($token, $source, $line) = $tokenArr;
-            $source = strtolower($source);
+            $source = \mb_strtolower($source);
 
             switch ($token) {
                 case T_STRING:
-                    if (in_array($source, self::$unsafeFunctions, true)) {
+                    if (\in_array($source, self::$unsafeFunctions, true)) {
                         $this->fail("Function {$source} in {$filePath}:{$line}");
                     }
                     break;
@@ -55,10 +65,10 @@ class UnsafeFunctionsTest extends BaseTestCase
 
     public function providerFiles()
     {
-        $exploded = explode(DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR, __DIR__);
-        array_pop($exploded);
+        $exploded = \explode(DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR, __DIR__);
+        \array_pop($exploded);
         $exploded[] = 'src';
-        $path = implode(DIRECTORY_SEPARATOR, $exploded);
+        $path = \implode(DIRECTORY_SEPARATOR, $exploded);
         $pattern = '/^.+\.php$/';
 
         $directory = new \RecursiveDirectoryIterator($path);

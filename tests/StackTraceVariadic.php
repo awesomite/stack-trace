@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Arguments\ArgumentInterface;
@@ -30,17 +39,17 @@ class StackTraceVariadic
         $factory = new StackTraceFactory();
         $stackTrace = $factory->create(2);
         /** @var StepInterface[] $steps */
-        $steps = iterator_to_array($stackTrace->getIterator());
+        $steps = \iterator_to_array($stackTrace->getIterator());
         $step = $steps[1];
         /** @var ArgumentInterface[] $args */
-        $args = iterator_to_array($step->getArguments());
-        $this->testCase->assertSame(3, count($args));
+        $args = \iterator_to_array($step->getArguments());
+        $this->testCase->assertSame(3, \count($args));
         /**
          * @see https://travis-ci.org/awesomite/stack-trace/builds/239418547
          * Bug in older HHVM versions:
          * Variadic parameter is missing in debug_backtrace()[$x]['args']
          */
-        if (!defined('HHVM_VERSION') || version_compare(HHVM_VERSION, '3.9') >= 0) {
+        if (!\defined('HHVM_VERSION') || \version_compare(HHVM_VERSION, '3.9') >= 0) {
             $this->testCase->assertSame(empty($third), !$args[2]->hasValue());
             $this->testCase->assertTrue($args[2]->hasDeclaration());
         }

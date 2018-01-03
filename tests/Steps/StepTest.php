@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\ArgumentsInterface;
@@ -25,7 +34,7 @@ class StepTest extends BaseTestCase
     public function providerGetArguments()
     {
         $result = array();
-        foreach (debug_backtrace() as $arrayStep) {
+        foreach (\debug_backtrace() as $arrayStep) {
             $result[] = array(new Step($arrayStep));
         }
 
@@ -43,7 +52,7 @@ class StepTest extends BaseTestCase
         $this->assertSame($hasPlaceInCode, $step->hasPlaceInCode());
         if (!$hasPlaceInCode) {
             $exception = new LogicException();
-            $this->setExpectedException(get_class($exception));
+            $this->setExpectedException(\get_class($exception));
         }
         $this->assertTrue($step->getPlaceInCode() instanceof PlaceInCodeInterface);
     }
@@ -67,15 +76,15 @@ class StepTest extends BaseTestCase
     /**
      * @dataProvider providerGetCalledFunction
      *
-     * @param Step $step
-     * @param bool $hasFunction
+     * @param Step   $step
+     * @param bool   $hasFunction
      * @param string $expectedName
      */
     public function testGetCalledFunction(Step $step, $hasFunction, $expectedName = '')
     {
         if (!$hasFunction) {
             $exception = new LogicException();
-            $this->setExpectedException(get_class($exception), 'There is no called function for this step!');
+            $this->setExpectedException(\get_class($exception), 'There is no called function for this step!');
         }
         $this->assertSame($hasFunction, $step->hasCalledFunction());
         $this->assertSame($expectedName, $step->getCalledFunction()->getName());

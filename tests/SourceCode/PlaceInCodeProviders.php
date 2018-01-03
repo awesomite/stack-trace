@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\SourceCode;
 
 use Awesomite\StackTrace\BaseTestCase;
@@ -15,7 +24,7 @@ class PlaceInCodeProviders extends BaseTestCase
             array(Constants::MAX_LINE_THRESHOLD * 2 + 1),
         );
     }
-    
+
     public function providerGetFile()
     {
         return array(
@@ -36,7 +45,7 @@ class PlaceInCodeProviders extends BaseTestCase
     {
         return array(
             array(new PlaceInCode(__DIR__, 1)),
-            array(new PlaceInCode(dirname(__DIR__), 1)),
+            array(new PlaceInCode(\dirname(__DIR__), 1)),
         );
     }
 
@@ -47,16 +56,17 @@ class PlaceInCodeProviders extends BaseTestCase
         $result[] = array(new PlaceInCode(__FILE__, 1000));
 
         $reflectionClass = new \ReflectionClass(new StackTraceFactory());
-        $contents = file_get_contents($reflectionClass->getFileName());
-        $lines = explode("\n", $contents);
-        $result[] = array(new PlaceInCode($reflectionClass->getFileName(), count($lines) + 1));
+        $contents = \file_get_contents($reflectionClass->getFileName());
+        $lines = \explode("\n", $contents);
+        $result[] = array(new PlaceInCode($reflectionClass->getFileName(), \count($lines) + 1));
 
         return $result;
     }
 
     public function providerMove()
     {
-        $linesCounter = count(explode("\n", file_get_contents(__FILE__)));
+        $linesCounter = \count(\explode("\n", \file_get_contents(__FILE__)));
+
         return array(
             array(new PlaceInCode(__FILE__, $linesCounter), 20, $linesCounter - 19, $linesCounter),
             array(new PlaceInCode(__FILE__, 1), 20, 1, 20),

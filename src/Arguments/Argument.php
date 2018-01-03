@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Declarations\DeclarationInterface;
@@ -25,7 +34,7 @@ class Argument implements ArgumentInterface
      * @codeCoverageIgnore
      *
      * @param DeclarationInterface|null $declaration
-     * @param ValueInterface|null $value
+     * @param ValueInterface|null       $value
      */
     public function __construct(DeclarationInterface $declaration = null, ValueInterface $value = null)
     {
@@ -35,7 +44,7 @@ class Argument implements ArgumentInterface
 
     public function hasDeclaration()
     {
-        return !is_null($this->declaration);
+        return !\is_null($this->declaration);
     }
 
     public function getDeclaration()
@@ -49,7 +58,7 @@ class Argument implements ArgumentInterface
 
     public function hasValue()
     {
-        return !is_null($this->value);
+        return !\is_null($this->value);
     }
 
     public function getValue()

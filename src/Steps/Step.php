@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Steps;
 
 use Awesomite\StackTrace\Arguments\Arguments;
@@ -50,8 +59,9 @@ class Step implements StepInterface
 
     public function hasPlaceInCode()
     {
-        return isset($this->stepArray[Constants::KEY_FILE_OBJECT]) ||
-            (isset($this->stepArray['file']) && is_file($this->stepArray['file']) && !empty($this->stepArray['line']));
+        return isset($this->stepArray[Constants::KEY_FILE_OBJECT])
+            || (isset($this->stepArray['file']) && \is_file($this->stepArray['file'])
+                && !empty($this->stepArray['line']));
     }
 
     public function hasCalledFunction()
@@ -65,7 +75,7 @@ class Step implements StepInterface
             throw new LogicException('There is no called function for this step!');
         }
 
-        if (is_null($this->function)) {
+        if (\is_null($this->function)) {
             $this->function = new AFunction($this->stepArray);
         }
 

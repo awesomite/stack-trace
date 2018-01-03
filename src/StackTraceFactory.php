@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
@@ -9,18 +18,19 @@ class StackTraceFactory
     private static $rootExceptionClass = null;
 
     /**
-     * @param int $stepLimit
+     * @param int  $stepLimit
      * @param bool $ignoreArgs
+     *
      * @return StackTraceInterface
      */
     public function create($stepLimit = 0, $ignoreArgs = false)
     {
-        if (version_compare(PHP_VERSION, '5.4') >= 0) {
+        if (\version_compare(PHP_VERSION, '5.4') >= 0) {
             $options = 0;
             if ($ignoreArgs) {
                 $options |= DEBUG_BACKTRACE_IGNORE_ARGS;
             }
-            $arrayStackTrace = debug_backtrace($options, $stepLimit);
+            $arrayStackTrace = \debug_backtrace($options, $stepLimit);
             if ($ignoreArgs) {
                 $this->removeArgs($arrayStackTrace);
             }
@@ -28,9 +38,9 @@ class StackTraceFactory
             return new StackTrace($arrayStackTrace);
         }
 
-        $arrayStackTrace = debug_backtrace($this->getOptionsForDebugBacktrace53());
+        $arrayStackTrace = \debug_backtrace($this->getOptionsForDebugBacktrace53());
         if ($stepLimit > 0) {
-            $arrayStackTrace = array_slice($arrayStackTrace, 0, $stepLimit, true);
+            $arrayStackTrace = \array_slice($arrayStackTrace, 0, $stepLimit, true);
         }
         if ($ignoreArgs) {
             $this->removeArgs($arrayStackTrace);
@@ -41,18 +51,19 @@ class StackTraceFactory
 
     /**
      * @param \Throwable|\Exception $exception
-     * @param int $stepLimit
-     * @param bool $ignoreArgs
+     * @param int                   $stepLimit
+     * @param bool                  $ignoreArgs
+     *
      * @return StackTraceInterface
      */
     public function createByThrowable($exception, $stepLimit = 0, $ignoreArgs = false)
     {
         $exceptionClass = $this->getRootExceptionClass();
-        if (!is_object($exception) || !$exception instanceof $exceptionClass) {
-            throw new InvalidArgumentException(sprintf(
+        if (!\is_object($exception) || !$exception instanceof $exceptionClass) {
+            throw new InvalidArgumentException(\sprintf(
                 "Expected argument of type %s, %s given",
                 $exceptionClass,
-                is_object($exception) ? get_class($exception) : gettype($exception)
+                \is_object($exception) ? \get_class($exception) : \gettype($exception)
             ));
         }
 
@@ -66,9 +77,9 @@ class StackTraceFactory
      */
     private function getRootExceptionClass()
     {
-        if (is_null(self::$rootExceptionClass)) {
+        if (\is_null(self::$rootExceptionClass)) {
             $reflection = new \ReflectionClass('\Exception');
-            $throwableExists = interface_exists('\Throwable', false);
+            $throwableExists = \interface_exists('\Throwable', false);
             self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('\Throwable')
                 ? '\Throwable'
                 : '\Exception';
@@ -79,8 +90,9 @@ class StackTraceFactory
 
     /**
      * @param \Exception|\Throwable $exception
-     * @param int $stepLimit
-     * @param bool $ignoreArgs
+     * @param int                   $stepLimit
+     * @param bool                  $ignoreArgs
+     *
      * @return StackTrace
      */
     private function createBy($exception, $stepLimit = 0, $ignoreArgs = false)
@@ -90,10 +102,10 @@ class StackTraceFactory
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
         );
-        array_unshift($trace, $step);
+        \array_unshift($trace, $step);
 
         if ($stepLimit > 0) {
-            $trace = array_slice($trace, 0, $stepLimit, true);
+            $trace = \array_slice($trace, 0, $stepLimit, true);
         }
 
         if ($ignoreArgs) {
@@ -114,6 +126,6 @@ class StackTraceFactory
 
     private function getOptionsForDebugBacktrace53()
     {
-        return version_compare(PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
+        return \version_compare(PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments\Values;
 
 use Awesomite\VarDumper\InternalVarDumper;
@@ -22,7 +31,7 @@ class Value implements ValueInterface, \Serializable
     /**
      * @codeCoverageIgnore
      *
-     * @param mixed $value
+     * @param mixed              $value
      * @param VarDumperInterface $varDumper
      */
     public function __construct($value, VarDumperInterface $varDumper = null)
@@ -43,8 +52,9 @@ class Value implements ValueInterface, \Serializable
 
     public function dump()
     {
-        if (!is_null($this->dumpedVar)) {
+        if (!\is_null($this->dumpedVar)) {
             echo $this->dumpedVar;
+
             return;
         }
 
@@ -53,10 +63,10 @@ class Value implements ValueInterface, \Serializable
 
     public function getDump()
     {
-        ob_start();
+        \ob_start();
         $this->dump();
-        $result = ob_get_contents();
-        ob_end_clean();
+        $result = \ob_get_contents();
+        \ob_end_clean();
 
         return $result;
     }
@@ -68,15 +78,15 @@ class Value implements ValueInterface, \Serializable
 
     public function serialize()
     {
-        return serialize(array(
-            'value' => $this->value,
-            'dumpedVar' => !is_null($this->dumpedVar) ? $this->dumpedVar : $this->varDumper->getDump($this->value),
+        return \serialize(array(
+            'value'     => $this->value,
+            'dumpedVar' => !\is_null($this->dumpedVar) ? $this->dumpedVar : $this->varDumper->getDump($this->value),
         ));
     }
 
     public function unserialize($serialized)
     {
-        $data = unserialize($serialized);
+        $data = \unserialize($serialized);
         $this->value = $data['value'];
         $this->dumpedVar = $data['dumpedVar'];
     }

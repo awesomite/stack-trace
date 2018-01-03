@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments\Declarations;
 
 use Awesomite\StackTrace\Exceptions\LogicException;
@@ -31,11 +40,11 @@ class Declaration implements DeclarationInterface
 
     public function getType()
     {
-        if (version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
-            return new Type((string) $this->parameter->getType());
+        if (\version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
+            return new Type((string)$this->parameter->getType());
         }
 
-        if (version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
+        if (\version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
             return new Type('callable');
         }
 
@@ -45,11 +54,11 @@ class Declaration implements DeclarationInterface
 
         try {
             $class = $this->parameter->getClass();
-            if (!is_null($class)) {
+            if (!\is_null($class)) {
                 return new Type($class->getName());
             }
         } catch (\ReflectionException $exception) {
-            if (preg_match(static::REGEX_CLASS_NOT_EXISTS, $exception->getMessage(), $matches)) {
+            if (\preg_match(static::REGEX_CLASS_NOT_EXISTS, $exception->getMessage(), $matches)) {
                 return new Type($matches['name']);
             }
         }
@@ -59,11 +68,11 @@ class Declaration implements DeclarationInterface
 
     public function hasType()
     {
-        if (version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
+        if (\version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
             return true;
         }
 
-        if (version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
+        if (\version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
             return true;
         }
 
@@ -73,11 +82,11 @@ class Declaration implements DeclarationInterface
 
         try {
             $class = $this->parameter->getClass();
-            if (!is_null($class)) {
+            if (!\is_null($class)) {
                 return true;
             }
         } catch (\ReflectionException $exception) {
-            if (preg_match(static::REGEX_CLASS_NOT_EXISTS, $exception->getMessage())) {
+            if (\preg_match(static::REGEX_CLASS_NOT_EXISTS, $exception->getMessage())) {
                 return true;
             }
         }
@@ -92,7 +101,7 @@ class Declaration implements DeclarationInterface
 
     public function isVariadic()
     {
-        return version_compare(PHP_VERSION, '5.6') >= 0 && $this->parameter->isVariadic();
+        return \version_compare(PHP_VERSION, '5.6') >= 0 && $this->parameter->isVariadic();
     }
 
     public function hasDefaultValue()
@@ -111,17 +120,17 @@ class Declaration implements DeclarationInterface
 
     public function hasDefaultValueConstantName()
     {
-        if (defined('HHVM_VERSION')) {
+        if (\defined('HHVM_VERSION')) {
             // @codeCoverageIgnoreStart
-            if (method_exists($this->parameter, 'isDefaultValueConstant')) {
-                return (bool) $this->parameter->isDefaultValueConstant();
+            if (\method_exists($this->parameter, 'isDefaultValueConstant')) {
+                return (bool)$this->parameter->isDefaultValueConstant();
             }
 
             return false;
             // @codeCoverageIgnoreEnd
         }
 
-        return version_compare(PHP_VERSION, '5.4.6') >= 0
+        return \version_compare(PHP_VERSION, '5.4.6') >= 0
             && $this->hasDefaultValue()
             && $this->parameter->isDefaultValueConstant();
     }

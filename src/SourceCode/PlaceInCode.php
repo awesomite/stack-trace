@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\SourceCode;
 
 use Awesomite\StackTrace\Constants;
@@ -20,9 +29,8 @@ class PlaceInCode implements PlaceInCodeInterface
     private $file;
 
     /**
-     * PlaceInCode constructor.
-     * @param string $fileName
-     * @param int $lineNo
+     * @param string             $fileName
+     * @param int                $lineNo
      * @param FileInterface|null $file
      */
     public function __construct($fileName, $lineNo, FileInterface $file = null)
@@ -51,8 +59,8 @@ class PlaceInCode implements PlaceInCodeInterface
         if ($linesLimit > $maxValue) {
             throw new InvalidArgumentException("Too big number, cannot be bigger than {$maxValue}!");
         }
-        
-        if (is_null($this->file) && !is_file($this->fileName)) {
+
+        if (\is_null($this->file) && !\is_file($this->fileName)) {
             throw new LogicException("File {$this->fileName} does not exist!");
         }
 
@@ -63,8 +71,8 @@ class PlaceInCode implements PlaceInCodeInterface
             throw new LogicException("Line {$this->lineNo} does not exist in file {$this->fileName}!");
         }
 
-        $firstLine = $this->lineNo - floor($linesLimit/2);
-        $lastLine = $this->lineNo  + ceil($linesLimit/2) - 1;
+        $firstLine = $this->lineNo - \floor($linesLimit / 2);
+        $lastLine = $this->lineNo + \ceil($linesLimit / 2) - 1;
 
         list($firstMoved, $lastMoved) = $this->moveIfNeed($firstLine, $lastLine, $count);
         $firstLine -= $lastMoved;
@@ -82,7 +90,7 @@ class PlaceInCode implements PlaceInCodeInterface
 
     private function getFile()
     {
-        if (is_null($this->file)) {
+        if (\is_null($this->file)) {
             $this->file = new File($this->fileName);
         }
 

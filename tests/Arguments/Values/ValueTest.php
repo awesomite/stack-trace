@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments\Values;
 
 use Awesomite\StackTrace\BaseTestCase;
@@ -13,13 +22,13 @@ class ValueTest extends BaseTestCase
      * @dataProvider providerAll
      *
      * @param Value $value
-     * @param $expectedRealValue
+     * @param       $expectedRealValue
      */
     public function testAll(Value $value, $expectedRealValue)
     {
         $this->assertTrue($value->isRealValueReadable());
         $this->assertSame($expectedRealValue, $value->getRealValue());
-        $this->assertSame($value->getDump(), (string) $value);
+        $this->assertSame($value->getDump(), (string)$value);
         $this->expectOutputString($value->getDump());
         $value->dump();
     }
@@ -40,7 +49,7 @@ class ValueTest extends BaseTestCase
             $result[] = array(new Value($value), $value);
         }
 
-        $result[] = array(unserialize(serialize(new Value(100))), 100);
+        $result[] = array(\unserialize(\serialize(new Value(100))), 100);
 
         return $result;
     }
@@ -53,9 +62,9 @@ class ValueTest extends BaseTestCase
     public function testSerialize(Value $value)
     {
         /** @var Value $restored */
-        $restored = unserialize(serialize($value));
+        $restored = \unserialize(\serialize($value));
         $this->assertSame($value->getDump(), $restored->getDump());
-        $this->assertSame((string) $value, $restored->getDump());
+        $this->assertSame((string)$value, $restored->getDump());
         $this->assertSame($value->getRealValue(), $restored->getRealValue());
     }
 

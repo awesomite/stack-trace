@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\SourceCode;
 
 /**
@@ -12,13 +21,13 @@ class File implements FileInterface
     private $deserialized = false;
 
     private $fileObject = null;
-    
+
     private $numberOfLines;
-    
+
     private $lines = array();
 
     private $thresholds = array();
-    
+
     public function __construct($fileName)
     {
         $this->fileName = $fileName;
@@ -31,45 +40,47 @@ class File implements FileInterface
 
     /**
      * One-based array type
+     *
      * @param int $from
      * @param int $to
+     *
      * @return $this
      */
     public function addThreshold($from, $to)
     {
         $this->thresholds[] = array($from, $to);
-        
+
         return $this;
     }
 
     public function serialize()
     {
-        return serialize(array(
-            'fileName' => $this->fileName,
+        return \serialize(array(
+            'fileName'      => $this->fileName,
             'numberOfLines' => $this->countLines(),
-            'lines' => $this->getAllLines(),
-            'thresholds' => $this->thresholds,
+            'lines'         => $this->getAllLines(),
+            'thresholds'    => $this->thresholds,
         ));
     }
 
     public function unserialize($serialized)
     {
-        $deserialized = unserialize($serialized);
+        $deserialized = \unserialize($serialized);
         $this->fileName = $deserialized['fileName'];
         $this->numberOfLines = $deserialized['numberOfLines'];
         $this->lines = $deserialized['lines'];
         $this->thresholds = $deserialized['thresholds'];
         $this->deserialized = true;
     }
-    
+
     public function countLines()
     {
-        if (is_null($this->numberOfLines)) {
+        if (\is_null($this->numberOfLines)) {
             $file = $this->getFileObject();
             $file->seek($file->getSize());
             $this->numberOfLines = $file->key() + 1;
         }
-        
+
         return $this->numberOfLines;
     }
 
@@ -77,11 +88,11 @@ class File implements FileInterface
     {
         if (!$this->deserialized) {
             $file = $this->getFileObject();
-            $max = min($to, $this->countLines());
+            $max = \min($to, $this->countLines());
             $result = array();
-            for ($i = max(1, $from); $i <= $max; $i++) {
-                $file->seek($i-1);
-                $result[$i] = rtrim((string) $file->current(), "\n");
+            for ($i = \max(1, $from); $i <= $max; $i++) {
+                $file->seek($i - 1);
+                $result[$i] = \rtrim((string)$file->current(), "\n");
             }
 
             return $result;
@@ -117,7 +128,7 @@ class File implements FileInterface
      */
     private function getFileObject()
     {
-        if (is_null($this->fileObject)) {
+        if (\is_null($this->fileObject)) {
             $this->fileObject = new \SplFileObject($this->fileName, 'r');
         }
 

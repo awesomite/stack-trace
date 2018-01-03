@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments\Declarations;
 
 use Awesomite\StackTrace\Exceptions\LogicException;
@@ -13,7 +22,7 @@ class DeclarationTest extends DeclarationProviders
      * @dataProvider providerGetName
      *
      * @param Declaration $declaration
-     * @param $expectedName
+     * @param             $expectedName
      */
     public function testGetName(Declaration $declaration, $expectedName)
     {
@@ -24,24 +33,24 @@ class DeclarationTest extends DeclarationProviders
      * @dataProvider providerGetType
      *
      * @param Declaration $declaration
-     * @param bool $hasType
-     * @param string $expectedName
+     * @param bool        $hasType
+     * @param string      $expectedName
      */
     public function testGetType(Declaration $declaration, $hasType, $expectedName = '')
     {
         if (!$hasType) {
-            $this->setExpectedException(get_class(new LogicException()));
+            $this->setExpectedException(\get_class(new LogicException()));
         }
 
         $this->assertSame($hasType, $declaration->hasType());
-        $this->assertSame($expectedName, (string) $declaration->getType());
+        $this->assertSame($expectedName, (string)$declaration->getType());
     }
 
     /**
      * @dataProvider providerIsPassedByReference
      *
      * @param Declaration $declaration
-     * @param bool $isPassedByReference
+     * @param bool        $isPassedByReference
      */
     public function testIsPassedByReference(Declaration $declaration, $isPassedByReference)
     {
@@ -52,7 +61,7 @@ class DeclarationTest extends DeclarationProviders
      * @dataProvider providerIsVariadic
      *
      * @param Declaration $declaration
-     * @param bool $isVariadic
+     * @param bool        $isVariadic
      */
     public function testIsVariadic(Declaration $declaration, $isVariadic)
     {
@@ -63,13 +72,13 @@ class DeclarationTest extends DeclarationProviders
      * @dataProvider providerDefaultValue
      *
      * @param Declaration $declaration
-     * @param bool $hasDefaultValue
-     * @param mixed $defaultValue
+     * @param bool        $hasDefaultValue
+     * @param mixed       $defaultValue
      */
     public function testDefaultValue(Declaration $declaration, $hasDefaultValue, $defaultValue = null)
     {
         if (!$hasDefaultValue) {
-            $this->setExpectedException(get_class(new LogicException()));
+            $this->setExpectedException(\get_class(new LogicException()));
         }
 
         $this->assertSame($hasDefaultValue, $declaration->hasDefaultValue());
@@ -80,13 +89,13 @@ class DeclarationTest extends DeclarationProviders
      * @dataProvider providerDefaultValueConstantName
      *
      * @param Declaration $declaration
-     * @param bool $hasDefault
-     * @param string $defaultName
+     * @param bool        $hasDefault
+     * @param string      $defaultName
      */
     public function testDefaultValueConstantName(Declaration $declaration, $hasDefault, $defaultName = '')
     {
         if (!$hasDefault) {
-            $this->setExpectedException(get_class(new LogicException()));
+            $this->setExpectedException(\get_class(new LogicException()));
         }
 
         $this->assertSame($hasDefault, $declaration->hasDefaultValueConstantName());

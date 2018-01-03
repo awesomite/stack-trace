@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Declarations\Declaration;
@@ -24,7 +33,7 @@ class Arguments implements ArgumentsInterface
     /**
      * @codeCoverageIgnore
      *
-     * @param ValueInterface[] $arguments
+     * @param ValueInterface[]       $arguments
      * @param FunctionInterface|null $function
      */
     public function __construct(array $arguments, FunctionInterface $function = null)
@@ -42,7 +51,7 @@ class Arguments implements ArgumentsInterface
                 $declaration = new Declaration($parameter);
 
                 if ($arguments) {
-                    $result[] = new Argument($declaration, array_shift($arguments));
+                    $result[] = new Argument($declaration, \array_shift($arguments));
                     continue;
                 }
 
@@ -62,17 +71,17 @@ class Arguments implements ArgumentsInterface
         if ($this->function && $this->function->hasReflection()) {
             $parameters = $this->function->getReflection()->getParameters();
 
-            if (version_compare(PHP_VERSION, '5.6') >= 0) {
+            if (\version_compare(PHP_VERSION, '5.6') >= 0) {
                 /** @var \ReflectionParameter|bool $parameter */
-                $parameter = end($parameters);
+                $parameter = \end($parameters);
                 if ($parameter && $parameter->isVariadic()) {
-                    return count($parameters);
+                    return \count($parameters);
                 }
             }
 
-            return max(count($parameters), count($this->arguments));
+            return \max(\count($parameters), \count($this->arguments));
         }
 
-        return count($this->arguments);
+        return \count($this->arguments);
     }
 }

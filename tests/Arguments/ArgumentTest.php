@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Arguments;
 
 use Awesomite\StackTrace\Arguments\Declarations\Declaration;
@@ -17,16 +26,16 @@ class ArgumentTest extends BaseTestCase
     /**
      * @dataProvider providerDeclaration
      *
-     * @param Argument $argument
+     * @param Argument                  $argument
      * @param DeclarationInterface|null $declaration
      */
     public function testDeclaration(Argument $argument, DeclarationInterface $declaration = null)
     {
-        if (is_null($declaration)) {
-            $this->setExpectedException(get_class(new LogicException()));
+        if (\is_null($declaration)) {
+            $this->setExpectedException(\get_class(new LogicException()));
         }
 
-        $this->assertSame(!is_null($declaration), $argument->hasDeclaration());
+        $this->assertSame(!\is_null($declaration), $argument->hasDeclaration());
         $this->assertSame($declaration, $argument->getDeclaration());
     }
 
@@ -45,16 +54,16 @@ class ArgumentTest extends BaseTestCase
     /**
      * @dataProvider providerValue
      *
-     * @param Argument $argument
+     * @param Argument            $argument
      * @param ValueInterface|null $value
      */
     public function testValue(Argument $argument, ValueInterface $value = null)
     {
-        if (is_null($value)) {
-            $this->setExpectedException(get_class(new LogicException()));
+        if (\is_null($value)) {
+            $this->setExpectedException(\get_class(new LogicException()));
         }
 
-        $this->assertSame(!is_null($value), $argument->hasValue());
+        $this->assertSame(!\is_null($value), $argument->hasValue());
         $this->assertSame($value, $argument->getValue());
     }
 

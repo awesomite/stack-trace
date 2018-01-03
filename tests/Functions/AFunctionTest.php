@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Functions;
 
 use Awesomite\StackTrace\Exceptions\LogicException;
@@ -13,7 +22,7 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerGetName
      *
      * @param AFunction $function
-     * @param $expectedName
+     * @param           $expectedName
      */
     public function testGetName(AFunction $function, $expectedName)
     {
@@ -24,7 +33,7 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerIsClosure
      *
      * @param AFunction $function
-     * @param bool $isClosure
+     * @param bool      $isClosure
      */
     public function testIsClosure(AFunction $function, $isClosure)
     {
@@ -35,7 +44,7 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerInClass
      *
      * @param AFunction $function
-     * @param bool $isInClass
+     * @param bool      $isInClass
      */
     public function testInClass(AFunction $function, $isInClass)
     {
@@ -46,7 +55,7 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerIsKeyword
      *
      * @param AFunction $function
-     * @param bool $isKeyword
+     * @param bool      $isKeyword
      */
     public function testIsKeyword(AFunction $function, $isKeyword)
     {
@@ -57,7 +66,7 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerIsDeprecated
      *
      * @param AFunction $function
-     * @param bool $isDeprecated
+     * @param bool      $isDeprecated
      */
     public function testIsDeprecated(AFunction $function, $isDeprecated)
     {
@@ -68,12 +77,12 @@ class AFunctionTest extends AFunctionProviders
      * @dataProvider providerReflection
      *
      * @param AFunction $function
-     * @param bool $hasReflection
+     * @param bool      $hasReflection
      */
     public function testReflection(AFunction $function, $hasReflection)
     {
         if (!$hasReflection) {
-            $this->setExpectedException(get_class(new LogicException()));
+            $this->setExpectedException(\get_class(new LogicException()));
         }
         $this->assertSame($hasReflection, $function->hasReflection());
         $this->assertTrue($function->getReflection() instanceof \ReflectionFunctionAbstract);

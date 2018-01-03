@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Arguments\ArgumentInterface;
@@ -13,10 +22,10 @@ class StackTraceTest extends BaseTestCase
 {
     public function testAll()
     {
-        $debugBacktrace = debug_backtrace();
-        $debugBacktrace = array_slice($debugBacktrace, 0, 3, true);
+        $debugBacktrace = \debug_backtrace();
+        $debugBacktrace = \array_slice($debugBacktrace, 0, 3, true);
         $stackTrace = new StackTrace($debugBacktrace);
-        $this->assertSame(count($debugBacktrace), count($stackTrace));
+        $this->assertSame(\count($debugBacktrace), \count($stackTrace));
         $this->assertTrue($stackTrace->getIterator() instanceof \Traversable);
 
         foreach ($stackTrace->getIterator() as $step) {
@@ -36,8 +45,8 @@ class StackTraceTest extends BaseTestCase
      */
     public function testSerialize(StackTrace $stackTrace)
     {
-        $serialized = serialize($stackTrace);
-        $restored = unserialize($serialized);
+        $serialized = \serialize($stackTrace);
+        $restored = \unserialize($serialized);
         $this->assertTrue($restored instanceof StackTrace);
         $firstDump = $this->getFirstDump($stackTrace);
         $restoredFirstDump = $this->getFirstDump($restored);
@@ -62,15 +71,16 @@ class StackTraceTest extends BaseTestCase
     public function providerSerialize()
     {
         $getBackTrace = function () {
-            return debug_backtrace();
+            return \debug_backtrace();
         };
-        $backTrace = call_user_func($getBackTrace, function () {});
+        $backTrace = \call_user_func($getBackTrace, function () {
+        });
         $factory = new StackTraceFactory();
 
         return array(
             array(new StackTrace($backTrace)),
             array($factory->create()),
-            array(unserialize(serialize($factory->create()))),
+            array(\unserialize(\serialize($factory->create()))),
         );
     }
 
@@ -78,18 +88,19 @@ class StackTraceTest extends BaseTestCase
     {
         $factory = new StackTraceFactory();
         $stackTraceA = $factory->create();
-        $stackTraceB = $factory->create(); $stackTraceC = $factory->create();
+        $stackTraceB = $factory->create();
+        $stackTraceC = $factory->create();
         $this->assertNotEquals($stackTraceA->getId(), $stackTraceB->getId());
         $this->assertSame($stackTraceB->getId(), $stackTraceC->getId());
         $this->assertInternalType('string', $stackTraceA->getId());
-        $this->assertSame(32, strlen($stackTraceA->getId()));
+        $this->assertSame(32, \mb_strlen($stackTraceA->getId()));
     }
 
     public function testToString()
     {
         $factory = new StackTraceFactory();
         $stackTrace = $factory->create();
-        $string = (string) $stackTrace;
+        $string = (string)$stackTrace;
         $shouldContains = array(
             __FUNCTION__,
             __CLASS__,
@@ -105,13 +116,14 @@ class StackTraceTest extends BaseTestCase
      */
     public function testCannotUnserialize()
     {
-        $string = 'C:31:"Awesomite\StackTrace\StackTrace":81:{a:3:{s:5:"steps";a:0:{}s:13:"filesContents";a:0:{}s:9:"__version";s:7:"999.0.0";}}';
-        unserialize($string);
+        $string
+            = 'C:31:"Awesomite\StackTrace\StackTrace":81:{a:3:{s:5:"steps";a:0:{}s:13:"filesContents";a:0:{}s:9:"__version";s:7:"999.0.0";}}';
+        \unserialize($string);
     }
 
     public function testVariadic()
     {
-        if (version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
             $stackTraceVariadic = new StackTraceVariadic($this);
             $stackTraceVariadic->handleTest();
         } else {
@@ -131,11 +143,11 @@ class StackTraceTest extends BaseTestCase
         $factory = new StackTraceFactory();
         $stackTrace = $factory->create(2);
         /** @var StepInterface[] $steps */
-        $steps = iterator_to_array($stackTrace->getIterator());
+        $steps = \iterator_to_array($stackTrace->getIterator());
         $step = $steps[1];
         /** @var ArgumentInterface[] $args */
-        $args = iterator_to_array($step->getArguments());
-        $this->assertSame(count(func_get_args()), count($args));
+        $args = \iterator_to_array($step->getArguments());
+        $this->assertSame(\count(\func_get_args()), \count($args));
         foreach ($args as $argument) {
             $this->assertTrue($argument->hasValue());
             $this->assertFalse($argument->hasDeclaration());
@@ -172,8 +184,9 @@ class StackTraceTest extends BaseTestCase
         /**
          * HHVM does not allow to change value of reference using debug_backtrace()
          */
-        if (defined('HHVM_VERSION')) {
+        if (\defined('HHVM_VERSION')) {
             $this->assertTrue(true);
+
             return;
         }
 
@@ -190,7 +203,7 @@ class StackTraceTest extends BaseTestCase
 
     private function modifyArgsInStackTrace()
     {
-        $stackTrace = debug_backtrace();
+        $stackTrace = \debug_backtrace();
         $stackTrace[1]['args'][0] = 'I\'m a hacker!';
     }
 }

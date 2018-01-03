@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Arguments\ArgumentInterface;
@@ -20,7 +29,7 @@ class StackTraceFactoryTest extends BaseTestCase
     {
         $stackTrace = $this->createFactory()->create($length);
         $this->assertTrue($stackTrace instanceof StackTraceInterface);
-        $this->assertLessThanOrEqual($length, count($stackTrace));
+        $this->assertLessThanOrEqual($length, \count($stackTrace));
     }
 
     public function providerCreate()
@@ -38,13 +47,13 @@ class StackTraceFactoryTest extends BaseTestCase
      * @dataProvider providerCreateByException
      *
      * @param \Exception $exception
-     * @param int $length
+     * @param int        $length
      */
     public function testCreateByException($exception, $length)
     {
         $stackTrace = $this->createFactory()->createByThrowable($exception, $length);
         $this->assertTrue($stackTrace instanceof StackTraceInterface);
-        $this->assertLessThanOrEqual($length, count($stackTrace));
+        $this->assertLessThanOrEqual($length, \count($stackTrace));
     }
 
     public function providerCreateByException()
@@ -64,7 +73,7 @@ class StackTraceFactoryTest extends BaseTestCase
     public function testInvalidArgument($notThrowable)
     {
         $class = new InvalidArgumentException();
-        $this->setExpectedException(get_class($class));
+        $this->setExpectedException(\get_class($class));
         $this->createFactory()->createByThrowable($notThrowable);
     }
 

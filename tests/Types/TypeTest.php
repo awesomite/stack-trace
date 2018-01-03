@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\Types;
 
 use Awesomite\StackTrace\BaseTestCase;
@@ -12,13 +21,13 @@ class TypeTest extends BaseTestCase
     /**
      * @dataProvider providerToString
      *
-     * @param Type $type
+     * @param Type   $type
      * @param string $expectedName
-     * @param bool $shouldBeTheSame
+     * @param bool   $shouldBeTheSame
      */
     public function testToString(Type $type, $expectedName, $shouldBeTheSame)
     {
-        $this->assertEquals($shouldBeTheSame, $expectedName === (string) $type);
+        $this->assertEquals($shouldBeTheSame, $expectedName === (string)$type);
     }
 
     public function providerToString()
@@ -32,8 +41,8 @@ class TypeTest extends BaseTestCase
 
     public function testConstructor()
     {
-        $stringType = gettype(array());
+        $stringType = \gettype(array());
         $type = new Type($stringType);
-        $this->assertSame($stringType, (string) $type);
+        $this->assertSame($stringType, (string)$type);
     }
 }

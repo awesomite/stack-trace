@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the awesomite/stack-trace package.
+ *
+ * (c) Bartłomiej Krukowski <bartlomiej@krukowski.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Awesomite\StackTrace\SourceCode;
 
 use Awesomite\StackTrace\SourceCode\Lines\LinesInterface;
@@ -26,8 +35,8 @@ class PlaceInCodeTest extends PlaceInCodeProviders
      * @dataProvider providerGetFile
      *
      * @param PlaceInCode $placeInCode
-     * @param string $expectedFile
-     * @param int $expectedLine
+     * @param string      $expectedFile
+     * @param int         $expectedLine
      */
     public function testGetFileLine(PlaceInCode $placeInCode, $expectedFile, $expectedLine)
     {
@@ -58,7 +67,7 @@ class PlaceInCodeTest extends PlaceInCodeProviders
     }
 
     /**
-     * @dataProvider providerInvalidLine
+     * @dataProvider                   providerInvalidLine
      * @expectedException \Awesomite\StackTrace\Exceptions\LogicException
      * @expectedExceptionMessageRegExp /Line .* does not exist in file .*!/
      *
@@ -82,9 +91,9 @@ class PlaceInCodeTest extends PlaceInCodeProviders
      * @dataProvider providerMove
      *
      * @param PlaceInCode $placeInCode
-     * @param int $linesCounter
-     * @param int $firstLineNo
-     * @param int $lastLineNo
+     * @param int         $linesCounter
+     * @param int         $firstLineNo
+     * @param int         $lastLineNo
      */
     public function testMove(PlaceInCode $placeInCode, $linesCounter, $firstLineNo, $lastLineNo)
     {
