@@ -47,7 +47,7 @@ class Value implements ValueInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getDump();
+        return $this->dumpAsString();
     }
 
     public function dump()
@@ -61,7 +61,7 @@ class Value implements ValueInterface, \Serializable
         $this->varDumper->dump($this->getRealValue());
     }
 
-    public function getDump()
+    public function dumpAsString()
     {
         \ob_start();
         $this->dump();
@@ -69,6 +69,11 @@ class Value implements ValueInterface, \Serializable
         \ob_end_clean();
 
         return $result;
+    }
+
+    public function getDump()
+    {
+        return $this->dumpAsString();
     }
 
     public function isRealValueReadable()
@@ -80,7 +85,9 @@ class Value implements ValueInterface, \Serializable
     {
         return \serialize(array(
             'value'     => $this->value,
-            'dumpedVar' => !\is_null($this->dumpedVar) ? $this->dumpedVar : $this->varDumper->getDump($this->value),
+            'dumpedVar' => !\is_null($this->dumpedVar)
+                ? $this->dumpedVar
+                : $this->varDumper->dumpAsString($this->value),
         ));
     }
 

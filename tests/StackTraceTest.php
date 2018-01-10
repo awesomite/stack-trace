@@ -60,7 +60,7 @@ class StackTraceTest extends BaseTestCase
             /** @var StepInterface $step */
             foreach ($step->getArguments() as $argument) {
                 if ($argument->hasValue()) {
-                    return $argument->getValue()->getDump();
+                    return $argument->getValue()->dumpAsString();
                 }
             }
         }

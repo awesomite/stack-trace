@@ -28,7 +28,7 @@ class DeserializedValue implements ValueInterface
 
     public function __toString()
     {
-        return $this->getDump();
+        return $this->dumpAsString();
     }
 
     public function dump()
@@ -36,9 +36,14 @@ class DeserializedValue implements ValueInterface
         echo $this->dumpedVariable;
     }
 
-    public function getDump()
+    public function dumpAsString()
     {
         return $this->dumpedVariable;
+    }
+
+    public function getDump()
+    {
+        return $this->dumpAsString();
     }
 
     public function getRealValue()

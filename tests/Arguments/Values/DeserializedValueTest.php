@@ -24,7 +24,7 @@ class DeserializedValueTest extends BaseTestCase
     {
         $value = new DeserializedValue($dump);
         $this->assertSame($dump, (string)$value);
-        $this->assertSame($dump, $value->getDump());
+        $this->assertSame($dump, $value->dumpAsString());
         $this->assertFalse($value->isRealValueReadable());
         $this->expectOutputString($dump);
         $value->dump();

@@ -27,8 +27,8 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION             = '0.10.4';
-    const CONSTRAINTS_VERSION = '>=0.1.0 <0.11.0';
+    const VERSION             = '0.11.0';
+    const CONSTRAINTS_VERSION = '^0.11.0';
 
     private $arrayStackTrace;
 
@@ -252,6 +252,6 @@ class StackTrace implements StackTraceInterface
             return new Value($value, $this->getVarDumper());
         }
 
-        return new DeserializedValue($this->getVarDumper()->getDump($value));
+        return new DeserializedValue($this->getVarDumper()->dumpAsString($value));
     }
 }
