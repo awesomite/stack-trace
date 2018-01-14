@@ -71,11 +71,6 @@ class Value implements ValueInterface, \Serializable
         return $result;
     }
 
-    public function getDump()
-    {
-        return $this->dumpAsString();
-    }
-
     public function isRealValueReadable()
     {
         return true;

@@ -48,7 +48,7 @@ class AFunction implements FunctionInterface
 
     public function isClosure()
     {
-        return false !== \mb_strpos($this->arrayStep['function'], '{closure}');
+        return false !== \strpos($this->arrayStep['function'], '{closure}');
     }
 
     public function isInClass()
@@ -108,7 +108,7 @@ class AFunction implements FunctionInterface
     {
         $comment = $function->getDocComment();
 
-        return false !== $comment && false !== \mb_strpos($comment, '@deprecated');
+        return false !== $comment && false !== \strpos($comment, '@deprecated');
     }
 
     private function createReflection()

@@ -19,10 +19,6 @@ php:
   - hhvm-3.15
   - hhvm-3.18
   - hhvm-nightly
-  
-allow_failures:
-  - php: nightly
-  - php: hhvm-nightly
 
 env:
   matrix:
@@ -30,6 +26,10 @@ env:
     - DEPENDENCIES="low"
 
 matrix:
+  allow_failures:
+    - php: nightly
+    - php: hhvm-nightly
+
   include:
     - php: 5.3
       dist: precise
@@ -74,6 +74,7 @@ before_script:
 script:
   - if [[ "$RUN_CS_FIXER" = "true" ]]; then php -n ${PHP_CS_FIXER} --diff --dry-run -v --allow-risky=yes fix; fi
   - php ${PHP_ARGS} vendor/bin/phpunit
+  - php ${PHP_ARGS} examples/read-arguments.php
 
 after_script:
   - mv ~.git .git

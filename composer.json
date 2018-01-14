@@ -30,5 +30,6 @@
         "sebastian/comparator": ">=1.2.3",
         "symfony/console": "^2.7 || ^3.0",
         "awesomite/phpunit-4.8-fixer": "^1.0"
-    }
+    },
+    "keywords": ["debug", "debug_backtrace"]
 }
