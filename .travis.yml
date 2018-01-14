@@ -19,10 +19,6 @@ php:
   - hhvm-3.15
   - hhvm-3.18
   - hhvm-nightly
-  
-allow_failures:
-  - php: nightly
-  - php: hhvm-nightly
 
 env:
   matrix:
@@ -30,6 +26,10 @@ env:
     - DEPENDENCIES="low"
 
 matrix:
+  allow_failures:
+    - php: nightly
+    - php: hhvm-nightly
+
   include:
     - php: 5.3
       dist: precise
