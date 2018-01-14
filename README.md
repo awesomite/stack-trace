@@ -16,6 +16,7 @@ use Awesomite\StackTrace\StackTraceFactory;
 $factory = new StackTraceFactory();
 $stackTrace = $factory->create();
 foreach ($stackTrace as $step) {
+    /** @var StepInterface $step */
     $placeInCode = $step->getPlaceInCode();
     $line = $placeInCode->getLineNumber();
     $fileName = $placeInCode->getFileName();
