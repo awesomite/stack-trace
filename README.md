@@ -32,7 +32,3 @@ foreach ($stackTrace as $step) {
 
 The version numbers follow the [Semantic Versioning 2.0.0](http://semver.org/) scheme.
 [Read more](docs/DOCUMENTATION.md#backward-compatibility) about backward compatibility.
-
-## Running tests
-
-See [documentation](docs/TESTS.md) for tests.
