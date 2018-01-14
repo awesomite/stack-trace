@@ -4,7 +4,7 @@
 
 * Removed deprecated method `Awesomite\StackTrace\Arguments\Values\ValueInterface::getDump`
 
-## 0.11.0 (????-??-??)
+## 0.11.0 (2018-01-14)
 
 * Updated `awesomite/var-dumper`
 * Method `Awesomite\StackTrace\Arguments\Values\ValueInterface::getDump` has been deprecated
