@@ -29,7 +29,6 @@ class ValueTest extends BaseTestCase
         $this->assertTrue($value->isRealValueReadable());
         $this->assertSame($expectedRealValue, $value->getRealValue());
         $this->assertSame($value->dumpAsString(), (string)$value);
-        $this->assertSame($value->getDump(), (string)$value);
         $this->expectOutputString($value->dumpAsString());
         $value->dump();
     }
@@ -65,10 +64,6 @@ class ValueTest extends BaseTestCase
         /** @var Value $restored */
         $restored = \unserialize(\serialize($value));
         $this->assertSame($value->dumpAsString(), $restored->dumpAsString());
-
-        $this->assertSame($value->dumpAsString(), $restored->getDump());
-        $this->assertSame($value->getDump(), $restored->dumpAsString());
-
         $this->assertSame((string)$value, $restored->dumpAsString());
         $this->assertSame($value->getRealValue(), $restored->getRealValue());
     }

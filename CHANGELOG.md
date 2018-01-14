@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0 (????-??-??)
+
+* Removed deprecated method `Awesomite\StackTrace\Arguments\Values\ValueInterface::getDump`
+
 ## 0.11.0 (????-??-??)
 
 * Updated `awesomite/var-dumper`

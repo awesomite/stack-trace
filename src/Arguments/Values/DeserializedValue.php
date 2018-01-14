@@ -41,11 +41,6 @@ class DeserializedValue implements ValueInterface
         return $this->dumpedVariable;
     }
 
-    public function getDump()
-    {
-        return $this->dumpAsString();
-    }
-
     public function getRealValue()
     {
         throw new CannotRestoreValueException('Cannot restore value!');

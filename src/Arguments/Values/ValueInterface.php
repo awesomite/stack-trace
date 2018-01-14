@@ -32,12 +32,5 @@ interface ValueInterface
      */
     public function dumpAsString();
 
-    /**
-     * @deprecated
-     *
-     * @return mixed
-     */
-    public function getDump();
-
     public function __toString();
 }
