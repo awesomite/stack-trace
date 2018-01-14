@@ -74,6 +74,7 @@ before_script:
 script:
   - if [[ "$RUN_CS_FIXER" = "true" ]]; then php -n ${PHP_CS_FIXER} --diff --dry-run -v --allow-risky=yes fix; fi
   - php ${PHP_ARGS} vendor/bin/phpunit
+  - php ${PHP_ARGS} examples/read-arguments.php
 
 after_script:
   - mv ~.git .git

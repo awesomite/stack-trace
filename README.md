@@ -5,24 +5,42 @@
 [![Build Status](https://travis-ci.org/awesomite/stack-trace.svg?branch=master)](https://travis-ci.org/awesomite/stack-trace)
 
 Abstract layer for [`debug_backtrace()`](http://php.net/manual/en/function.debug-backtrace.php) function.
+This library allows you to serialize whole stack trace including variables.
+It handles all types of data, including resources.
 
 ## Usage
 
 See [documentation](docs/DOCUMENTATION.md).
 
 ```php
+<?php
+
 use Awesomite\StackTrace\StackTraceFactory;
+use Awesomite\StackTrace\Steps\StepInterface;
+use Awesomite\StackTrace\SourceCode\PlaceInCodeInterface;
 
 $factory = new StackTraceFactory();
 $stackTrace = $factory->create();
 foreach ($stackTrace as $step) {
     /** @var StepInterface $step */
-    $placeInCode = $step->getPlaceInCode();
-    $line = $placeInCode->getLineNumber();
-    $fileName = $placeInCode->getFileName();
+    
     $function = $step->getCalledFunction()->getName();
-    echo "Function {$function} is called from {$fileName}:{$line}\n";
+    echo "Function {$function}";
+    
+    if ($step->hasPlaceInCode()) {
+        /** @var PlaceInCodeInterface $placeInCode */
+        $placeInCode = $step->getPlaceInCode();
+        $fileName = $placeInCode->getFileName();
+        $line = $placeInCode->getLineNumber();
+        $function = $step->getCalledFunction()->getName();
+        echo " is called from {$fileName}:{$line}";
+    }
+    
+    echo "\n";
 }
+
+$data = serialize($stackTrace);
+$unserializedStackTrace = unserialize($data);
 ```
 
 ## Installation
@@ -33,3 +51,11 @@ foreach ($stackTrace as $step) {
 
 The version numbers follow the [Semantic Versioning 2.0.0](http://semver.org/) scheme.
 [Read more](docs/DOCUMENTATION.md#backward-compatibility) about backward compatibility.
+
+## Examples
+
+[See](examples) more examples.
+
+## License
+
+This library is released under the [MIT license](LICENSE).

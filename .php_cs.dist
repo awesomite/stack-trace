@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . DIRECTORY_SEPARATOR . 'bin')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'examples')
     ->in(__DIR__ . DIRECTORY_SEPARATOR . 'src')
     ->in(__DIR__ . DIRECTORY_SEPARATOR . 'tests')
     ->notName('StackTraceTest.php')
@@ -23,7 +24,6 @@ return PhpCsFixer\Config::create()
         'no_unused_imports' => true,
         'yoda_style' => true,
         'new_with_braces' => true,
-        'mb_str_functions' => true,
         'native_function_invocation' => true,
         'header_comment' => array('header' => $header),
         'phpdoc_align' => true,
