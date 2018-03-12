@@ -48,6 +48,10 @@ class AFunction implements FunctionInterface
 
     public function isClosure()
     {
+        if (\defined('HHVM_VERSION') && 0 === \strpos($this->arrayStep['function'], 'Closure$')) {
+            return true;
+        }
+
         return false !== \strpos($this->arrayStep['function'], '{closure}');
     }
 

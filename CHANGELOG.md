@@ -3,6 +3,7 @@
 ## [1.0.1] - ????-??-??
 
 * Added support for [eval](http://php.net/manual/en/function.eval.php)
+* Fixed `Awesomite\StackTrace\Functions\AFunction::isClosure` for `HHVM`
 
 ## [1.0.0] - 2018-01-14
 

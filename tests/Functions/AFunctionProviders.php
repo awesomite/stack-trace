@@ -12,6 +12,7 @@
 namespace Awesomite\StackTrace\Functions;
 
 use Awesomite\StackTrace\BaseTestCase;
+use Awesomite\StackTrace\StackTraceFactory;
 
 class AFunctionProviders extends BaseTestCase
 {
@@ -32,10 +33,25 @@ class AFunctionProviders extends BaseTestCase
 
     public function providerIsClosure()
     {
-        return array(
+        $result = array(
             array(new AFunction(array('function' => 'strpos')), false),
             array(new AFunction(array('function' => '{closure}')), true),
         );
+
+        $closure = function () use (&$result) {
+            $factory = new StackTraceFactory();
+            $trace = $factory->create(2);
+            $i = 0;
+            foreach ($trace as $step) {
+                $result[] = array(
+                    new AFunction(array('function' => $step->getCalledFunction()->getName())),
+                    2 === ++$i,
+                );
+            }
+        };
+        \call_user_func($closure);
+
+        return $result;
     }
 
     public function providerInClass()
