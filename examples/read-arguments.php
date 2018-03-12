@@ -20,7 +20,10 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'StackTracePrinter.php';
  */
 function myFirstFunction($arg1, $arg2)
 {
-    mySecondFunction('foo', 'bar');
+    $callable = function () {
+        mySecondFunction('foo', 'bar');
+    };
+    \call_user_func($callable, 'redundant');
 }
 
 /**

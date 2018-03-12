@@ -31,7 +31,7 @@ class StackTracePrinter
 
     private function printStep(StepInterface $step, $i)
     {
-        $function = $step->getCalledFunction()->getName();
+        $function = $step->hasCalledFunction() ? $step->getCalledFunction()->getName() : 'unknown';
 
         echo "#{$i} {$function}(";
         $arguments = $step->getArguments();
