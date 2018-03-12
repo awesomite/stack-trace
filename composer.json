@@ -22,7 +22,8 @@
         "php": "^5.3 || ^7.0",
         "composer/semver": "^1.4.2",
         "awesomite/var-dumper": "^0.12 || ^1.0",
-        "awesomite/iterators": "^1.0"
+        "awesomite/iterators": "^1.0",
+        "ext-pcre": "*"
     },
     "prefer-stable": true,
     "require-dev": {
