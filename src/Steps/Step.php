@@ -91,7 +91,7 @@ class Step implements StepInterface
     private function handleEval()
     {
         if (isset($this->stepArray['file'])) {
-            $regex = "#^(?<file>.*)\((?<line>[0-9]+)\) \: eval\(\)'d code\$#";
+            $regex = "#^(?<file>.*)\((?<line>[0-9]+)\)(\(.*\))? \: eval\(\)'d code\$#";
             if (\preg_match($regex, $this->stepArray['file'], $matches)) {
                 $this->stepArray['file'] = $matches['file'];
                 $this->stepArray['line'] = (int)$matches['line'];
