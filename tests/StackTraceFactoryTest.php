@@ -110,6 +110,86 @@ class StackTraceFactoryTest extends BaseTestCase
         $this->assertTrue($atLeast1);
     }
 
+    /**
+     * @dataProvider providerStackTrace
+     *
+     * @param StackTraceInterface $stackTrace
+     * @param array               $data
+     */
+    public function testStackTrace(StackTraceInterface $stackTrace, array $data)
+    {
+        foreach ($stackTrace as $step) {
+            $row = \array_shift($data);
+
+            if (false === $row) {
+                continue;
+            }
+
+            if (isset($row['file'])) {
+                $this->assertSame($row['file'], $step->getPlaceInCode()->getFileName());
+                $this->assertSame($row['line'], $step->getPlaceInCode()->getLineNumber());
+            }
+
+            if (isset($row['function'])) {
+                $fn = $step->hasCalledFunction()
+                    ? $step->getCalledFunction()->getName()
+                    : false;
+                $this->assertSame($row['function'], $fn);
+            }
+
+            if (empty($data)) {
+                return;
+            }
+        }
+    }
+
+    public function providerStackTrace()
+    {
+        $result = array();
+        $factory = $this->createFactory();
+
+        $result[] = array(
+            $factory->create(2),
+            array(
+                false,
+                array('function' => __CLASS__ . '->' . __FUNCTION__),
+            ),
+        );
+
+        try {
+            eval('throw new \LogicException("Test exception");');
+        } catch (\LogicException $exception) {
+            $result[] = array(
+                $factory->createByThrowable($exception, 2),
+                array(
+                    array('function' => 'eval', 'file' => __FILE__, 'line' => __LINE__ - 5),
+                ),
+            );
+        }
+
+        $eval = <<<EVAL
+if (!function_exists('awesomite_test_function')) {
+    function awesomite_test_function () {
+        throw new \LogicException('Test exception 2');
+    }
+}
+EVAL;
+        eval($eval);
+
+        try {
+            awesomite_test_function();
+        } catch (\LogicException $exception) {
+            $result[] = array(
+                $factory->createByThrowable($exception, 2),
+                array(
+                    array('function' => 'eval', 'file' => __FILE__, 'line' => __LINE__ - 8),
+                ),
+            );
+        }
+
+        return $result;
+    }
+
     private function createFactory()
     {
         return new StackTraceFactory();

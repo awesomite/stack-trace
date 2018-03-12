@@ -32,6 +32,7 @@ class Step implements StepInterface
     public function __construct(array $stepArray)
     {
         $this->stepArray = $stepArray;
+        $this->handleEval();
     }
 
     public function getArguments()
@@ -85,5 +86,17 @@ class Step implements StepInterface
     private function getArgsFromArray()
     {
         return isset($this->stepArray['args']) ? $this->stepArray['args'] : array();
+    }
+
+    private function handleEval()
+    {
+        if (isset($this->stepArray['file'])) {
+            $regex = "#^(?<file>.*)\((?<line>[0-9]+)\) \: eval\(\)'d code\$#";
+            if (\preg_match($regex, $this->stepArray['file'], $matches)) {
+                $this->stepArray['file'] = $matches['file'];
+                $this->stepArray['line'] = (int)$matches['line'];
+                $this->stepArray['function'] = 'eval';
+            }
+        }
     }
 }
