@@ -73,15 +73,19 @@ class AFunctionProviders extends BaseTestCase
     public function providerIsDeprecated()
     {
         $testClassName = \get_class(new TestClass());
+        $deprecatedClassName = \get_class(new TestDeprecatedClass());
 
         $deprecatedFunctions = array(
-            'sayHello'   => array('class' => $testClassName, 'function' => 'sayHello'),
-            'sayGoodbye' => array('class' => $testClassName, 'function' => 'sayGoodbye'),
+            'sayHello'    => array('class' => $testClassName, 'function' => 'sayHello'),
+            'sayGoodbye'  => array('class' => $testClassName, 'function' => 'sayGoodbye'),
+            'doSomething' => array('class' => $deprecatedClassName, 'function' => 'doSomething'),
         );
 
         $functions = array(
-            'welcome'   => array('class' => $testClassName, 'function' => 'welcome'),
-            '{closure}' => array('function' => '{closure}'),
+            'welcome'             => array('class' => $testClassName, 'function' => 'welcome'),
+            'bye'                 => array('class' => $testClassName, 'function' => 'bye'),
+            '{closure}'           => array('function' => '{closure}'),
+            'ArrayObject->append' => array('class' => 'ArrayObject', 'function' => 'append'),
         );
 
         foreach (array('call_user_method', 'ldap_sort', 'strpos', 'mb_ereg_replace') as $functionName) {

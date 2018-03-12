@@ -27,7 +27,14 @@ class TestClass implements TestInterface
     {
     }
 
+    /**
+     * This method is not @deprecated
+     */
     public function welcome()
+    {
+    }
+
+    public function bye()
     {
     }
 }

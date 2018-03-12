@@ -88,6 +88,10 @@ class AFunction implements FunctionInterface
                 }
             } catch (\ReflectionException $exception) {
             }
+
+            if ($this->hasDeprecatedTagInClass($reflection->getDeclaringClass())) {
+                return true;
+            }
         }
 
         return false;
@@ -108,11 +112,19 @@ class AFunction implements FunctionInterface
             && (!$this->isInClass() || \method_exists($this->arrayStep['class'], $this->arrayStep['function']));
     }
 
+    private function hasDeprecatedTagInClass(\ReflectionClass $class)
+    {
+        return $this->hasDeprecatedTagInDoc($class->getDocComment());
+    }
+
     private function hasDeprecatedTag(\ReflectionFunctionAbstract $function)
     {
-        $comment = $function->getDocComment();
+        return $this->hasDeprecatedTagInDoc($function->getDocComment());
+    }
 
-        return false !== $comment && false !== \strpos($comment, '@deprecated');
+    private function hasDeprecatedTagInDoc($doc)
+    {
+        return false !== $doc && \preg_match('#^\s+\*\s+@deprecated($|(\s.*?$))#m', $doc);
     }
 
     private function createReflection()

@@ -4,6 +4,9 @@
 
 * Added support for [eval](http://php.net/manual/en/function.eval.php)
 * Fixed `Awesomite\StackTrace\Functions\AFunction::isClosure` for `HHVM`
+* Fixed `Awesomite\StackTrace\Functions\AFunction::isDeprecated`:
+  * returns `true` whenever class is deprecated
+  * returns `false` whenever tag is invalid
 
 ## [1.0.0] - 2018-01-14
 
