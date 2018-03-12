@@ -20,5 +20,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->expectOutputString('');
+
+        $factoryReflection = new \ReflectionClass(new StackTraceFactory());
+        $rootClassRef = $factoryReflection->getProperty('rootExceptionClass');
+        $rootClassRef->setAccessible(true);
+        $rootClassRef->setValue(null);
     }
 }
