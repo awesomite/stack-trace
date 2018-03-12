@@ -63,22 +63,27 @@ Output:
     undefined
 #2 StackTracePrinter->printStackTrace()
   Place in code:
-    (...)/stack-trace/examples/read-arguments.php:46
+    (...)/stack-trace/examples/read-arguments.php:49
 #3 myThirdFunction($argument1, $argument2)
   Place in code:
-    (...)/stack-trace/examples/read-arguments.php:34
+    (...)/stack-trace/examples/read-arguments.php:37
   Arguments:
     resource #10 of type stream
     M_PI
 #4 mySecondFunction($foo, $bar)
   Place in code:
-    (...)/stack-trace/examples/read-arguments.php:23
+    (...)/stack-trace/examples/read-arguments.php:24
   Arguments:
     “foo”
     “bar”
-#5 myFirstFunction($arg1, $arg2)
+#5 {closure}()
   Place in code:
-    (...)/stack-trace/examples/read-arguments.php:49
+    (...)/stack-trace/examples/read-arguments.php:26
+  Arguments:
+    “redundant”
+#6 myFirstFunction($arg1, $arg2)
+  Place in code:
+    (...)/stack-trace/examples/read-arguments.php:52
   Arguments:
     “hello”
     “world”
