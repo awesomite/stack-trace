@@ -66,10 +66,14 @@ class StepTest extends BaseTestCase
         );
 
         $hasNotPlaceInCode = array('args' => array());
+        $hasNotPlaceInCode2 = array('file' => __FILE__, 'line' => 0);
+        $hasNotPlaceInCode3 = array('file' => __DIR__ . DIRECTORY_SEPARATOR . 'not-exists.php', 'line' => 1);
 
         return array(
             array(new Step($hasPlaceInCode), true),
             array(new Step($hasNotPlaceInCode), false),
+            array(new Step($hasNotPlaceInCode2), false),
+            array(new Step($hasNotPlaceInCode3), false),
         );
     }
 
