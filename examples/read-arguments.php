@@ -10,7 +10,7 @@
  */
 
 require \implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'vendor', 'autoload.php'));
-require __DIR__ . DIRECTORY_SEPARATOR . 'StackTracePrinter.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'StackTracePrinter.php';
 
 /**
  * @internal
