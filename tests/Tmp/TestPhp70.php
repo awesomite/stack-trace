@@ -19,4 +19,16 @@ class TestPhp70
     public function argumentInt(int $argument)
     {
     }
+
+    public function argumentBool(bool $argument)
+    {
+    }
+
+    public function argumentFloat(float $argument)
+    {
+    }
+
+    public function argumentString(string $string)
+    {
+    }
 }

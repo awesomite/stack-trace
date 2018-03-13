@@ -68,8 +68,11 @@ class DeclarationProviders extends BaseTestCase
 
         if (\version_compare(PHP_VERSION, '7.0') >= 0) {
             $class70 = new \ReflectionClass(new TestPhp70());
-            list($parameterIterable) = $class70->getMethod('argumentInt')->getParameters();
-            $result[] = array(new Declaration($parameterIterable), true, 'int');
+
+            foreach (array('int', 'bool', 'float', 'string') as $type) {
+                list($parameterIterable) = $class70->getMethod('argument' . ucfirst($type))->getParameters();
+                $result[] = array(new Declaration($parameterIterable), true, $type);
+            }
         }
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
