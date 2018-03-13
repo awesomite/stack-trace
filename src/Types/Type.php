@@ -30,6 +30,7 @@ class Type implements TypeInterface
             foreach (array('HH\\', '?HH\\') as $prefix) {
                 if (0 === \strpos($name, $prefix)) {
                     $name = \substr($name, \strlen($prefix));
+                    break;
                 }
             }
         }
