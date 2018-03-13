@@ -70,22 +70,28 @@ class DeclarationProviders extends BaseTestCase
             $class70 = new \ReflectionClass(new TestPhp70());
 
             foreach (array('int', 'bool', 'float', 'string') as $type) {
-                list($parameterIterable) = $class70->getMethod('argument' . ucfirst($type))->getParameters();
-                $result[] = array(new Declaration($parameterIterable), true, $type);
+                list($parameter) = $class70->getMethod('argument' . \ucfirst($type))->getParameters();
+                $result[] = array(new Declaration($parameter), true, $type);
             }
         }
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
-        if (\version_compare(PHP_VERSION, '7.1.0RC1') >= 0 && !\defined('HHVM_VERSION')) {
+        if (\version_compare(PHP_VERSION, '7.1.0RC1') >= 0) {
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameterIterable) = $class71->getMethod('argumentIterable')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'iterable');
         }
 
+        if (\version_compare(PHP_VERSION, '7.1') >= 0) {
+            $class71 = new \ReflectionClass(new TestPhp71());
+            list($parameter) = $class71->getMethod('argumentNullableInt')->getParameters();
+            $result[] = array(new Declaration($parameter), true, 'int');
+        }
+
         if (\version_compare(PHP_VERSION, '7.2') >= 0) {
             $class72 = new \ReflectionClass(new TestPhp72());
-            list($parameterIterable) = $class72->getMethod('argumentObject')->getParameters();
-            $result[] = array(new Declaration($parameterIterable), true, 'object');
+            list($parameterObject) = $class72->getMethod('argumentObject')->getParameters();
+            $result[] = array(new Declaration($parameterObject), true, 'object');
         }
 
         return $result;

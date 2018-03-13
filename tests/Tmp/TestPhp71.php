@@ -19,4 +19,8 @@ class TestPhp71
     public function argumentIterable(iterable $argument)
     {
     }
+
+    public function argumentNullableInt(?int $argument)
+    {
+    }
 }
