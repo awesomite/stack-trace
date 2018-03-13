@@ -15,6 +15,7 @@ use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Tmp\TestPhp53;
 use Awesomite\StackTrace\Tmp\TestPhp54;
 use Awesomite\StackTrace\Tmp\TestPhp56;
+use Awesomite\StackTrace\Tmp\TestPhp70;
 use Awesomite\StackTrace\Tmp\TestPhp71;
 use Awesomite\StackTrace\Tmp\TestPhp72;
 
@@ -63,6 +64,12 @@ class DeclarationProviders extends BaseTestCase
             $methodCallable = $class54->getMethod('argumentCallable');
             list($parameterCallable) = $methodCallable->getParameters();
             $result[] = array(new Declaration($parameterCallable), true, 'callable');
+        }
+
+        if (\version_compare(PHP_VERSION, '7.0')) {
+            $class70 = new \ReflectionClass(new TestPhp70());
+            list($parameterIterable) = $class70->getMethod('argumentInt')->getParameters();
+            $result[] = array(new Declaration($parameterIterable), true, 'int');
         }
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
