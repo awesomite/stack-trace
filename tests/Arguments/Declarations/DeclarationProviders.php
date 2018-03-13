@@ -66,7 +66,7 @@ class DeclarationProviders extends BaseTestCase
             $result[] = array(new Declaration($parameterCallable), true, 'callable');
         }
 
-        if (\version_compare(PHP_VERSION, '7.0')) {
+        if (\version_compare(PHP_VERSION, '7.0') >= 0) {
             $class70 = new \ReflectionClass(new TestPhp70());
             list($parameterIterable) = $class70->getMethod('argumentInt')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'int');
