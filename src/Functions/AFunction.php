@@ -39,11 +39,7 @@ class AFunction implements FunctionInterface
             $result .= $this->arrayStep['type'];
         }
 
-        if (isset($this->arrayStep['function'])) {
-            $result .= $this->arrayStep['function'];
-        }
-
-        return $result;
+        return $result . $this->arrayStep['function'];
     }
 
     public function isClosure()
