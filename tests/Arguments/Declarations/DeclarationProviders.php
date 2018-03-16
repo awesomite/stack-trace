@@ -85,9 +85,8 @@ class DeclarationProviders extends BaseTestCase
 
         if (
             \version_compare(PHP_VERSION, '7.1') >= 0
-            && !\defined('HHVM_VERSION')
             // https://travis-ci.org/awesomite/stack-trace/jobs/354125877
-            || 0 !== \strpos(HHVM_VERSION, '3.18.')
+            && (!\defined('HHVM_VERSION') || 0 !== \strpos(HHVM_VERSION, '3.18.'))
         ) {
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameter) = $class71->getMethod('argumentNullableInt')->getParameters();
