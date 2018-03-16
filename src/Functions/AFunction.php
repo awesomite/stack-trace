@@ -73,19 +73,19 @@ class AFunction implements FunctionInterface
             return true;
         }
 
-        if ($this->hasDeprecatedTag($reflection)) {
+        if ($this->hasDeprecatedTag($reflection->getDocComment())) {
             return true;
         }
 
         if ($reflection instanceof \ReflectionMethod) {
             try {
-                if ($this->hasDeprecatedTag($reflection->getPrototype())) {
+                if ($this->hasDeprecatedTag($reflection->getPrototype()->getDocComment())) {
                     return true;
                 }
             } catch (\ReflectionException $exception) {
             }
 
-            if ($this->hasDeprecatedTagInClass($reflection->getDeclaringClass())) {
+            if ($this->hasDeprecatedTag($reflection->getDeclaringClass()->getDocComment())) {
                 return true;
             }
         }
@@ -108,17 +108,7 @@ class AFunction implements FunctionInterface
             && (!$this->isInClass() || \method_exists($this->arrayStep['class'], $this->arrayStep['function']));
     }
 
-    private function hasDeprecatedTagInClass(\ReflectionClass $class)
-    {
-        return $this->hasDeprecatedTagInDoc($class->getDocComment());
-    }
-
-    private function hasDeprecatedTag(\ReflectionFunctionAbstract $function)
-    {
-        return $this->hasDeprecatedTagInDoc($function->getDocComment());
-    }
-
-    private function hasDeprecatedTagInDoc($doc)
+    private function hasDeprecatedTag($doc)
     {
         return false !== $doc && \preg_match('#^\s+\*\s+@deprecated($|(\s.*?$))#m', $doc);
     }
