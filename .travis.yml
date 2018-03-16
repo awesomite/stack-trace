@@ -85,6 +85,13 @@ script:
   - if [[ "$RUN_CS_FIXER" = "true" ]]; then php -n ${PHP_CS_FIXER} --diff --dry-run -v --allow-risky=yes fix; fi
   - php ${PHP_ARGS} vendor/bin/phpunit --group syntax
   - php ${HHVM_ARGS} ${PHP_ARGS} vendor/bin/phpunit --exclude-group syntax
+  - |
+    if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then
+      travis_retry wget https://github.com/infection/infection/releases/download/0.7.0/infection.phar;
+      travis_retry wget https://github.com/infection/infection/releases/download/0.7.0/infection.phar.pubkey;
+      chmod +x infection.phar;
+      ./infection.phar --no-interaction
+    fi
   - php ${PHP_ARGS} examples/read-arguments.php
 
 after_script:
