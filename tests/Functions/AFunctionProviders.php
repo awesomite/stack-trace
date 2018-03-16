@@ -38,6 +38,10 @@ class AFunctionProviders extends BaseTestCase
             array(new AFunction(array('function' => '{closure}')), true),
         );
 
+        if (\defined('HHVM_VERSION')) {
+            array(new AFunction(array('function' => 'Closure$myFunction')), true);
+        }
+
         $closure = function () use (&$result) {
             $factory = new StackTraceFactory();
             $trace = $factory->create(2);
