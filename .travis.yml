@@ -51,9 +51,7 @@ matrix:
       env: DEPENDENCIES="hhvm_high"
 
     - php: hhvm-3.18
-      env:
-        - DEPENDENCIES="hhvm_high"
-        - HHVM_ARGS="-v Eval.EnableHipHopSyntax=true"
+      env: DEPENDENCIES="hhvm_high"
 
     - php: hhvm-3.21
       env: DEPENDENCIES="hhvm_high"
@@ -84,7 +82,7 @@ before_script:
 script:
   - if [[ "$RUN_CS_FIXER" = "true" ]]; then php -n ${PHP_CS_FIXER} --diff --dry-run -v --allow-risky=yes fix; fi
   - php ${PHP_ARGS} vendor/bin/phpunit --group syntax
-  - php ${HHVM_ARGS} ${PHP_ARGS} vendor/bin/phpunit --exclude-group syntax
+  - php ${PHP_ARGS} vendor/bin/phpunit --exclude-group syntax
   - |
     if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then
       travis_retry wget https://github.com/infection/infection/releases/download/0.7.0/infection.phar;
