@@ -53,6 +53,12 @@ matrix:
     - php: hhvm-3.18
       env: DEPENDENCIES="hhvm_high"
 
+    - php: hhvm-3.21
+      env: DEPENDENCIES="hhvm_high"
+
+    - php: hhvm-3.24
+      env: DEPENDENCIES="hhvm_high"
+
     - php: hhvm-nightly
       env: DEPENDENCIES="hhvm_high"
 
