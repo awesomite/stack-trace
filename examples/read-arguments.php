@@ -57,10 +57,10 @@ Output:
 
 #1 Awesomite\StackTrace\StackTraceFactory->create($stepLimit, $ignoreArgs)
   Place in code:
-    (...)/stack-trace/examples/StackTracePrinter.php:25
+    (...)/stack-trace/examples/StackTracePrinter.php:26
   Arguments:
-    undefined
-    undefined
+    undefined (default 0)
+    undefined (default false)
 #2 StackTracePrinter->printStackTrace()
   Place in code:
     (...)/stack-trace/examples/read-arguments.php:49
@@ -68,7 +68,7 @@ Output:
   Place in code:
     (...)/stack-trace/examples/read-arguments.php:37
   Arguments:
-    resource #10 of type stream
+    resource #11 of type stream
     M_PI
 #4 mySecondFunction($foo, $bar)
   Place in code:

@@ -13,6 +13,7 @@ use Awesomite\StackTrace\Arguments\ArgumentInterface;
 use Awesomite\StackTrace\Arguments\ArgumentsInterface;
 use Awesomite\StackTrace\StackTraceFactory;
 use Awesomite\StackTrace\Steps\StepInterface;
+use Awesomite\VarDumper\LightVarDumper;
 
 /**
  * @internal
@@ -73,9 +74,20 @@ class StackTracePrinter
         echo "  Arguments:\n";
 
         foreach ($arguments as $argument) {
-            $dump = $argument->hasValue()
-                ? $argument->getValue()->dumpAsString()
-                : "undefined\n";
+            if ($argument->hasValue()) {
+                $dump = $argument->getValue();
+            } else {
+                $dump = 'undefined';
+                if ($argument->hasDeclaration()) {
+                    $declaration = $argument->getDeclaration();
+                    if ($declaration->hasDefaultValue()) {
+                        $dumper = new LightVarDumper();
+                        $defDump = $dumper->dumpAsString($declaration->getDefaultValue());
+                        $dump .= ' (default ' . \substr($defDump, 0, -1) . ')';
+                    }
+                }
+                $dump .= "\n";
+            }
 
             $tabs = "    ";
 
