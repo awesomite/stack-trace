@@ -26,16 +26,16 @@ class Type implements TypeInterface
      */
     public function __construct($name)
     {
+        // @codeCoverageIgnoreStart
         if (\defined('HHVM_VERSION')) {
-            // @codeCoverageIgnoreStart
             foreach (array('HH\\', '?HH\\') as $prefix) {
                 if (0 === \strpos($name, $prefix)) {
                     $name = \substr($name, \strlen($prefix));
                     break;
                 }
             }
-            // @codeCoverageIgnoreEnd
         }
+        // @codeCoverageIgnoreEnd
         $this->name = $name;
     }
 
