@@ -27,14 +27,14 @@ class Type implements TypeInterface
     public function __construct($name)
     {
         // @codeCoverageIgnoreStart
-        /*if (\defined('HHVM_VERSION')) {
+        if (\defined('HHVM_VERSION')) {
             foreach (array('HH\\', '?HH\\') as $prefix) {
                 if (0 === \strpos($name, $prefix)) {
                     $name = \substr($name, \strlen($prefix));
                     break;
                 }
             }
-        }*/
+        }
         // @codeCoverageIgnoreEnd
         $this->name = $name;
     }
