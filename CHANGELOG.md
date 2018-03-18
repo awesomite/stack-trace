@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.1] - ????-??-??
+## [1.0.1] - 2018-03-18
 
 * Added support for [eval](http://php.net/manual/en/function.eval.php)
 * Fixed `Awesomite\StackTrace\Functions\AFunction::isClosure` for `HHVM`
@@ -12,5 +12,6 @@
 
 This version contains the same source code as [0.12.0].
 
+[1.0.1]: https://github.com/awesomite/stack-trace/tree/v1.0.1
 [1.0.0]: https://github.com/awesomite/stack-trace/tree/v1.0.0
 [0.12.0]: https://github.com/awesomite/stack-trace/tree/v0.12.0
