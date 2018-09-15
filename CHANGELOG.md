@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.2] - 2018-09-15
+
+Use `varDumper->dumpAsString()` instead of `ob_*` functions and `varDumper->dump()`
+in [`Value::dumpAsString()`](./src/Arguments/Values/Value.php).
+
 ## [1.0.1] - 2018-03-18
 
 * Added support for [eval](http://php.net/manual/en/function.eval.php)
@@ -12,6 +17,7 @@
 
 This version contains the same source code as [0.12.0].
 
+[1.0.2]: https://github.com/awesomite/stack-trace/tree/v1.0.2
 [1.0.1]: https://github.com/awesomite/stack-trace/tree/v1.0.1
 [1.0.0]: https://github.com/awesomite/stack-trace/tree/v1.0.0
 [0.12.0]: https://github.com/awesomite/stack-trace/tree/v0.12.0

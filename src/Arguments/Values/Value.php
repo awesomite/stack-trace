@@ -63,12 +63,11 @@ class Value implements ValueInterface, \Serializable
 
     public function dumpAsString()
     {
-        \ob_start();
-        $this->dump();
-        $result = \ob_get_contents();
-        \ob_end_clean();
+        if (!\is_null($this->dumpedVar)) {
+            return $this->dumpedVar;
+        }
 
-        return $result;
+        return $this->varDumper->dumpAsString($this->getRealValue());
     }
 
     public function isRealValueReadable()

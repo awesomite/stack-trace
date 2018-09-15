@@ -27,7 +27,7 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION             = '1.0.1';
+    const VERSION             = '1.0.2';
     const CONSTRAINTS_VERSION = '^1.0.0';
 
     private $arrayStackTrace;
