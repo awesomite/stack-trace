@@ -27,7 +27,7 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION             = '1.0.2';
+    const VERSION             = '1.1.0';
     const CONSTRAINTS_VERSION = '^1.0.0';
 
     private $arrayStackTrace;
@@ -157,6 +157,15 @@ class StackTrace implements StackTraceInterface
         return \md5(\implode('__', $lines));
     }
 
+    public function getVarDumper()
+    {
+        if (\is_null($this->varDumper)) {
+            $this->varDumper = new LightVarDumper();
+        }
+
+        return $this->varDumper;
+    }
+
     public function setVarDumper(VarDumperInterface $varDumper)
     {
         $this->varDumper = $varDumper;
@@ -206,15 +215,6 @@ class StackTrace implements StackTraceInterface
         }
 
         return $step;
-    }
-
-    private function getVarDumper()
-    {
-        if (\is_null($this->varDumper)) {
-            $this->varDumper = new LightVarDumper();
-        }
-
-        return $this->varDumper;
     }
 
     /**
