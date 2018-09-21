@@ -14,6 +14,8 @@ namespace Awesomite\StackTrace\Arguments\Values;
 use Awesomite\StackTrace\Exceptions\StackTraceException;
 
 /**
+ * @deprecated
+ *
  * @internal
  */
 class CannotRestoreValueException extends \Exception implements StackTraceException
