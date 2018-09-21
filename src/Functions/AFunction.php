@@ -16,7 +16,7 @@ use Awesomite\StackTrace\Exceptions\LogicException;
 /**
  * @internal
  */
-class AFunction implements FunctionInterface
+final class AFunction implements FunctionInterface
 {
     private $reflection = null;
 

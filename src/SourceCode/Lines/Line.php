@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\SourceCode\Lines;
 /**
  * @internal
  */
-class Line implements LineInterface
+final class Line implements LineInterface
 {
     /**
      * @var string

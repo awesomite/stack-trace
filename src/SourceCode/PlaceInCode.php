@@ -20,7 +20,7 @@ use Awesomite\StackTrace\SourceCode\Lines\Lines;
 /**
  * @internal
  */
-class PlaceInCode implements PlaceInCodeInterface
+final class PlaceInCode implements PlaceInCodeInterface
 {
     private $fileName;
 

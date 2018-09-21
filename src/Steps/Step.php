@@ -20,7 +20,7 @@ use Awesomite\StackTrace\SourceCode\PlaceInCode;
 /**
  * @internal
  */
-class Step implements StepInterface
+final class Step implements StepInterface
 {
     private $stepArray;
 

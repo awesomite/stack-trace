@@ -9,6 +9,7 @@ in class [`Awesomite\StackTrace\StackTraceFactory`](./src/StackTraceFactory.php)
 have become `@deprecated`
 * Added optional parameter `$varDumper` to [`Awesomite\StackTrace\StackTraceFactory::__construct`](./src/StackTraceFactory.php)
 * Tests classes have become `final` whenever it was possible
+* `@internal` classes have become `final` whenever it was possible
 
 ## [1.1.0] - 2018-09-19
 

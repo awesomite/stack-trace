@@ -18,7 +18,7 @@ use Awesomite\StackTrace\Functions\FunctionInterface;
 /**
  * @internal
  */
-class Arguments implements ArgumentsInterface
+final class Arguments implements ArgumentsInterface
 {
     /**
      * @var FunctionInterface

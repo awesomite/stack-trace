@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Types;
 /**
  * @internal
  */
-class Type implements TypeInterface
+final class Type implements TypeInterface
 {
     /**
      * @var string

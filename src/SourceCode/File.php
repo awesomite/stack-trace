@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\SourceCode;
 /**
  * @internal
  */
-class File implements FileInterface
+final class File implements FileInterface
 {
     private $fileName;
 

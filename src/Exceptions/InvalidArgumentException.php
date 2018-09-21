@@ -11,6 +11,9 @@
 
 namespace Awesomite\StackTrace\Exceptions;
 
+/**
+ * TODO make this class internal in v2.0.0
+ */
 class InvalidArgumentException extends \InvalidArgumentException implements StackTraceException
 {
 }

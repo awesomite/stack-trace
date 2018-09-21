@@ -18,7 +18,7 @@ use Awesomite\StackTrace\Exceptions\LogicException;
 /**
  * @internal
  */
-class Argument implements ArgumentInterface
+final class Argument implements ArgumentInterface
 {
     /**
      * @var DeclarationInterface|null

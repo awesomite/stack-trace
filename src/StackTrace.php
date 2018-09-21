@@ -25,7 +25,7 @@ use Composer\Semver\Semver;
 /**
  * @internal
  */
-class StackTrace implements StackTraceInterface
+final class StackTrace implements StackTraceInterface
 {
     const VERSION             = '1.2.0';
     const CONSTRAINTS_VERSION = '^1.0.0';

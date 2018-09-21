@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Arguments\Values;
 /**
  * @internal
  */
-class DeserializedValue implements ValueInterface
+final class DeserializedValue implements ValueInterface
 {
     private $dumpedVariable;
 

@@ -17,7 +17,7 @@ use Awesomite\StackTrace\Types\Type;
 /**
  * @internal
  */
-class Declaration implements DeclarationInterface
+final class Declaration implements DeclarationInterface
 {
     const REGEX_CLASS_NOT_EXISTS = '/^Class (?<name>.*) does not exist$/';
 

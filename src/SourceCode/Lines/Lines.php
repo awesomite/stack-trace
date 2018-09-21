@@ -16,7 +16,7 @@ use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 /**
  * @internal
  */
-class Lines implements LinesInterface
+final class Lines implements LinesInterface
 {
     /**
      * @var array|LineInterface[]

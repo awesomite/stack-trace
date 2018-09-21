@@ -17,7 +17,7 @@ use Awesomite\VarDumper\VarDumperInterface;
 /**
  * @internal
  */
-class Value implements ValueInterface, \Serializable
+final class Value implements ValueInterface, \Serializable
 {
     private $value;
 
