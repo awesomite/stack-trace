@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0] - ????-??-??
+## [1.2.0] - 2018-09-21
 
 * Added interface [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)
 * Implemented interfece [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)
