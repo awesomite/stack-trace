@@ -84,11 +84,13 @@ script:
   - php ${PHP_ARGS} vendor/bin/phpunit --group syntax
   - php ${PHP_ARGS} vendor/bin/phpunit --exclude-group syntax
   - |
-    if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then
-      travis_retry wget https://github.com/infection/infection/releases/download/0.7.0/infection.phar;
-      travis_retry wget https://github.com/infection/infection/releases/download/0.7.0/infection.phar.pubkey;
+    if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then
+      wget https://github.com/infection/infection/releases/download/0.10.5/infection.phar;
+      wget https://github.com/infection/infection/releases/download/0.10.5/infection.phar.asc;
+      gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 493B4AA0;
+      gpg --with-fingerprint --verify infection.phar.asc infection.phar;
       chmod +x infection.phar;
-      ./infection.phar --no-interaction
+      ./infection.phar --no-interaction;
     fi
   - php ${PHP_ARGS} examples/read-arguments.php
 
