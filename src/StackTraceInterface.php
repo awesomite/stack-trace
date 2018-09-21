@@ -31,9 +31,16 @@ interface StackTraceInterface extends \IteratorAggregate, \Countable, \Serializa
     public function getId();
 
     /**
+     * @deprecated
+     *
      * @return VarDumperInterface
      */
     public function getVarDumper();
 
+    /**
+     * @deprecated
+     *
+     * @param VarDumperInterface $varDumper
+     */
     public function setVarDumper(VarDumperInterface $varDumper);
 }

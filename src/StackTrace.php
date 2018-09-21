@@ -27,7 +27,7 @@ use Composer\Semver\Semver;
  */
 class StackTrace implements StackTraceInterface
 {
-    const VERSION             = '1.1.0';
+    const VERSION             = '1.2.0';
     const CONSTRAINTS_VERSION = '^1.0.0';
 
     private $arrayStackTrace;
@@ -43,9 +43,10 @@ class StackTrace implements StackTraceInterface
      */
     private $varDumper;
 
-    public function __construct(array $arrayStackTrace)
+    public function __construct(array $arrayStackTrace, VarDumperInterface $varDumper)
     {
         $this->arrayStackTrace = new \ArrayObject($arrayStackTrace);
+        $this->varDumper = $varDumper;
     }
 
     public function getIterator()

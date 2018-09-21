@@ -24,7 +24,7 @@ class StackTraceTest extends BaseTestCase
     {
         $debugBacktrace = \debug_backtrace();
         $debugBacktrace = \array_slice($debugBacktrace, 0, 3, true);
-        $stackTrace = new StackTrace($debugBacktrace);
+        $stackTrace = new StackTrace($debugBacktrace, new LightVarDumper());
         $this->assertSame(\count($debugBacktrace), \count($stackTrace));
         $this->assertTrue($stackTrace->getIterator() instanceof \Traversable);
 
@@ -78,7 +78,7 @@ class StackTraceTest extends BaseTestCase
         $factory = new StackTraceFactory();
 
         return array(
-            array(new StackTrace($backTrace)),
+            array(new StackTrace($backTrace, new LightVarDumper())),
             array($factory->create()),
             array(\unserialize(\serialize($factory->create()))),
         );

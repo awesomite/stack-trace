@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - ????-??-??
+
+* Added interface [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)
+* Implemented interfece [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)
+in class [`Awesomite\StackTrace\StackTraceFactory`](./src/StackTraceFactory.php)
+* Methods `getVarDumper` and `setVarDumper` in [`Awesomite\StackTrace\StackTraceInterface`](./src/StackTraceInterface.php)
+have become `@deprecated`
+
 ## [1.1.0] - 2018-09-19
 
 Added method `Awesomite\StackTrace\StackTraceInterface::getVarDumper`.
@@ -21,6 +29,7 @@ in [`Value::dumpAsString()`](./src/Arguments/Values/Value.php).
 
 This version contains the same source code as [0.12.0].
 
+[1.2.0]: https://github.com/awesomite/stack-trace/tree/v1.1.0
 [1.1.0]: https://github.com/awesomite/stack-trace/tree/v1.1.0
 [1.0.2]: https://github.com/awesomite/stack-trace/tree/v1.0.2
 [1.0.1]: https://github.com/awesomite/stack-trace/tree/v1.0.1

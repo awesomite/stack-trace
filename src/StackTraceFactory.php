@@ -12,16 +12,25 @@
 namespace Awesomite\StackTrace;
 
 use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
+use Awesomite\VarDumper\LightVarDumper;
+use Awesomite\VarDumper\VarDumperInterface;
 
-class StackTraceFactory
+class StackTraceFactory implements StackTraceFactoryInterface
 {
     private static $rootExceptionClass = null;
 
     /**
-     * @param int  $stepLimit
-     * @param bool $ignoreArgs
-     *
-     * @return StackTraceInterface
+     * @var VarDumperInterface
+     */
+    private $varDumper;
+
+    public function __construct(VarDumperInterface $varDumper = null)
+    {
+        $this->varDumper = $varDumper ?: new LightVarDumper();
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function create($stepLimit = 0, $ignoreArgs = false)
     {
@@ -35,7 +44,7 @@ class StackTraceFactory
                 $this->removeArgs($arrayStackTrace);
             }
 
-            return new StackTrace($arrayStackTrace);
+            return new StackTrace($arrayStackTrace, $this->varDumper);
         }
 
         $arrayStackTrace = \debug_backtrace($this->getOptionsForDebugBacktrace53());
@@ -46,15 +55,11 @@ class StackTraceFactory
             $this->removeArgs($arrayStackTrace);
         }
 
-        return new StackTrace($arrayStackTrace);
+        return new StackTrace($arrayStackTrace, $this->varDumper);
     }
 
     /**
-     * @param \Throwable|\Exception $exception
-     * @param int                   $stepLimit
-     * @param bool                  $ignoreArgs
-     *
-     * @return StackTraceInterface
+     * {@inheritdoc}
      */
     public function createByThrowable($exception, $stepLimit = 0, $ignoreArgs = false)
     {
@@ -112,7 +117,7 @@ class StackTraceFactory
             $this->removeArgs($trace);
         }
 
-        return new StackTrace($trace);
+        return new StackTrace($trace, $this->varDumper);
     }
 
     private function removeArgs(array &$trace)
