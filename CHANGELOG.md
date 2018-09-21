@@ -7,6 +7,7 @@
 in class [`Awesomite\StackTrace\StackTraceFactory`](./src/StackTraceFactory.php)
 * Methods `getVarDumper` and `setVarDumper` in [`Awesomite\StackTrace\StackTraceInterface`](./src/StackTraceInterface.php)
 have become `@deprecated`
+* Added optional parameter `$varDumper` to [`Awesomite\StackTrace\StackTraceFactory::__construct`](./src/StackTraceFactory.php)
 
 ## [1.1.0] - 2018-09-19
 
