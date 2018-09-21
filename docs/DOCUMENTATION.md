@@ -8,6 +8,13 @@ Both methods have optional `$limit` parameter.
 ```php
 use Awesomite\StackTrace\StackTraceFactory;
 
+/*
+ * Constructor of StackTraceFactory has optional parameter $varDumper,
+ * you can inject your own varDumper, otherwise new instance of
+ * Awesomite\VarDumper\LightVarDumper with default values will be used
+ *
+ * @see https://github.com/awesomite/var-dumper
+ */
 $factory = new StackTraceFactory();
 
 // creates stack trace for current position
