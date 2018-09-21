@@ -43,10 +43,24 @@ final class StackTrace implements StackTraceInterface
      */
     private $varDumper;
 
-    public function __construct(array $arrayStackTrace, VarDumperInterface $varDumper)
-    {
+    /**
+     * @var false|int
+     */
+    private $maxSerializableStringLen;
+
+    /**
+     * @param array              $arrayStackTrace
+     * @param VarDumperInterface $varDumper
+     * @param false|int          $maxSerializableStringLen
+     */
+    public function __construct(
+        array $arrayStackTrace,
+        VarDumperInterface $varDumper,
+        $maxSerializableStringLen
+    ) {
         $this->arrayStackTrace = new \ArrayObject($arrayStackTrace);
         $this->varDumper = $varDumper;
+        $this->maxSerializableStringLen = $maxSerializableStringLen;
     }
 
     public function getIterator()
@@ -249,7 +263,16 @@ final class StackTrace implements StackTraceInterface
 
     private function convertArg($value)
     {
-        if (\is_scalar($value)) {
+        $isSerializable = \is_scalar($value) || null === $value;
+        if (\is_string($value)) {
+            $isSerializable = $isSerializable
+                && (
+                    false === $this->maxSerializableStringLen
+                    || \strlen($value) <= $this->maxSerializableStringLen
+                );
+        }
+
+        if ($isSerializable) {
             return new Value($value, $this->getVarDumper());
         }
 

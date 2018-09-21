@@ -24,7 +24,7 @@ final class StackTraceTest extends BaseTestCase
     {
         $debugBacktrace = \debug_backtrace();
         $debugBacktrace = \array_slice($debugBacktrace, 0, 3, true);
-        $stackTrace = new StackTrace($debugBacktrace, new LightVarDumper());
+        $stackTrace = new StackTrace($debugBacktrace, new LightVarDumper(), false);
         $this->assertSame(\count($debugBacktrace), \count($stackTrace));
         $this->assertTrue($stackTrace->getIterator() instanceof \Traversable);
 
@@ -78,7 +78,7 @@ final class StackTraceTest extends BaseTestCase
         $factory = new StackTraceFactory();
 
         return array(
-            array(new StackTrace($backTrace, new LightVarDumper())),
+            array(new StackTrace($backTrace, new LightVarDumper(), false)),
             array($factory->create()),
             array(\unserialize(\serialize($factory->create()))),
         );
@@ -193,6 +193,41 @@ final class StackTraceTest extends BaseTestCase
         $copy = $original;
         $this->changeReference($original);
         $this->assertNotSame($copy, $original);
+    }
+
+    /**
+     * @dataProvider providerConvertArg
+     *
+     * @param false|int $threshold
+     * @param mixed     $value
+     * @param string    $expectedReturnedClass
+     */
+    public function testConvertArg($threshold, $value, $expectedReturnedClass)
+    {
+        $stackTrace = new StackTrace(array(), new LightVarDumper(), $threshold);
+        $method = new \ReflectionMethod($stackTrace, 'convertArg');
+        $method->setAccessible(true);
+        $result = $method->invoke($stackTrace, $value);
+        $this->assertInstanceOf('Awesomite\StackTrace\Arguments\Values\ValueInterface', $result);
+        $this->assertInstanceOf($expectedReturnedClass, $result);
+    }
+
+    public function providerConvertArg()
+    {
+        return array(
+            array(false, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(false, false, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(false, 5, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(false, 5.0, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(false, INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, '000000', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(0, 'a', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(false, new \stdClass(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(false, array(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(false, \tmpfile(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+        );
     }
 
     private function changeReference(&$reference)

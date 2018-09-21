@@ -1,5 +1,9 @@
 # Changelog
 
+## ?.?.? - ????-??-??
+
+* Added optional parameter `$maxSerializableStringLen` to [`Awesomite\StackTrace\StackTraceFactory::__construct`](./src/StackTraceFactory.php)
+
 ## [1.2.0] - 2018-09-21
 
 * Added interface [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)

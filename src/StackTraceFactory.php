@@ -24,9 +24,19 @@ class StackTraceFactory implements StackTraceFactoryInterface
      */
     private $varDumper;
 
-    public function __construct(VarDumperInterface $varDumper = null)
+    /**
+     * @var false|int
+     */
+    private $maxSerializableStringLen;
+
+    /**
+     * @param VarDumperInterface|null $varDumper
+     * @param false|int               $maxSerializableStringLen
+     */
+    public function __construct(VarDumperInterface $varDumper = null, $maxSerializableStringLen = false)
     {
         $this->varDumper = $varDumper ?: new LightVarDumper();
+        $this->maxSerializableStringLen = $maxSerializableStringLen;
     }
 
     /**
@@ -44,7 +54,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
                 $this->removeArgs($arrayStackTrace);
             }
 
-            return new StackTrace($arrayStackTrace, $this->varDumper);
+            return new StackTrace($arrayStackTrace, $this->varDumper, $this->maxSerializableStringLen);
         }
 
         $arrayStackTrace = \debug_backtrace($this->getOptionsForDebugBacktrace53());
@@ -55,7 +65,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
             $this->removeArgs($arrayStackTrace);
         }
 
-        return new StackTrace($arrayStackTrace, $this->varDumper);
+        return new StackTrace($arrayStackTrace, $this->varDumper, $this->maxSerializableStringLen);
     }
 
     /**
@@ -117,7 +127,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
             $this->removeArgs($trace);
         }
 
-        return new StackTrace($trace, $this->varDumper);
+        return new StackTrace($trace, $this->varDumper, $this->maxSerializableStringLen);
     }
 
     private function removeArgs(array &$trace)
