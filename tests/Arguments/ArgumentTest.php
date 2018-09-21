@@ -21,7 +21,7 @@ use Awesomite\StackTrace\Exceptions\LogicException;
 /**
  * @internal
  */
-class ArgumentTest extends BaseTestCase
+final class ArgumentTest extends BaseTestCase
 {
     /**
      * @dataProvider providerDeclaration

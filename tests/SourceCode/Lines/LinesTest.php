@@ -17,7 +17,7 @@ use Awesomite\StackTrace\SourceCode\PlaceInCode;
 /**
  * @internal
  */
-class LinesTest extends BaseTestCase
+final class LinesTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

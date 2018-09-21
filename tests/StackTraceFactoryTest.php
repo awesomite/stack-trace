@@ -18,7 +18,7 @@ use Awesomite\StackTrace\Steps\StepInterface;
 /**
  * @internal
  */
-class StackTraceFactoryTest extends BaseTestCase
+final class StackTraceFactoryTest extends BaseTestCase
 {
     /**
      * @dataProvider providerCreate

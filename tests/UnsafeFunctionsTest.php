@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace;
 /**
  * @internal
  */
-class UnsafeFunctionsTest extends BaseTestCase
+final class UnsafeFunctionsTest extends BaseTestCase
 {
     private static $unsafeFunctions
         = array(

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 /**
  * @internal
  */
-class TestListener implements \PHPUnit_Framework_TestListener
+final class TestListener implements \PHPUnit_Framework_TestListener
 {
     private $offset = .05;
 

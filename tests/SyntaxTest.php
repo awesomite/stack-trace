@@ -12,10 +12,11 @@
 namespace Awesomite\StackTrace;
 
 /**
- * @internal
  * @group syntax
+ *
+ * @internal
  */
-class SyntaxTest extends BaseTestCase
+final class SyntaxTest extends BaseTestCase
 {
     public function testSyntax()
     {

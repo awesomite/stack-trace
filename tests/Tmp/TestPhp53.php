@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Tmp;
 /**
  * @internal
  */
-class TestPhp53
+final class TestPhp53
 {
     public function argumentArray(array $argument)
     {

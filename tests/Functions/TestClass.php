@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Functions;
 /**
  * @internal
  */
-class TestClass implements TestInterface
+final class TestClass implements TestInterface
 {
     public function sayHello()
     {

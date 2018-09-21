@@ -17,7 +17,7 @@ use Awesomite\StackTrace\Steps\StepInterface;
 /**
  * @internal
  */
-class StackTraceVariadic
+final class StackTraceVariadic
 {
     private $testCase;
 

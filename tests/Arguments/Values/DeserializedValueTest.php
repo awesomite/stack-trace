@@ -13,7 +13,10 @@ namespace Awesomite\StackTrace\Arguments\Values;
 
 use Awesomite\StackTrace\BaseTestCase;
 
-class DeserializedValueTest extends BaseTestCase
+/**
+ * @internal
+ */
+abstract class DeserializedValueTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

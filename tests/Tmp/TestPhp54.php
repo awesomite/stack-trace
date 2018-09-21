@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Tmp;
 /**
  * @internal
  */
-class TestPhp54
+final class TestPhp54
 {
     public function argumentCallable(callable $argument)
     {

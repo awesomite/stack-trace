@@ -16,7 +16,7 @@ use Awesomite\StackTrace\Exceptions\LogicException;
 /**
  * @internal
  */
-class DeclarationTest extends DeclarationProviders
+final class DeclarationTest extends DeclarationProviders
 {
     /**
      * @dataProvider providerGetName

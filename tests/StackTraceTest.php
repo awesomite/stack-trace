@@ -18,7 +18,7 @@ use Awesomite\VarDumper\LightVarDumper;
 /**
  * @internal
  */
-class StackTraceTest extends BaseTestCase
+final class StackTraceTest extends BaseTestCase
 {
     public function testAll()
     {

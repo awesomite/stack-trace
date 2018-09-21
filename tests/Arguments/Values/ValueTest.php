@@ -16,7 +16,7 @@ use Awesomite\StackTrace\BaseTestCase;
 /**
  * @internal
  */
-class ValueTest extends BaseTestCase
+final class ValueTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

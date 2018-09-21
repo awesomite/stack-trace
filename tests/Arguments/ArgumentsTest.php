@@ -21,7 +21,7 @@ use Awesomite\StackTrace\Tmp\TestPhp56;
 /**
  * @internal
  */
-class ArgumentsTest extends BaseTestCase
+final class ArgumentsTest extends BaseTestCase
 {
     /**
      * @dataProvider providerAll

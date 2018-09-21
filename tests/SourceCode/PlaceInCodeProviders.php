@@ -15,7 +15,10 @@ use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\Constants;
 use Awesomite\StackTrace\StackTraceFactory;
 
-class PlaceInCodeProviders extends BaseTestCase
+/**
+ * @internal
+ */
+abstract class PlaceInCodeProviders extends BaseTestCase
 {
     public function providerInvalidLineLimit()
     {

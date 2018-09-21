@@ -14,7 +14,7 @@ namespace Awesomite\StackTrace\Tmp;
 /**
  * @internal
  */
-class TestPhp72
+final class TestPhp72
 {
     public function argumentObject(object $argument)
     {

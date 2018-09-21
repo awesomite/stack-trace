@@ -16,7 +16,7 @@ use Awesomite\StackTrace\SourceCode\Lines\LinesInterface;
 /**
  * @internal
  */
-class PlaceInCodeTest extends PlaceInCodeProviders
+final class PlaceInCodeTest extends PlaceInCodeProviders
 {
     /**
      * @dataProvider providerInvalidLineLimit

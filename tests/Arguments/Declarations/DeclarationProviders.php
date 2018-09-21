@@ -19,7 +19,10 @@ use Awesomite\StackTrace\Tmp\TestPhp70;
 use Awesomite\StackTrace\Tmp\TestPhp71;
 use Awesomite\StackTrace\Tmp\TestPhp72;
 
-class DeclarationProviders extends BaseTestCase
+/**
+ * @internal
+ */
+abstract class DeclarationProviders extends BaseTestCase
 {
     public function providerGetName()
     {

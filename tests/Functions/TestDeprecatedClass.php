@@ -13,9 +13,10 @@ namespace Awesomite\StackTrace\Functions;
 
 /**
  * @deprecated
+ *
  * @internal
  */
-class TestDeprecatedClass
+final class TestDeprecatedClass
 {
     public function doSomething()
     {

@@ -13,7 +13,10 @@ namespace Awesomite\StackTrace\SourceCode;
 
 use Awesomite\StackTrace\BaseTestCase;
 
-class FileTest extends BaseTestCase
+/**
+ * @internal
+ */
+final class FileTest extends BaseTestCase
 {
     public function testSerialize()
     {

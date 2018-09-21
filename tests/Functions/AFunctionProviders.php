@@ -14,7 +14,10 @@ namespace Awesomite\StackTrace\Functions;
 use Awesomite\StackTrace\BaseTestCase;
 use Awesomite\StackTrace\StackTraceFactory;
 
-class AFunctionProviders extends BaseTestCase
+/**
+ * @internal
+ */
+abstract class AFunctionProviders extends BaseTestCase
 {
     public function providerGetName()
     {

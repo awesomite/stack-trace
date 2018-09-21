@@ -19,7 +19,7 @@ use Awesomite\StackTrace\SourceCode\PlaceInCodeInterface;
 /**
  * @internal
  */
-class StepTest extends BaseTestCase
+final class StepTest extends BaseTestCase
 {
     /**
      * @dataProvider providerGetArguments
