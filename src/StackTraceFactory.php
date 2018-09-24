@@ -25,15 +25,15 @@ class StackTraceFactory implements StackTraceFactoryInterface
     private $varDumper;
 
     /**
-     * @var false|int
+     * @var null|int
      */
     private $maxSerializableStringLen;
 
     /**
      * @param VarDumperInterface|null $varDumper
-     * @param false|int               $maxSerializableStringLen
+     * @param null|int                $maxSerializableStringLen
      */
-    public function __construct(VarDumperInterface $varDumper = null, $maxSerializableStringLen = false)
+    public function __construct(VarDumperInterface $varDumper = null, $maxSerializableStringLen = null)
     {
         $this->varDumper = $varDumper ?: new LightVarDumper();
         $this->maxSerializableStringLen = $maxSerializableStringLen;

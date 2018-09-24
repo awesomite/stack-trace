@@ -215,18 +215,19 @@ final class StackTraceTest extends BaseTestCase
     public function providerConvertArg()
     {
         return array(
-            array(false, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(5, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
-            array(false, false, 'Awesomite\StackTrace\Arguments\Values\Value'),
-            array(false, 5, 'Awesomite\StackTrace\Arguments\Values\Value'),
-            array(false, 5.0, 'Awesomite\StackTrace\Arguments\Values\Value'),
-            array(false, INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, false, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, 5, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, 5.0, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(5, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(5, '000000', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
             array(0, 'a', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
-            array(false, new \stdClass(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
-            array(false, array(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
-            array(false, \tmpfile(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, new \stdClass(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, array(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, \tmpfile(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
         );
     }
 

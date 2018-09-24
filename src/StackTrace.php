@@ -51,7 +51,7 @@ final class StackTrace implements StackTraceInterface
     /**
      * @param array              $arrayStackTrace
      * @param VarDumperInterface $varDumper
-     * @param false|int          $maxSerializableStringLen
+     * @param null|int           $maxSerializableStringLen
      */
     public function __construct(
         array $arrayStackTrace,
@@ -263,14 +263,9 @@ final class StackTrace implements StackTraceInterface
 
     private function convertArg($value)
     {
-        $isSerializable = \is_scalar($value) || null === $value;
-        if (\is_string($value)) {
-            $isSerializable = $isSerializable
-                && (
-                    false === $this->maxSerializableStringLen
-                    || \strlen($value) <= $this->maxSerializableStringLen
-                );
-        }
+        $isSerializable = \is_string($value)
+            ? (null === $this->maxSerializableStringLen || \strlen($value) <= $this->maxSerializableStringLen)
+            : (\is_scalar($value) || null === $value);
 
         if ($isSerializable) {
             return new Value($value, $this->getVarDumper());
