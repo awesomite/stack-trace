@@ -93,11 +93,11 @@ class StackTraceFactory implements StackTraceFactoryInterface
     private function getRootExceptionClass()
     {
         if (\is_null(self::$rootExceptionClass)) {
-            $reflection = new \ReflectionClass('\Exception');
-            $throwableExists = \interface_exists('\Throwable', false);
-            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('\Throwable')
-                ? '\Throwable'
-                : '\Exception';
+            $reflection = new \ReflectionClass('Exception');
+            $throwableExists = \interface_exists('Throwable', false);
+            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('Throwable')
+                ? 'Throwable'
+                : 'Exception';
         }
 
         return self::$rootExceptionClass;
