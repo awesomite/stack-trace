@@ -22,7 +22,7 @@ interface StackTraceFactoryInterface
     public function create($stepLimit = 0, $ignoreArgs = false);
 
     /**
-     * @param \Throwable|\Exception $exception
+     * @param \Exception|\Throwable $exception
      * @param int                   $stepLimit
      * @param bool                  $ignoreArgs
      *

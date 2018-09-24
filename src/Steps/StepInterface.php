@@ -20,7 +20,7 @@ use Awesomite\StackTrace\SourceCode\PlaceInCodeInterface;
 interface StepInterface
 {
     /**
-     * @return ArgumentsInterface|ArgumentInterface[]
+     * @return ArgumentInterface[]|ArgumentsInterface
      */
     public function getArguments();
 

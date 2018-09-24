@@ -34,7 +34,7 @@ final class Arguments implements ArgumentsInterface
      * @codeCoverageIgnore
      *
      * @param ValueInterface[]       $arguments
-     * @param FunctionInterface|null $function
+     * @param null|FunctionInterface $function
      */
     public function __construct(array $arguments, FunctionInterface $function = null)
     {
@@ -72,7 +72,7 @@ final class Arguments implements ArgumentsInterface
             $parameters = $this->function->getReflection()->getParameters();
 
             if (\version_compare(PHP_VERSION, '5.6') >= 0) {
-                /** @var \ReflectionParameter|bool $parameter */
+                /** @var bool|\ReflectionParameter $parameter */
                 $parameter = \end($parameters);
                 if ($parameter && $parameter->isVariadic()) {
                     return \count($parameters);

@@ -39,7 +39,7 @@ final class StackTrace implements StackTraceInterface
     private $unserialized = false;
 
     /**
-     * @var VarDumperInterface|null
+     * @var null|VarDumperInterface
      */
     private $varDumper;
 
@@ -234,7 +234,7 @@ final class StackTrace implements StackTraceInterface
 
     /**
      * @param array    $inputArgs
-     * @param int|null $maxArgs
+     * @param null|int $maxArgs
      *
      * @return array
      */

@@ -31,7 +31,7 @@ final class PlaceInCode implements PlaceInCodeInterface
     /**
      * @param string             $fileName
      * @param int                $lineNo
-     * @param FileInterface|null $file
+     * @param null|FileInterface $file
      */
     public function __construct($fileName, $lineNo, FileInterface $file = null)
     {

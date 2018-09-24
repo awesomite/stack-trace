@@ -30,7 +30,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
     private $maxSerializableStringLen;
 
     /**
-     * @param VarDumperInterface|null $varDumper
+     * @param null|VarDumperInterface $varDumper
      * @param null|int                $maxSerializableStringLen
      */
     public function __construct(VarDumperInterface $varDumper = null, $maxSerializableStringLen = null)
@@ -76,7 +76,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
         $exceptionClass = $this->getRootExceptionClass();
         if (!\is_object($exception) || !$exception instanceof $exceptionClass) {
             throw new InvalidArgumentException(\sprintf(
-                "Expected argument of type %s, %s given",
+                'Expected argument of type %s, %s given',
                 $exceptionClass,
                 \is_object($exception) ? \get_class($exception) : \gettype($exception)
             ));

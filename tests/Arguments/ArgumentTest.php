@@ -27,7 +27,7 @@ final class ArgumentTest extends BaseTestCase
      * @dataProvider providerDeclaration
      *
      * @param Argument                  $argument
-     * @param DeclarationInterface|null $declaration
+     * @param null|DeclarationInterface $declaration
      */
     public function testDeclaration(Argument $argument, DeclarationInterface $declaration = null)
     {
@@ -55,7 +55,7 @@ final class ArgumentTest extends BaseTestCase
      * @dataProvider providerValue
      *
      * @param Argument            $argument
-     * @param ValueInterface|null $value
+     * @param null|ValueInterface $value
      */
     public function testValue(Argument $argument, ValueInterface $value = null)
     {

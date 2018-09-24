@@ -63,7 +63,7 @@ class StackTracePrinter
     }
 
     /**
-     * @param ArgumentsInterface|ArgumentInterface[] $arguments
+     * @param ArgumentInterface[]|ArgumentsInterface $arguments
      */
     private function printArguments($arguments)
     {
@@ -89,7 +89,7 @@ class StackTracePrinter
                 $dump .= "\n";
             }
 
-            $tabs = "    ";
+            $tabs = '    ';
 
             $dump = \substr($dump, 0, -1);
             $dump = $tabs . \str_replace("\n", "\n", $dump) . "\n";
