@@ -267,10 +267,8 @@ final class StackTrace implements StackTraceInterface
             ? (null === $this->maxSerializableStringLen || \strlen($value) <= $this->maxSerializableStringLen)
             : (\is_scalar($value) || null === $value);
 
-        if ($isSerializable) {
-            return new Value($value, $this->getVarDumper());
-        }
-
-        return new DeserializedValue($this->getVarDumper()->dumpAsString($value));
+        return $isSerializable
+            ? new Value($value, $this->getVarDumper())
+            : new DeserializedValue($this->getVarDumper()->dumpAsString($value));
     }
 }
