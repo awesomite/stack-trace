@@ -20,10 +20,10 @@ final class SyntaxTest extends BaseTestCase
 {
     public function testSyntax()
     {
-        $delimiter = DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR;
+        $delimiter = \DIRECTORY_SEPARATOR . 'tests' . \DIRECTORY_SEPARATOR;
         $explodedPath = \explode($delimiter, __FILE__);
         \array_pop($explodedPath);
-        $path = \realpath(\implode($delimiter, $explodedPath) . DIRECTORY_SEPARATOR . 'src');
+        $path = \realpath(\implode($delimiter, $explodedPath) . \DIRECTORY_SEPARATOR . 'src');
         $this->assertInternalType('string', $path);
         $directory = new \RecursiveDirectoryIterator($path);
         $iterator = new \RecursiveIteratorIterator($directory);

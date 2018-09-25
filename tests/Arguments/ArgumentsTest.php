@@ -47,7 +47,7 @@ final class ArgumentsTest extends BaseTestCase
             'closure' => $this->providerClosure(),
         );
 
-        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.6') >= 0) {
             $result['variadic'] = $this->providerVariadic();
         }
 

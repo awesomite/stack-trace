@@ -28,6 +28,7 @@ use Composer\Semver\Semver;
 final class StackTrace implements StackTraceInterface
 {
     const VERSION             = '1.3.0';
+
     const CONSTRAINTS_VERSION = '^1.0.0';
 
     private $arrayStackTrace;
@@ -116,8 +117,11 @@ final class StackTrace implements StackTraceInterface
     {
         $data = \unserialize($serialized);
         if (!Semver::satisfies($data['__version'], static::CONSTRAINTS_VERSION)) {
-            $message = 'Cannot use incompatible version to unserialize stack trace (serialized by: %s, current: %s).';
-            throw new LogicException(\sprintf($message, $data['__version'], static::VERSION));
+            throw new LogicException(\sprintf(
+                'Cannot use incompatible version to unserialize stack trace (serialized by: %s, current: %s).',
+                $data['__version'],
+                static::VERSION
+            ));
         }
         $this->arrayStackTrace = $data['steps'];
         $this->unserialized = true;
@@ -201,7 +205,7 @@ final class StackTrace implements StackTraceInterface
         } else {
             if (empty($step[Constants::KEY_ARGS_CONVERTED]) && isset($step['args'])) {
                 $maxArgs = null;
-                if (\version_compare(PHP_VERSION, '5.6') >= 0) {
+                if (\version_compare(\PHP_VERSION, '5.6') >= 0) {
                     $fakeStep = new Step($step);
                     $reflectionFn = $fakeStep->hasCalledFunction() && $fakeStep->getCalledFunction()->hasReflection()
                         ? $fakeStep->getCalledFunction()->getReflection()

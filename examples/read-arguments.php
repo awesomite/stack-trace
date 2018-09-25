@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-require \implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'vendor', 'autoload.php'));
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'StackTracePrinter.php';
+require \implode(\DIRECTORY_SEPARATOR, array(__DIR__, '..', 'vendor', 'autoload.php'));
+require_once __DIR__ . \DIRECTORY_SEPARATOR . 'StackTracePrinter.php';
 
 /**
  * @internal
@@ -34,7 +34,7 @@ function myFirstFunction($arg1, $arg2)
  */
 function mySecondFunction($foo, $bar)
 {
-    myThirdFunction(\tmpfile(), M_PI);
+    myThirdFunction(\tmpfile(), \M_PI);
 }
 
 /**

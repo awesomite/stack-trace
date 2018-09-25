@@ -88,7 +88,7 @@ final class StackTraceTest extends BaseTestCase
     {
         $factory = new StackTraceFactory();
         $stackTraceA = $factory->create();
-        $stackTraceB = $factory->create(); $stackTraceC = $factory->create();
+        list($stackTraceB, $stackTraceC) = array($factory->create(), $factory->create());
         $this->assertNotEquals($stackTraceA->getId(), $stackTraceB->getId());
         $this->assertSame($stackTraceB->getId(), $stackTraceC->getId());
         $this->assertInternalType('string', $stackTraceA->getId());
@@ -122,7 +122,7 @@ final class StackTraceTest extends BaseTestCase
 
     public function testVariadic()
     {
-        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.6') >= 0) {
             $stackTraceVariadic = new StackTraceVariadic($this);
             $stackTraceVariadic->handleTest();
         } else {
@@ -220,7 +220,7 @@ final class StackTraceTest extends BaseTestCase
             array(null, false, 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(null, 5, 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(null, 5.0, 'Awesomite\StackTrace\Arguments\Values\Value'),
-            array(null, INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, \INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(5, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(null, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
             array(5, '000000', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),

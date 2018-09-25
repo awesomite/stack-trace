@@ -99,7 +99,7 @@ class StackTracePrinter
 
     private function shortFileName($file)
     {
-        $exploded = \explode(DIRECTORY_SEPARATOR, $file);
+        $exploded = \explode(\DIRECTORY_SEPARATOR, $file);
         $shifted = false;
         while (\count($exploded) > 3) {
             \array_shift($exploded);
@@ -110,7 +110,6 @@ class StackTracePrinter
             \array_unshift($exploded, '(...)');
         }
 
-
-        return \implode(DIRECTORY_SEPARATOR, $exploded);
+        return \implode(\DIRECTORY_SEPARATOR, $exploded);
     }
 }

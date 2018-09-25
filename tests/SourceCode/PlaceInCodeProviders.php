@@ -23,7 +23,7 @@ abstract class PlaceInCodeProviders extends BaseTestCase
     public function providerInvalidLineLimit()
     {
         return array(
-            array(PHP_INT_MAX),
+            array(\PHP_INT_MAX),
             array(Constants::MAX_LINE_THRESHOLD * 2 + 1),
         );
     }

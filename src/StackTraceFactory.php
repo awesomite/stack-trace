@@ -44,10 +44,10 @@ class StackTraceFactory implements StackTraceFactoryInterface
      */
     public function create($stepLimit = 0, $ignoreArgs = false)
     {
-        if (\version_compare(PHP_VERSION, '5.4') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.4') >= 0) {
             $options = 0;
             if ($ignoreArgs) {
-                $options |= DEBUG_BACKTRACE_IGNORE_ARGS;
+                $options |= \DEBUG_BACKTRACE_IGNORE_ARGS;
             }
             $arrayStackTrace = \debug_backtrace($options, $stepLimit);
             if ($ignoreArgs) {
@@ -141,6 +141,6 @@ class StackTraceFactory implements StackTraceFactoryInterface
 
     private function getOptionsForDebugBacktrace53()
     {
-        return \version_compare(PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
+        return \version_compare(\PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
     }
 }

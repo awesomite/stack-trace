@@ -43,21 +43,24 @@ final class UnsafeFunctionsTest extends BaseTestCase
                 if ('`' === $tokenArr) {
                     $this->fail("Backtick operator is forbidden {$filePath}");
                 }
+
                 continue;
             }
             list($token, $source, $line) = $tokenArr;
             $source = \mb_strtolower($source);
 
             switch ($token) {
-                case T_STRING:
+                case \T_STRING:
                     if (\in_array($source, self::$unsafeFunctions, true)) {
                         $this->fail("Function {$source} in {$filePath}:{$line}");
                     }
+
                     break;
 
-                case T_EXIT:
-                case T_EVAL:
+                case \T_EXIT:
+                case \T_EVAL:
                     $this->fail("Function {$source} in {$filePath}:{$line}");
+
                     break;
             }
         }
@@ -65,10 +68,10 @@ final class UnsafeFunctionsTest extends BaseTestCase
 
     public function providerFiles()
     {
-        $exploded = \explode(DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR, __DIR__);
+        $exploded = \explode(\DIRECTORY_SEPARATOR . 'tests' . \DIRECTORY_SEPARATOR, __DIR__);
         \array_pop($exploded);
         $exploded[] = 'src';
-        $path = \implode(DIRECTORY_SEPARATOR, $exploded);
+        $path = \implode(\DIRECTORY_SEPARATOR, $exploded);
         $pattern = '/^.+\.php$/';
 
         $directory = new \RecursiveDirectoryIterator($path);
