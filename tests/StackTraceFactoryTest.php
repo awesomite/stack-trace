@@ -14,6 +14,8 @@ namespace Awesomite\StackTrace;
 use Awesomite\StackTrace\Arguments\ArgumentInterface;
 use Awesomite\StackTrace\Exceptions\InvalidArgumentException;
 use Awesomite\StackTrace\Steps\StepInterface;
+use Awesomite\VarDumper\LightVarDumper;
+use Awesomite\VarDumper\VarDumperInterface;
 
 /**
  * @internal
@@ -167,7 +169,8 @@ final class StackTraceFactoryTest extends BaseTestCase
             );
         }
 
-        $eval = <<<EVAL
+        $eval
+            = <<<EVAL
 if (!function_exists('awesomite_test_function')) {
     function awesomite_test_function () {
         throw new \LogicException('Test exception 2');
@@ -188,6 +191,47 @@ EVAL;
         }
 
         return $result;
+    }
+
+    /**
+     * @dataProvider providerConstructor
+     *
+     * @param null|VarDumperInterface $varDumper
+     * @param null|int                $maxSerializableStringLen
+     */
+    public function testConstructor(VarDumperInterface $varDumper = null, $maxSerializableStringLen = null)
+    {
+        $stackTraceFactory = new StackTraceFactory($varDumper, $maxSerializableStringLen);
+        $reflectionClass = new \ReflectionClass($stackTraceFactory);
+
+        $reflectionVarDumper = $reflectionClass->getProperty('varDumper');
+        $reflectionVarDumper->setAccessible(true);
+
+        $reflectionStringLen = $reflectionClass->getProperty('maxSerializableStringLen');
+        $reflectionStringLen->setAccessible(true);
+
+        if (null === $varDumper) {
+            $this->assertInstanceOf(
+                'Awesomite\VarDumper\VarDumperInterface',
+                $reflectionVarDumper->getValue($stackTraceFactory)
+            );
+        } else {
+            $this->assertSame($varDumper, $reflectionVarDumper->getValue($stackTraceFactory));
+        }
+
+        $this->assertSame($maxSerializableStringLen, $maxSerializableStringLen);
+    }
+
+    public function providerConstructor()
+    {
+        return array(
+            array(null, null),
+            array(new LightVarDumper(), null),
+            array(new LightVarDumper(), 5),
+            array(new LightVarDumper(), 6),
+            array(null, 5),
+            array(null, 6),
+        );
     }
 
     private function createFactory()
