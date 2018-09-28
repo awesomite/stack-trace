@@ -21,20 +21,20 @@ use Awesomite\StackTrace\Exceptions\LogicException;
 final class Argument implements ArgumentInterface
 {
     /**
-     * @var DeclarationInterface|null
+     * @var null|DeclarationInterface
      */
     private $declaration;
 
     /**
-     * @var ValueInterface|null
+     * @var null|ValueInterface
      */
     private $value;
 
     /**
      * @codeCoverageIgnore
      *
-     * @param DeclarationInterface|null $declaration
-     * @param ValueInterface|null       $value
+     * @param null|DeclarationInterface $declaration
+     * @param null|ValueInterface       $value
      */
     public function __construct(DeclarationInterface $declaration = null, ValueInterface $value = null)
     {

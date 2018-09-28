@@ -24,7 +24,7 @@ final class StackTraceTest extends BaseTestCase
     {
         $debugBacktrace = \debug_backtrace();
         $debugBacktrace = \array_slice($debugBacktrace, 0, 3, true);
-        $stackTrace = new StackTrace($debugBacktrace, new LightVarDumper());
+        $stackTrace = new StackTrace($debugBacktrace, new LightVarDumper(), false);
         $this->assertSame(\count($debugBacktrace), \count($stackTrace));
         $this->assertTrue($stackTrace->getIterator() instanceof \Traversable);
 
@@ -78,7 +78,7 @@ final class StackTraceTest extends BaseTestCase
         $factory = new StackTraceFactory();
 
         return array(
-            array(new StackTrace($backTrace, new LightVarDumper())),
+            array(new StackTrace($backTrace, new LightVarDumper(), false)),
             array($factory->create()),
             array(\unserialize(\serialize($factory->create()))),
         );
@@ -88,7 +88,7 @@ final class StackTraceTest extends BaseTestCase
     {
         $factory = new StackTraceFactory();
         $stackTraceA = $factory->create();
-        $stackTraceB = $factory->create(); $stackTraceC = $factory->create();
+        list($stackTraceB, $stackTraceC) = array($factory->create(), $factory->create());
         $this->assertNotEquals($stackTraceA->getId(), $stackTraceB->getId());
         $this->assertSame($stackTraceB->getId(), $stackTraceC->getId());
         $this->assertInternalType('string', $stackTraceA->getId());
@@ -122,7 +122,7 @@ final class StackTraceTest extends BaseTestCase
 
     public function testVariadic()
     {
-        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.6') >= 0) {
             $stackTraceVariadic = new StackTraceVariadic($this);
             $stackTraceVariadic->handleTest();
         } else {
@@ -193,6 +193,42 @@ final class StackTraceTest extends BaseTestCase
         $copy = $original;
         $this->changeReference($original);
         $this->assertNotSame($copy, $original);
+    }
+
+    /**
+     * @dataProvider providerConvertArg
+     *
+     * @param false|int $threshold
+     * @param mixed     $value
+     * @param string    $expectedReturnedClass
+     */
+    public function testConvertArg($threshold, $value, $expectedReturnedClass)
+    {
+        $stackTrace = new StackTrace(array(), new LightVarDumper(), $threshold);
+        $method = new \ReflectionMethod($stackTrace, 'convertArg');
+        $method->setAccessible(true);
+        $result = $method->invoke($stackTrace, $value);
+        $this->assertInstanceOf('Awesomite\StackTrace\Arguments\Values\ValueInterface', $result);
+        $this->assertInstanceOf($expectedReturnedClass, $result);
+    }
+
+    public function providerConvertArg()
+    {
+        return array(
+            array(null, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, null, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, false, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, 5, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, 5.0, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, \INF, 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(null, '00000', 'Awesomite\StackTrace\Arguments\Values\Value'),
+            array(5, '000000', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(0, 'a', 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, new \stdClass(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, array(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+            array(null, \tmpfile(), 'Awesomite\StackTrace\Arguments\Values\DeserializedValue'),
+        );
     }
 
     private function changeReference(&$reference)

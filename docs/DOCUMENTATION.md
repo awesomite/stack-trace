@@ -9,9 +9,16 @@ Both methods have optional `$limit` parameter.
 use Awesomite\StackTrace\StackTraceFactory;
 
 /*
- * Constructor of StackTraceFactory has optional parameter $varDumper,
- * you can inject your own varDumper, otherwise new instance of
- * Awesomite\VarDumper\LightVarDumper with default values will be used
+ * Constructor of StackTraceFactory has two optional parameters:
+ *
+ * $varDumper - you can inject your own varDumper,
+ * otherwise new instance of Awesomite\VarDumper\LightVarDumper
+ * with default values will be used.
+ *
+ * $maxSerializableStringLen - this library
+ * serializes values for scalar types and null,
+ * for big strings you can set max length which can be serialized,
+ * default null (no limit).
  *
  * @see https://github.com/awesomite/var-dumper
  */

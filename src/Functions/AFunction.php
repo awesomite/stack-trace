@@ -14,7 +14,11 @@ namespace Awesomite\StackTrace\Functions;
 use Awesomite\StackTrace\Exceptions\LogicException;
 
 /**
+ * Cannot use "function" as a class name in php
+ *
  * @internal
+ *
+ * @see http://php.net/manual/en/reserved.keywords.php
  */
 final class AFunction implements FunctionInterface
 {

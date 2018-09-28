@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.0] - 2018-09-28
+
+* Added optional parameter `$maxSerializableStringLen` to [`Awesomite\StackTrace\StackTraceFactory::__construct`](./src/StackTraceFactory.php)
+
 ## [1.2.0] - 2018-09-21
 
 * Added interface [`Awesomite\StackTrace\StackTraceFactoryInterface`](./src/StackTraceFactoryInterface.php)
@@ -33,6 +37,7 @@ in [`Value::dumpAsString()`](./src/Arguments/Values/Value.php).
 
 This version contains the same source code as [0.12.0].
 
+[1.3.0]: https://github.com/awesomite/stack-trace/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/awesomite/stack-trace/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/awesomite/stack-trace/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/awesomite/stack-trace/compare/v1.0.1...v1.0.2

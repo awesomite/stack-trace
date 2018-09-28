@@ -61,7 +61,7 @@ abstract class DeclarationProviders extends BaseTestCase
         list($parameterWithoutName) = $methodWithoutType->getParameters();
         $result[] = array(new Declaration($parameterWithoutName), false);
 
-        if (\version_compare(PHP_VERSION, '5.4') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.4') >= 0) {
             $testPhp54 = new TestPhp54();
             $class54 = new \ReflectionClass($testPhp54);
             $methodCallable = $class54->getMethod('argumentCallable');
@@ -69,7 +69,7 @@ abstract class DeclarationProviders extends BaseTestCase
             $result[] = array(new Declaration($parameterCallable), true, 'callable');
         }
 
-        if (\version_compare(PHP_VERSION, '7.0') >= 0) {
+        if (\version_compare(\PHP_VERSION, '7.0') >= 0) {
             $class70 = new \ReflectionClass(new TestPhp70());
 
             foreach (array('int', 'bool', 'float', 'string') as $type) {
@@ -80,14 +80,14 @@ abstract class DeclarationProviders extends BaseTestCase
 
         // on version 7.1.0beta1 there is wrong type - array instead of iterable
         // HHVM - https://travis-ci.org/awesomite/stack-trace/jobs/353062405
-        if (\version_compare(PHP_VERSION, '7.1.0RC1') >= 0 && !\defined('HHVM_VERSION')) {
+        if (\version_compare(\PHP_VERSION, '7.1.0RC1') >= 0 && !\defined('HHVM_VERSION')) {
             $class71 = new \ReflectionClass(new TestPhp71());
             list($parameterIterable) = $class71->getMethod('argumentIterable')->getParameters();
             $result[] = array(new Declaration($parameterIterable), true, 'iterable');
         }
 
         if (
-            \version_compare(PHP_VERSION, '7.1') >= 0
+            \version_compare(\PHP_VERSION, '7.1') >= 0
             // https://travis-ci.org/awesomite/stack-trace/jobs/354125877
             && (!\defined('HHVM_VERSION') || 0 !== \strpos(HHVM_VERSION, '3.18.'))
         ) {
@@ -96,7 +96,7 @@ abstract class DeclarationProviders extends BaseTestCase
             $result[] = array(new Declaration($parameter), true, 'int');
         }
 
-        if (\version_compare(PHP_VERSION, '7.2') >= 0) {
+        if (\version_compare(\PHP_VERSION, '7.2') >= 0) {
             $class72 = new \ReflectionClass(new TestPhp72());
             list($parameterObject) = $class72->getMethod('argumentObject')->getParameters();
             $result[] = array(new Declaration($parameterObject), true, 'object');
@@ -125,7 +125,7 @@ abstract class DeclarationProviders extends BaseTestCase
         list($normalParameter) = $class53->getMethod('argumentArray')->getParameters();
         $result[] = array(new Declaration($normalParameter), false);
 
-        if (\version_compare(PHP_VERSION, '5.6') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.6') >= 0) {
             $class56 = new \ReflectionClass(new TestPhp56());
             list($variadicParameter) = $class56->getMethod('argumentVariadic')->getParameters();
             $result[] = array(new Declaration($variadicParameter), true);
@@ -156,7 +156,7 @@ abstract class DeclarationProviders extends BaseTestCase
         list($normalParameter) = $class53->getMethod('argumentArray')->getParameters();
         $result[] = array(new Declaration($normalParameter), false);
 
-        if (\version_compare(PHP_VERSION, '5.4.6') >= 0 && !\defined('HHVM_VERSION')) {
+        if (\version_compare(\PHP_VERSION, '5.4.6') >= 0 && !\defined('HHVM_VERSION')) {
             $class54 = new \ReflectionClass(new TestPhp54());
             list($defaultConstant) = $class54->getMethod('argumentDefaultConstant')->getParameters();
             $result[] = array(new Declaration($defaultConstant), true, 'PHP_VERSION');

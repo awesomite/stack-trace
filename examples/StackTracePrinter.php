@@ -63,7 +63,7 @@ class StackTracePrinter
     }
 
     /**
-     * @param ArgumentsInterface|ArgumentInterface[] $arguments
+     * @param ArgumentInterface[]|ArgumentsInterface $arguments
      */
     private function printArguments($arguments)
     {
@@ -89,7 +89,7 @@ class StackTracePrinter
                 $dump .= "\n";
             }
 
-            $tabs = "    ";
+            $tabs = '    ';
 
             $dump = \substr($dump, 0, -1);
             $dump = $tabs . \str_replace("\n", "\n", $dump) . "\n";
@@ -99,7 +99,7 @@ class StackTracePrinter
 
     private function shortFileName($file)
     {
-        $exploded = \explode(DIRECTORY_SEPARATOR, $file);
+        $exploded = \explode(\DIRECTORY_SEPARATOR, $file);
         $shifted = false;
         while (\count($exploded) > 3) {
             \array_shift($exploded);
@@ -110,7 +110,6 @@ class StackTracePrinter
             \array_unshift($exploded, '(...)');
         }
 
-
-        return \implode(DIRECTORY_SEPARATOR, $exploded);
+        return \implode(\DIRECTORY_SEPARATOR, $exploded);
     }
 }

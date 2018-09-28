@@ -40,11 +40,11 @@ final class Declaration implements DeclarationInterface
 
     public function getType()
     {
-        if (\version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
+        if (\version_compare(\PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
             return new Type((string)$this->parameter->getType());
         }
 
-        if (\version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
+        if (\version_compare(\PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
             return new Type('callable');
         }
 
@@ -68,11 +68,11 @@ final class Declaration implements DeclarationInterface
 
     public function hasType()
     {
-        if (\version_compare(PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
+        if (\version_compare(\PHP_VERSION, '7.0') >= 0 && $this->parameter->hasType()) {
             return true;
         }
 
-        if (\version_compare(PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
+        if (\version_compare(\PHP_VERSION, '5.4') >= 0 && $this->parameter->isCallable()) {
             return true;
         }
 
@@ -101,7 +101,7 @@ final class Declaration implements DeclarationInterface
 
     public function isVariadic()
     {
-        return \version_compare(PHP_VERSION, '5.6') >= 0 && $this->parameter->isVariadic();
+        return \version_compare(\PHP_VERSION, '5.6') >= 0 && $this->parameter->isVariadic();
     }
 
     public function hasDefaultValue()
@@ -130,7 +130,7 @@ final class Declaration implements DeclarationInterface
             // @codeCoverageIgnoreEnd
         }
 
-        return \version_compare(PHP_VERSION, '5.4.6') >= 0
+        return \version_compare(\PHP_VERSION, '5.4.6') >= 0
             && $this->hasDefaultValue()
             && $this->parameter->isDefaultValueConstant();
     }

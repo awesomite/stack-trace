@@ -24,9 +24,19 @@ class StackTraceFactory implements StackTraceFactoryInterface
      */
     private $varDumper;
 
-    public function __construct(VarDumperInterface $varDumper = null)
+    /**
+     * @var null|int
+     */
+    private $maxSerializableStringLen;
+
+    /**
+     * @param null|VarDumperInterface $varDumper
+     * @param null|int                $maxSerializableStringLen
+     */
+    public function __construct(VarDumperInterface $varDumper = null, $maxSerializableStringLen = null)
     {
         $this->varDumper = $varDumper ?: new LightVarDumper();
+        $this->maxSerializableStringLen = $maxSerializableStringLen;
     }
 
     /**
@@ -34,17 +44,17 @@ class StackTraceFactory implements StackTraceFactoryInterface
      */
     public function create($stepLimit = 0, $ignoreArgs = false)
     {
-        if (\version_compare(PHP_VERSION, '5.4') >= 0) {
+        if (\version_compare(\PHP_VERSION, '5.4') >= 0) {
             $options = 0;
             if ($ignoreArgs) {
-                $options |= DEBUG_BACKTRACE_IGNORE_ARGS;
+                $options |= \DEBUG_BACKTRACE_IGNORE_ARGS;
             }
             $arrayStackTrace = \debug_backtrace($options, $stepLimit);
             if ($ignoreArgs) {
                 $this->removeArgs($arrayStackTrace);
             }
 
-            return new StackTrace($arrayStackTrace, $this->varDumper);
+            return new StackTrace($arrayStackTrace, $this->varDumper, $this->maxSerializableStringLen);
         }
 
         $arrayStackTrace = \debug_backtrace($this->getOptionsForDebugBacktrace53());
@@ -55,7 +65,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
             $this->removeArgs($arrayStackTrace);
         }
 
-        return new StackTrace($arrayStackTrace, $this->varDumper);
+        return new StackTrace($arrayStackTrace, $this->varDumper, $this->maxSerializableStringLen);
     }
 
     /**
@@ -66,7 +76,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
         $exceptionClass = $this->getRootExceptionClass();
         if (!\is_object($exception) || !$exception instanceof $exceptionClass) {
             throw new InvalidArgumentException(\sprintf(
-                "Expected argument of type %s, %s given",
+                'Expected argument of type %s, %s given',
                 $exceptionClass,
                 \is_object($exception) ? \get_class($exception) : \gettype($exception)
             ));
@@ -83,11 +93,11 @@ class StackTraceFactory implements StackTraceFactoryInterface
     private function getRootExceptionClass()
     {
         if (\is_null(self::$rootExceptionClass)) {
-            $reflection = new \ReflectionClass('\Exception');
-            $throwableExists = \interface_exists('\Throwable', false);
-            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('\Throwable')
-                ? '\Throwable'
-                : '\Exception';
+            $reflection = new \ReflectionClass('Exception');
+            $throwableExists = \interface_exists('Throwable', false);
+            self::$rootExceptionClass = $throwableExists && $reflection->implementsInterface('Throwable')
+                ? 'Throwable'
+                : 'Exception';
         }
 
         return self::$rootExceptionClass;
@@ -117,7 +127,7 @@ class StackTraceFactory implements StackTraceFactoryInterface
             $this->removeArgs($trace);
         }
 
-        return new StackTrace($trace, $this->varDumper);
+        return new StackTrace($trace, $this->varDumper, $this->maxSerializableStringLen);
     }
 
     private function removeArgs(array &$trace)
@@ -131,6 +141,6 @@ class StackTraceFactory implements StackTraceFactoryInterface
 
     private function getOptionsForDebugBacktrace53()
     {
-        return \version_compare(PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
+        return \version_compare(\PHP_VERSION, '5.3.6') >= 0 ? 0 : false;
     }
 }

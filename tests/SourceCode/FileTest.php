@@ -38,7 +38,7 @@ final class FileTest extends BaseTestCase
         $lines = $file->getLines($line, $line);
         $text = \implode("\n", $lines);
         $this->assertNotContains("\n", $text);
-        $this->assertContains("__LINE__", $text);
+        $this->assertContains('__LINE__', $text);
     }
 
     public function testOnlyStrings()
