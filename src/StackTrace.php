@@ -27,7 +27,7 @@ use Composer\Semver\Semver;
  */
 final class StackTrace implements StackTraceInterface
 {
-    const VERSION             = '1.3.0';
+    const VERSION             = '1.3.1';
     const CONSTRAINTS_VERSION = '^1.0.0';
 
     private $arrayStackTrace;
@@ -137,10 +137,13 @@ final class StackTrace implements StackTraceInterface
             $line = '#' . $stepNumber;
             if ($step->hasCalledFunction()) {
                 $line .= ' ' . $step->getCalledFunction()->getName() . '()';
+                if ($step->hasPlaceInCode()) {
+                    $line .= ' at';
+                }
             }
             if ($step->hasPlaceInCode()) {
                 $placeInCode = $step->getPlaceInCode();
-                $line .= ' at ' . $placeInCode->getFileName() . ':' . $placeInCode->getLineNumber();
+                $line .= ' ' . $placeInCode->getFileName() . ':' . $placeInCode->getLineNumber();
             }
 
             $result[] = $line;
