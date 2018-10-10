@@ -125,6 +125,16 @@ OUTPUT
             ),
             array(
                 array(
+                    array('file' => __FILE__ . '.test', 'line' => 15, 'function' => 'run', 'type' => '->', 'class' => 'Awesomite\MyApp'),
+                    array('file' => __FILE__ . '.test', 'line' => 23, 'function' => 'handleHttp', 'type' => '->', 'class' => 'Awesomite\MyApp\Http\Handler'),
+                ),
+                <<<OUTPUT
+#0 Awesomite\MyApp->run()
+#1 Awesomite\MyApp\Http\Handler->handleHttp()
+OUTPUT
+            ),
+            array(
+                array(
                     array('file' => __FILE__, 'line' => 17),
                 ),
                 '#0 %file%:17',
