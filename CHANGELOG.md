@@ -3,7 +3,7 @@
 ## [1.3.1] - ????-??-??
 
 Removed `at` word from result of `Awesomite\StackTrace\StackTrace::__toString` whenever step does not contain
-reference to called function, e.g.: `#0 (...)/file.php:13` instead of `#0 at (...)file.php:14`.
+reference to called function, e.g.: `#0 (...)/file.php:14` instead of `#0 at (...)file.php:14`.
 
 ## [1.3.0] - 2018-09-28
 
