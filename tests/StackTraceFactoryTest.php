@@ -170,7 +170,7 @@ final class StackTraceFactoryTest extends BaseTestCase
         }
 
         $eval
-            = <<<EVAL
+            = <<<'EVAL'
 if (!function_exists('awesomite_test_function')) {
     function awesomite_test_function () {
         throw new \LogicException('Test exception 2');
