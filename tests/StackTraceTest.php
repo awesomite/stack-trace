@@ -95,18 +95,47 @@ final class StackTraceTest extends BaseTestCase
         $this->assertSame(32, \mb_strlen($stackTraceA->getId()));
     }
 
-    public function testToString()
+    /**
+     * @dataProvider providerToString
+     *
+     * @param array  $rawStackTrace
+     * @param string $expected
+     */
+    public function testToString(array $rawStackTrace, $expected)
     {
-        $factory = new StackTraceFactory();
-        $stackTrace = $factory->create();
-        $string = (string)$stackTrace;
-        $shouldContains = array(
-            __FUNCTION__,
-            __CLASS__,
+        $stackTrace = new StackTrace($rawStackTrace, new LightVarDumper(), null);
+        $expected = \str_replace('%file%', __FILE__, $expected);
+        $result = (string)$stackTrace;
+        $this->assertInternalType('string', $result);
+        $this->assertSame($expected, $result);
+    }
+
+    public function providerToString()
+    {
+        return array(
+            array(
+                array(
+                    array('file' => __FILE__, 'line' => 15, 'function' => 'run', 'type' => '->', 'class' => 'Awesomite\MyApp'),
+                    array('file' => __FILE__, 'line' => 23, 'function' => 'handleHttp', 'type' => '->', 'class' => 'Awesomite\MyApp\Http\Handler'),
+                ),
+                <<<OUTPUT
+#0 Awesomite\MyApp->run() at %file%:15
+#1 Awesomite\MyApp\Http\Handler->handleHttp() at %file%:23
+OUTPUT
+            ),
+            array(
+                array(
+                    array('file' => __FILE__, 'line' => 17),
+                ),
+                '#0 %file%:17',
+            ),
+            array(
+                array(
+                    array('function' => 'eval'),
+                ),
+                '#0 eval()',
+            ),
         );
-        foreach ($shouldContains as $expectedPart) {
-            $this->assertContains($expectedPart, $string);
-        }
     }
 
     /**
