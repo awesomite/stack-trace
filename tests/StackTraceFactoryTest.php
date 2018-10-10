@@ -180,7 +180,7 @@ EVAL;
         eval($eval);
 
         try {
-            awesomite_test_function();
+            \awesomite_test_function();
         } catch (\LogicException $exception) {
             $result[] = array(
                 $factory->createByThrowable($exception, 2),
